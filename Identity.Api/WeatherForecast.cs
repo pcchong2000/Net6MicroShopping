@@ -1,4 +1,4 @@
-namespace Activity.Api
+namespace Identity.Api
 {
     public class WeatherForecast
     {

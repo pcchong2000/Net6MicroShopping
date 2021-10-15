@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace MicroShoping.DomainBase
 {
     public interface IEntityIdBase
     {
@@ -27,7 +22,7 @@ namespace Domain
         /// ID,统一小写
         /// </summary>
         [Key]
-        public string Id { get; set; } = "";// = SequentialGuid.Instance.Create(SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
+        public string Id { get; set; }// = SequentialGuid.Instance.Create(SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
         public DateTime CreatTime { get; set; } = DateTime.Now;
         public DateTime UpdateTime { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }

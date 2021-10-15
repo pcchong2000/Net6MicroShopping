@@ -1,6 +1,30 @@
 version: '3.4'
 
 services:
+
+  mysql:
+    container_name: mysqleshoping
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    volumes:
+      - D://docker/mysqleshoping/db:/var/lib/mysql
+      - D://docker/mysqleshoping/config:/etc/my.cnf
+    ports:
+      - "3307:3306"
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  redis:
+    ports:
+      - "5379:6379"
+
+  zipkin:
+    ports:
+      - "5411:9411"
+
   order.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
