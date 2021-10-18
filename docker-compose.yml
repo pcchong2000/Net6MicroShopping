@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  mysql:
-    image: mysql:latest
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -13,8 +13,38 @@ services:
   zipkin:
     image: openzipkin/zipkin-slim
 
-  order.api:
-    image: ${DOCKER_REGISTRY-}orderapi
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
     build:
       context: .
       dockerfile: Order.Api/Dockerfile
+
+
+  member.api:
+    image: ${DOCKER_REGISTRY-}memberapi
+    build:
+      context: .
+      dockerfile: Member.Api/Dockerfile
+
+
+  pay.api:
+    image: ${DOCKER_REGISTRY-}payapi
+    build:
+      context: .
+      dockerfile: Pay.Api/Dockerfile
+
+
+  product.api:
+    image: ${DOCKER_REGISTRY-}productapi
+    build:
+      context: .
+      dockerfile: Product.Api/Dockerfile
+
+
+  tenant.api:
+    image: ${DOCKER_REGISTRY-}tenantapi
+    build:
+      context: .
+      dockerfile: Tenant.Api/Dockerfile
+

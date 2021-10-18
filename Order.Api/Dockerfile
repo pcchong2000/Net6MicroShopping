@@ -6,16 +6,17 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Order.Api/Order.Api.csproj", "Order.Api/"]
-RUN dotnet restore "Order.Api/Order.Api.csproj"
+COPY ["Order.Api/Ordering.Api.csproj", "Order.Api/"]
+COPY ["MicroShoping.Domain/MicroShoping.DomainBase.csproj", "MicroShoping.Domain/"]
+RUN dotnet restore "Order.Api/Ordering.Api.csproj"
 COPY . .
 WORKDIR "/src/Order.Api"
-RUN dotnet build "Order.Api.csproj" -c Release -o /app/build
+RUN dotnet build "Ordering.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Order.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "Ordering.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Order.Api.dll"]
+ENTRYPOINT ["dotnet", "Ordering.Api.dll"]

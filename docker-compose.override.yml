@@ -2,15 +2,13 @@ version: '3.4'
 
 services:
 
-  mysql:
-    container_name: mysqleshoping
+  sqlserver:
     environment:
-      MYSQL_ROOT_PASSWORD: "123456"
-    volumes:
-      - D://docker/mysqleshoping/db:/var/lib/mysql
-      - D://docker/mysqleshoping/config:/etc/my.cnf
+      - SA_PASSWORD=123456
+      - ACCEPT_EULA=Y
     ports:
-      - "3307:3306"
+      - "5433:1433"
+
 
   rabbitmq:
     ports:
@@ -25,8 +23,43 @@ services:
     ports:
       - "5411:9411"
 
-  order.api:
+
+  ordering.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_orderdb;Persist Security Info=True;User ID=sa;Password=123456
     ports:
       - "80"
+
+
+  member.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=123456
+    ports:
+      - "80"
+
+
+  pay.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_paydb;Persist Security Info=True;User ID=sa;Password=123456
+    ports:
+      - "80"
+
+
+  product.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=123456
+    ports:
+      - "80"
+
+
+  tenant.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=123456
+    ports:
+      - "80"
+
