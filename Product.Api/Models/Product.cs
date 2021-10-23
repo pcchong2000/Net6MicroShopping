@@ -1,4 +1,4 @@
-﻿using MicroShoping.DomainBase;
+﻿using MicroShoping.Domain;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

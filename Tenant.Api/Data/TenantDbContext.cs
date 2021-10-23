@@ -9,6 +9,7 @@ namespace Tenant.Api.Data
         {
         }
         public DbSet<Tenant.Api.Models.Tenant> Tenant { get; set; }
+        public DbSet<Tenant.Api.Models.TenantStore> TenantStore { get; set; }
         public DbSet<Tenant.Api.Models.TenantAdmin> TenantAdmin { get; set; }
         
     }

@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Product.Api/Product.Api.csproj", "Product.Api/"]
-COPY ["MicroShoping.Domain/MicroShoping.DomainBase.csproj", "MicroShoping.Domain/"]
+COPY ["MicroShoping.Domain/MicroShoping.Domain.csproj", "MicroShoping.Domain/"]
 RUN dotnet restore "Product.Api/Product.Api.csproj"
 COPY . .
 WORKDIR "/src/Product.Api"

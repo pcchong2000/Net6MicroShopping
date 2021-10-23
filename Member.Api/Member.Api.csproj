@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MicroShoping.Domain\MicroShoping.DomainBase.csproj" />
+	  <ProjectReference Include="..\MicroShoping.ApplicationBase\MicroShoping.Application.csproj" />
 	</ItemGroup>
 
 </Project>

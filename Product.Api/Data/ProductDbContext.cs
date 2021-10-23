@@ -9,7 +9,7 @@ namespace Product.Api.Data
         {
         }
         public DbSet<Product.Api.Models.ProductCategory> ProductCategory { get; set; }
-        public DbSet<Product.Api.Models.TenantProductCategory> TenantProductCategory { get; set; }
+        public DbSet<Product.Api.Models.StoreProductCategory> StoreProductCategory { get; set; }
         public DbSet<Product.Api.Models.Product> Product { get; set; }
         public DbSet<Product.Api.Models.ProductModel> ProductModel { get; set; }
         public DbSet<Product.Api.Models.ProductModelCategory> ProductModelCategory { get; set; }

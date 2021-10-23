@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//add-migration init -Context MemberDbContext -OutputDir Data/migrations
+//add-migration init -Context TenantDbContext -OutputDir Data/migrations
 
 builder.Services.AddDbContext<TenantDbContext>(options =>
 {

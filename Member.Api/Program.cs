@@ -1,5 +1,6 @@
-using Member.Api.Data;
+using MicroShoping.EFCore.Members;
 using Microsoft.EntityFrameworkCore;
+using MicroShoping.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplication();
 
-//add-migration init -Context MemberDbContext -OutputDir Data/migrations
+//add-migration init -Context MemberDbContext -OutputDir Members/Data/migrations
 
 builder.Services.AddDbContext<MemberDbContext>(options =>
 {
@@ -18,8 +20,6 @@ builder.Services.AddDbContext<MemberDbContext>(options =>
     //options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
     options.UseSqlServer(connectionString);
 });
-
-
 
 var app = builder.Build();
 

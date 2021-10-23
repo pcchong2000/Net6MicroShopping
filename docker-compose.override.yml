@@ -4,7 +4,7 @@ services:
 
   sqlserver:
     environment:
-      - SA_PASSWORD=123456
+      - SA_PASSWORD=Admin123456
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433"
@@ -27,7 +27,7 @@ services:
   ordering.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_orderdb;Persist Security Info=True;User ID=sa;Password=123456
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_orderdb;Persist Security Info=True;User ID=sa;Password=Admin123456
     ports:
       - "80"
 
@@ -35,7 +35,7 @@ services:
   member.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=123456
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
     ports:
       - "80"
 
@@ -43,7 +43,7 @@ services:
   pay.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_paydb;Persist Security Info=True;User ID=sa;Password=123456
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_paydb;Persist Security Info=True;User ID=sa;Password=Admin123456
     ports:
       - "80"
 
@@ -51,7 +51,7 @@ services:
   product.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=123456
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=Admin123456
     ports:
       - "80"
 
@@ -59,7 +59,16 @@ services:
   tenant.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=123456
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=Admin123456
     ports:
       - "80"
 
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+    ports:
+      - "80"
+      - "443"

@@ -60,7 +60,12 @@ namespace Product.Api.Data.migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<string>("TenantCode")
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -108,7 +113,12 @@ namespace Product.Api.Data.migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<string>("TenantCode")
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -167,7 +177,12 @@ namespace Product.Api.Data.migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<string>("TenantCode")
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -210,7 +225,12 @@ namespace Product.Api.Data.migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<string>("TenantCode")
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -223,7 +243,7 @@ namespace Product.Api.Data.migrations
                     b.ToTable("ProductModelCategory");
                 });
 
-            modelBuilder.Entity("Product.Api.Models.TenantProductCategory", b =>
+            modelBuilder.Entity("Product.Api.Models.StoreProductCategory", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -253,7 +273,12 @@ namespace Product.Api.Data.migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<string>("TenantCode")
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -263,7 +288,7 @@ namespace Product.Api.Data.migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TenantProductCategory");
+                    b.ToTable("StoreProductCategory");
                 });
 #pragma warning restore 612, 618
         }

@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MicroShoping.Domain\MicroShoping.DomainBase.csproj" />
+    <ProjectReference Include="..\MicroShoping.Domain\MicroShoping.Domain.csproj" />
   </ItemGroup>
 
 </Project>

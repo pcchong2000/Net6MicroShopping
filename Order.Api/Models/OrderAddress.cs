@@ -1,4 +1,4 @@
-﻿using MicroShoping.DomainBase;
+﻿using MicroShoping.Domain;
 
 namespace Ordering.Api.Models
 {
