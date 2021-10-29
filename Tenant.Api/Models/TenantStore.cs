@@ -8,11 +8,11 @@ namespace Tenant.Api.Models
     {
         public string TenantId { get; set; }
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [MaxLength(200)]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         [MaxLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
     }
 }

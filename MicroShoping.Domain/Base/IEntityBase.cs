@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MicroShoping.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace MicroShoping.Domain
 {
@@ -27,7 +28,7 @@ namespace MicroShoping.Domain
         /// </summary>
         [Key]
         [MaxLength(36)]
-        public string Id { get; set; }// = SequentialGuid.Instance.Create(SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
+        public string Id { get; set; }= SequentialGuid.Instance.Create(SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
         public DateTime CreatTime { get; set; } = DateTime.Now;
         public DateTime UpdateTime { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }

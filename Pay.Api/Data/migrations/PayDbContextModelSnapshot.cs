@@ -40,7 +40,6 @@ namespace Pay.Api.Data.migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("MemberName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

@@ -11,4 +11,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\MicroShoping.Domain\MicroShoping.Domain.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Members\Data\" />
+	</ItemGroup>
 </Project>

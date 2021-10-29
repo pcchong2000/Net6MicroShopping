@@ -1,27 +1,64 @@
+using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ordering.Api.Controllers
+namespace Order.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
         private readonly ILogger<OrderController> _logger;
-
-        public OrderController(ILogger<OrderController> logger)
+        private readonly DaprClient _daprClient;
+        public OrderController(ILogger<OrderController> logger, DaprClient daprClient)
         {
             _logger = logger;
+            _daprClient = daprClient;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public string Get()
+        [HttpGet]
+        public async Task<string> Get()
         {
+            //return await _daprClient.InvokeMethodAsync<IEnumerable<Product>>(HttpMethod.Get, "productapi", "Product");
             return "";
         }
+        [HttpGet("test")]
+        public async Task<int> Get2()
+        {
+            //_daprClient.get
+
+            var httpClient = DaprClient.CreateInvokeHttpClient();
+            var resp = await httpClient.GetAsync("http://memberapi/member/test");
+            string respContent = await resp.Content.ReadAsStringAsync();
+            return await _daprClient.InvokeMethodAsync<int>(HttpMethod.Get, "memberapi", "member/test");
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Post(AddOrderDto addOrder)
+        {
+            await _daprClient.PublishEventAsync("pubsub", "newOrder",
+                new List<JianKuCunDto>() {
+                    new JianKuCunDto
+                    {
+                        ProductId = addOrder.ProductId,
+                        Model = addOrder.Model,
+                        Number = addOrder.Number
+
+                    },
+            });
+            return Ok();
+        }
+    }
+    public class AddOrderDto
+    {
+        public string MemberId { get; set; }
+        public string ProductId { get; set; }
+        public string Model { get; set; }
+        public int Number { get; set; }
+    }
+    public class JianKuCunDto
+    {
+        public string ProductId { get; set; }
+        public string Model { get; set; }
+        public int Number { get; set; }
     }
 }

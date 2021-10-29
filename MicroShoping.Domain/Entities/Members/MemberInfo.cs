@@ -8,8 +8,8 @@ namespace MicroShoping.Domain.Entities.Members
     public class MemberInfo: UserBase
     {
         [MaxLength(50)]
-        public string NickName { get; set; }
+        public string? NickName { get; set; }
         [MaxLength(200)]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

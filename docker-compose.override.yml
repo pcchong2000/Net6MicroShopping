@@ -24,51 +24,100 @@ services:
       - "5411:9411"
 
 
-  ordering.api:
+  order.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_orderdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - IdentityServerUrl=http://${LOCALHOST_IP}:5000
     ports:
-      - "80"
-
+      - "5001:80"
+  order.api.dapr:
+    command: [ "./daprd",
+    "-app-id", "orderapi", # app-id不可以有 .   这个写法 ordering.api 是错误的
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   member.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - IdentityServerUrl=http://${LOCALHOST_IP}:5000
     ports:
-      - "80"
-
+      - "5002:80"
+  member.api.dapr:
+    command: [ "./daprd",
+    "-app-id", "memberapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   pay.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_paydb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - IdentityServerUrl=http://${LOCALHOST_IP}:5000
     ports:
-      - "80"
-
+      - "5003:80"
+  pay.api.dapr:
+    command: [ "./daprd",
+    "-app-id", "payapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   product.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - IdentityServerUrl=http://${LOCALHOST_IP}:5000
     ports:
-      - "80"
-
+      - "5004:80"
+  product.api.dapr:
+    command: [ "./daprd",
+    "-app-id", "productapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   tenant.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - IdentityServerUrl=http://${LOCALHOST_IP}:5000
     ports:
-      - "80"
-
+      - "5005:80"
+  tenant.api.dapr:
+    command: [ "./daprd",
+    "-app-id", "tenantapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   identity.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - JSUrl=http://${LOCALHOST_IP}:5101
     ports:
-      - "80"
-      - "443"
+      - "5000:80"
+
+  nginxgateway:
+    ports:
+      - "5100:80"

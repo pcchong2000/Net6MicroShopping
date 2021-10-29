@@ -11,7 +11,7 @@ namespace Pay.Api.Models
         [MaxLength(36)]
         public string MemberId { get; set; }
         [MaxLength(50)]
-        public string MemberName { get; set; }
+        public string? MemberName { get; set; }
         [MaxLength(36)]
         public string OrderNo { get; set; }
         [Column(TypeName = "decimal(18, 2)")]

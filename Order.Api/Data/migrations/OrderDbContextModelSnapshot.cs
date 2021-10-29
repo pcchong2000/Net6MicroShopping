@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Ordering.Api.Data;
+using Order.Api.Data;
 
 #nullable disable
 
-namespace Ordering.Api.Data.migrations
+namespace Order.Api.Data.migrations
 {
     [DbContext(typeof(OrderDbContext))]
     partial class OrderDbContextModelSnapshot : ModelSnapshot
@@ -22,29 +22,25 @@ namespace Ordering.Api.Data.migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Ordering.Api.Models.MemberAddress", b =>
+            modelBuilder.Entity("Order.Api.Models.MemberAddress", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("CityCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CountyCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -60,22 +56,18 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProvinceCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TownCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -87,7 +79,7 @@ namespace Ordering.Api.Data.migrations
                     b.ToTable("MemberAddress");
                 });
 
-            modelBuilder.Entity("Ordering.Api.Models.Order", b =>
+            modelBuilder.Entity("Order.Api.Models.Order", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -105,7 +97,6 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("MemberName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -143,26 +134,22 @@ namespace Ordering.Api.Data.migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Ordering.Api.Models.OrderAddress", b =>
+            modelBuilder.Entity("Order.Api.Models.OrderAddress", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CityCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountyCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatTime")
@@ -176,7 +163,6 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderId")
@@ -188,15 +174,12 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProvinceCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TownCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateTime")
@@ -207,7 +190,7 @@ namespace Ordering.Api.Data.migrations
                     b.ToTable("OrderAddress");
                 });
 
-            modelBuilder.Entity("Ordering.Api.Models.OrderItem", b =>
+            modelBuilder.Entity("Order.Api.Models.OrderItem", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -243,12 +226,10 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ProductImageUrl")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -276,7 +257,7 @@ namespace Ordering.Api.Data.migrations
                     b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("Ordering.Api.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Order.Api.Models.ShoppingCart", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -302,12 +283,10 @@ namespace Ordering.Api.Data.migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ProductImageUrl")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

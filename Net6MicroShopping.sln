@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{34C04563-718F-4279-B1AA-B442CED0192A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{1BE4C977-8C10-44FE-8370-7DBE4003F2D1}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\configuration\eshop-config.yaml = dapr\configuration\eshop-config.yaml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orders", "orders", "{2C4AFB86-235F-4B4D-B906-1706FFACA41F}"
 EndProject
@@ -21,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pays", "pays", "{A82E00EB-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frameworks", "frameworks", "{A293FBDC-F2FF-4E36-965F-E16787BFDE7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Api", "Order.Api\Ordering.Api.csproj", "{B0BA416D-5361-476E-9ADF-C6B416027E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Api", "Order.Api\Order.Api.csproj", "{B0BA416D-5361-476E-9ADF-C6B416027E99}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Member.Api", "Member.Api\Member.Api.csproj", "{975EDF63-1DB9-4E48-9066-C2E81A115260}"
 EndProject
@@ -54,6 +57,23 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "IdentityMember.Api\Identity.Api.csproj", "{27868504-DF19-4BE6-AED1-D510218EF3F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.TenantWeb", "Shopping.TenantWeb\Shopping.TenantWeb.csproj", "{D4F2CEA2-423D-4659-9543-5DD97735067D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{CE539316-BAC5-463A-BBC7-6F38BB214C82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{1D97486B-137A-4766-8914-BCE1239BAB4A}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\eshop-pubsub.yaml = dapr\components\eshop-pubsub.yaml
+		dapr\components\eshop-statestore.yaml = dapr\components\eshop-statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateways", "gateways", "{2EA56D4B-E2F6-4038-A624-687F602C4392}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginxgateway", "nginxgateway", "{15A3B7A2-C764-4A22-99CC-A747BB461B00}"
+	ProjectSection(SolutionItems) = preProject
+		gateways\nginxgateway\Dockerfile = gateways\nginxgateway\Dockerfile
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Web", "Shopping.Web\Shopping.Web.csproj", "{2AB775A8-1573-49C2-A62E-D30F1E2852F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,11 +133,16 @@ Global
 		{D4F2CEA2-423D-4659-9543-5DD97735067D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F2CEA2-423D-4659-9543-5DD97735067D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F2CEA2-423D-4659-9543-5DD97735067D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{1BE4C977-8C10-44FE-8370-7DBE4003F2D1} = {CE539316-BAC5-463A-BBC7-6F38BB214C82}
 		{2C4AFB86-235F-4B4D-B906-1706FFACA41F} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{80C1F598-5A61-4767-8C13-B5C81C300549} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{D24EF2DD-A839-45AF-A92F-3F185C6BF93E} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
@@ -139,6 +164,9 @@ Global
 		{B9929CBB-9A0A-43A4-9982-5E0997A2ACCD} = {34C04563-718F-4279-B1AA-B442CED0192A}
 		{27868504-DF19-4BE6-AED1-D510218EF3F2} = {01F57133-5CEA-461B-ADA9-BEF4AC8F6476}
 		{D4F2CEA2-423D-4659-9543-5DD97735067D} = {34C04563-718F-4279-B1AA-B442CED0192A}
+		{1D97486B-137A-4766-8914-BCE1239BAB4A} = {CE539316-BAC5-463A-BBC7-6F38BB214C82}
+		{15A3B7A2-C764-4A22-99CC-A747BB461B00} = {2EA56D4B-E2F6-4038-A624-687F602C4392}
+		{2AB775A8-1573-49C2-A62E-D30F1E2852F6} = {34C04563-718F-4279-B1AA-B442CED0192A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58B868B8-AD61-40B0-A1A6-37621BF802F7}

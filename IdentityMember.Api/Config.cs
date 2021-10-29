@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace IdentityServer
@@ -21,32 +22,40 @@ namespace IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("api1", "My API")
+                new ApiScope("orderapi", "My API"),
+                new ApiScope("memberapi", "My API"),
+                new ApiScope("payapi", "My API"),
+                new ApiScope("productapi", "My API"),
+                new ApiScope("tenantapi", "My API"),
             };
 
-        public static IEnumerable<Client> Clients =>
-            new List<Client>
+        public static IEnumerable<Client> Clients(IConfiguration Configuration)
+        {
+            string JSUrl = Configuration["JSUrl"];
+            return new List<Client>
             {
-                // interactive ASP.NET Core MVC client
                 new Client
-                {
-                    ClientId = "mvc",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    
-                    // where to redirect to after login
-                    RedirectUris = { "https://localhost:5002/signin-oidc" },
-
-                    // where to redirect to after logout
-                    PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
-
-                    AllowedScopes = new List<string>
                     {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
-                }
+                        ClientId = "productjs",
+                        ClientName = "JavaScript Client",
+                        AllowedGrantTypes = GrantTypes.Code,
+                        RequireClientSecret = false,
+
+                        RedirectUris =           { JSUrl+"/#/logincallback" },
+                        PostLogoutRedirectUris = { JSUrl+"/#/login" },
+                        AllowedCorsOrigins =     { JSUrl },
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
+                            "memberapi",
+                            "productapi",
+                        }
+                    },
             };
+        }
+            
     }
 }

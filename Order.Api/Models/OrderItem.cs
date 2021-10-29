@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ordering.Api.Models
+namespace Order.Api.Models
 {
     public class OrderItem : EntityTenantBase
     {
@@ -13,9 +13,9 @@ namespace Ordering.Api.Models
         [MaxLength(36)]
         public string ProductId { get; set; }
         [MaxLength(50)]
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
         [MaxLength(200)]
-        public string ProductImageUrl { get; set; }
+        public string? ProductImageUrl { get; set; }
         [MaxLength(36)]
         public string MemberId { get; set; }
         public int Status { get; set; }

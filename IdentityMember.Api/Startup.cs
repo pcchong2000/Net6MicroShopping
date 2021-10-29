@@ -8,11 +8,13 @@ using MicroShoping.Application;
 using MicroShoping.EFCore.Members;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 
 namespace IdentityServer
 {
@@ -31,7 +33,7 @@ namespace IdentityServer
             var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients);
+                .AddInMemoryClients(Config.Clients(Configuration));
                 //.AddTestUsers(TestUsers.Users);
 
             builder.AddDeveloperSigningCredential();
@@ -83,7 +85,11 @@ namespace IdentityServer
             app.UseRouting();
 
             app.UseIdentityServer();
-            app.UseAuthorization();
+            //app.UseAuthorization();
+
+            //eShopDapr的解决方案，cookie在Routing 之前
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {

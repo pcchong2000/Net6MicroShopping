@@ -15,11 +15,16 @@ services:
     image: openzipkin/zipkin-slim
 
 
-  ordering.api:
-    image: ${DOCKER_REGISTRY-}orderingapi
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
     build:
       context: .
       dockerfile: Order.Api/Dockerfile
+  order.api.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - order.api
+    network_mode: "service:order.api"
 
 
   member.api:
@@ -27,32 +32,54 @@ services:
     build:
       context: .
       dockerfile: Member.Api/Dockerfile
-
+  member.api.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - member.api
+    network_mode: "service:member.api"
 
   pay.api:
     image: ${DOCKER_REGISTRY-}payapi
     build:
       context: .
       dockerfile: Pay.Api/Dockerfile
-
+  pay.api.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - pay.api
+    network_mode: "service:pay.api"
 
   product.api:
     image: ${DOCKER_REGISTRY-}productapi
     build:
       context: .
       dockerfile: Product.Api/Dockerfile
-
+  product.api.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - product.api
+    network_mode: "service:product.api"
 
   tenant.api:
     image: ${DOCKER_REGISTRY-}tenantapi
     build:
       context: .
       dockerfile: Tenant.Api/Dockerfile
-
+  tenant.api.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - tenant.api
+    network_mode: "service:tenant.api"
 
   identity.api:
     image: ${DOCKER_REGISTRY-}identityapi
     build:
       context: .
       dockerfile: IdentityMember.Api/Dockerfile
+  
+  nginxgateway:
+    image: nginxgateway
+    build:
+      context: .
+      dockerfile: gateways/nginxgateway/Dockerfile
 
