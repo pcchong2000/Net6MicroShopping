@@ -54,7 +54,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroShoping.Common", "Micr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.miniprogram", "Shopping.miniprogram\Shopping.miniprogram.csproj", "{B9929CBB-9A0A-43A4-9982-5E0997A2ACCD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "IdentityMember.Api\Identity.Api.csproj", "{27868504-DF19-4BE6-AED1-D510218EF3F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityMember.Api", "IdentityMember.Api\IdentityMember.Api.csproj", "{27868504-DF19-4BE6-AED1-D510218EF3F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.TenantWeb", "Shopping.TenantWeb\Shopping.TenantWeb.csproj", "{D4F2CEA2-423D-4659-9543-5DD97735067D}"
 EndProject
@@ -74,6 +74,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginxgateway", "nginxgatewa
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Web", "Shopping.Web\Shopping.Web.csproj", "{2AB775A8-1573-49C2-A62E-D30F1E2852F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityTenant.Api", "IdentityTenant.Api\IdentityTenant.Api.csproj", "{0FE234EA-A7C2-4A26-B90E-356FD4858EE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +139,10 @@ Global
 		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AB775A8-1573-49C2-A62E-D30F1E2852F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE234EA-A7C2-4A26-B90E-356FD4858EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE234EA-A7C2-4A26-B90E-356FD4858EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE234EA-A7C2-4A26-B90E-356FD4858EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE234EA-A7C2-4A26-B90E-356FD4858EE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{1D97486B-137A-4766-8914-BCE1239BAB4A} = {CE539316-BAC5-463A-BBC7-6F38BB214C82}
 		{15A3B7A2-C764-4A22-99CC-A747BB461B00} = {2EA56D4B-E2F6-4038-A624-687F602C4392}
 		{2AB775A8-1573-49C2-A62E-D30F1E2852F6} = {34C04563-718F-4279-B1AA-B442CED0192A}
+		{0FE234EA-A7C2-4A26-B90E-356FD4858EE4} = {01F57133-5CEA-461B-ADA9-BEF4AC8F6476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58B868B8-AD61-40B0-A1A6-37621BF802F7}

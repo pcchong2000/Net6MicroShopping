@@ -83,3 +83,10 @@ services:
       context: .
       dockerfile: gateways/nginxgateway/Dockerfile
 
+
+  identitytenant.api:
+    image: ${DOCKER_REGISTRY-}identitytenantapi
+    build:
+      context: .
+      dockerfile: IdentityTenant.Api/Dockerfile
+

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroShoping.Domain
+namespace MicroShoping.Domain.Base
 {
     public interface IUserBase : IEntityBase
     {

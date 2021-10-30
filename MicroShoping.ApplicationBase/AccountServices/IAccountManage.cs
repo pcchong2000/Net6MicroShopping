@@ -1,4 +1,4 @@
-﻿using MicroShoping.Domain;
+﻿using MicroShoping.Domain.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

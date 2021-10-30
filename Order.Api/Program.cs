@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using Order.Api.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Order.Api
 {
@@ -24,10 +26,19 @@ namespace Order.Api
             builder.Services.AddSwaggerGen();
 
             // accepts any access token issued by identity server
-            builder.Services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+            builder.Services.AddAuthentication()
+                .AddJwtBearer("MemberBearer", options =>
                 {
-                    options.Authority = builder.Configuration["IdentityServerUrl"];
+                    options.Authority = builder.Configuration["MemberIdentityServerUrl"];
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                })
+                .AddJwtBearer("TenantBearer", options =>
+                {
+                    options.Authority = builder.Configuration["TenantIdentityServerUrl"];
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -43,7 +54,12 @@ namespace Order.Api
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("scope", "orderapi");
                 });
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes("MemberBearer", "TenantBearer")
+                .Build();
             });
+
             // Ìí¼Ó¿çÓò
             builder.Services.AddCors(options =>
             {

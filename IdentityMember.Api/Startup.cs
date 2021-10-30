@@ -3,7 +3,6 @@
 
 
 using IdentityServer4;
-using IdentityServerHost.Quickstart.UI;
 using MicroShoping.Application;
 using MicroShoping.EFCore.Members;
 using Microsoft.AspNetCore.Builder;
@@ -16,7 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
 
-namespace IdentityServer
+namespace IdentityMember.Api
 {
     public class Startup
     {
@@ -34,7 +33,7 @@ namespace IdentityServer
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients(Configuration));
-                //.AddTestUsers(TestUsers.Users);
+            //.AddTestUsers(TestUsers.Users);
 
             builder.AddDeveloperSigningCredential();
 
@@ -46,7 +45,17 @@ namespace IdentityServer
                 //options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
                 options.UseSqlServer(connectionString);
             });
+            // 添加跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
 
+                });
+            });
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {
@@ -83,7 +92,7 @@ namespace IdentityServer
 
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseCors("any");
             app.UseIdentityServer();
             //app.UseAuthorization();
 

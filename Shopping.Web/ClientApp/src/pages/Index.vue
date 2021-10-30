@@ -10,7 +10,7 @@
 <script >
 import Menu from '../components/Menu.vue'
 import Header from '../components/Header.vue'
-import oidcUserManager from '../common/oidc'
+import orderService from '../services/orderService'
 export default {
   name: 'App',
   components: {
@@ -18,14 +18,7 @@ export default {
     Header
   },
   created(){
-    oidcUserManager.getUser().then((user)=> {
-        if (user) {
-            console.log("User:",user);
-            this.$router.push("/index");
-        }else {
-            oidcUserManager.signinRedirect();
-        }
-    });
+    orderService.getList({});
   }
 }
 </script>

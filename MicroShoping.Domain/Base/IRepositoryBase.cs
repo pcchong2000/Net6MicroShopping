@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroShoping.Domain
+namespace MicroShoping.Domain.Base
 {
     public interface IRepositoryBase<T> where T : class, IEntityBase
     {

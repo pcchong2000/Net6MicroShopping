@@ -7,7 +7,7 @@ using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace IdentityServer
+namespace IdentityMember.Api
 {
     public static class Config
     {
@@ -56,6 +56,6 @@ namespace IdentityServer
                     },
             };
         }
-            
+
     }
 }

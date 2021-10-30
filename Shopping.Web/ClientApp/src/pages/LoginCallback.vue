@@ -14,7 +14,7 @@ export default {
       localStorage.setItem("expires_at",userInfo.expires_at);
       localStorage.setItem("scope",userInfo.scope);
       localStorage.setItem("token_type",userInfo.token_type);
-      this.$router.push("/index");
+      this.$router.push("/");
     }).catch(function (e) {
         console.error(e);
     });

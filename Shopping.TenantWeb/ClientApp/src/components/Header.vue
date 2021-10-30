@@ -5,11 +5,11 @@
 </template>
 
 <script >
-import  staffService  from '../services/staffService'
+//import  staffService  from '../services/staffService'
 export default {
   name: 'Header',
   async created(){
-    let current = await staffService.getStaffInfo();
+    //let current = await staffService.getStaffInfo();
   }
 }
 </script>

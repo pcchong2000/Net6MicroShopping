@@ -1,15 +1,31 @@
 <template>
   <div>
-    
+    <el-button type="primary" v-if="!isLogin"  @click="login">登录</el-button>
   </div>
 </template>
 
 <script >
-import  staffService  from '../services/staffService'
+import oidcUserManager from '../common/oidc'
 export default {
   name: 'Header',
-  async created(){
-    let current = await staffService.getStaffInfo();
+  data() {
+    return {
+      isLogin:false
+    };
+  },
+  created(){
+    oidcUserManager.getUser().then((user)=> {
+        if (user) {
+          this.isLogin=true;
+            console.log("User:",user);
+            this.$router.push("/");
+        }
+    });
+  },
+  methods:{
+    login(){
+      oidcUserManager.signinRedirect();
+    },
   }
 }
 </script>

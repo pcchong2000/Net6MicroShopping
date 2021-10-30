@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroShoping.Domain
+namespace MicroShoping.Domain.Base
 {
     public class EFRepositoryBase<T> : IRepositoryBase<T> where T : class, IEntityBase
     {
@@ -17,9 +17,9 @@ namespace MicroShoping.Domain
         private readonly IMapper _mapper;
         public EFRepositoryBase(DbContext context, IMapper mapper)
         {
-            this._context = context;
-            this._dbSet = this._context.Set<T>();
-            this._mapper = mapper;
+            _context = context;
+            _dbSet = _context.Set<T>();
+            _mapper = mapper;
 
         }
         public async Task<IDbContextTransaction> BeginTransactionAsync()
@@ -41,7 +41,7 @@ namespace MicroShoping.Domain
             return await _dbSet.AnyAsync(where);
         }
 
-        
+
 
         public void Delete(T t)
         {
@@ -81,7 +81,7 @@ namespace MicroShoping.Domain
 
         public async Task<TResult> FindAsync<TResult>(Expression<Func<T, bool>> where)
         {
-           var t = await _dbSet.FirstOrDefaultAsync(where);
+            var t = await _dbSet.FirstOrDefaultAsync(where);
             return _mapper.Map<TResult>(t);
         }
 
@@ -144,7 +144,7 @@ namespace MicroShoping.Domain
             };
 
             resp.TotalCount = Iquery.Count();
-            resp.PageTotal = (int)Math.Ceiling((double)resp.TotalCount / (double)resp.PageSize);
+            resp.PageTotal = (int)Math.Ceiling(resp.TotalCount / (double)resp.PageSize);
 
             resp.List = await orderQuery.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
             return resp;
@@ -170,7 +170,7 @@ namespace MicroShoping.Domain
             };
 
             resp.TotalCount = Iquery.Count();
-            resp.PageTotal = (int)Math.Ceiling((double)resp.TotalCount / (double)resp.PageSize);
+            resp.PageTotal = (int)Math.Ceiling(resp.TotalCount / (double)resp.PageSize);
 
             var list = await orderQuery.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
             resp.List = _mapper.Map<List<T>, List<TResult>>(list);
@@ -184,6 +184,6 @@ namespace MicroShoping.Domain
             return await _context.SaveChangesAsync();
         }
 
-       
+
     }
 }

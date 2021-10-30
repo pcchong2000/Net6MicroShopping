@@ -11,7 +11,7 @@ using System;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 
-namespace IdentityServer
+namespace IdentityMember.Api
 {
     public class Program
     {

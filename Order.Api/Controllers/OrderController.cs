@@ -1,10 +1,12 @@
 using Dapr.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Order.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
@@ -16,10 +18,11 @@ namespace Order.Api.Controllers
         }
 
         [HttpGet]
+        
         public async Task<string> Get()
         {
             //return await _daprClient.InvokeMethodAsync<IEnumerable<Product>>(HttpMethod.Get, "productapi", "Product");
-            return "";
+            return "111111111111111";
         }
         [HttpGet("test")]
         public async Task<int> Get2()
