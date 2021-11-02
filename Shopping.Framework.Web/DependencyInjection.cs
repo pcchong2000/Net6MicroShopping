@@ -93,13 +93,14 @@ namespace Shopping.Framework.Web
                 });
             });
         }
+        public static List<string> schemes = new List<string>();
         /// <summary>
         /// 授权
         /// </summary>
         /// <param name="services"></param>
         /// <param name="apiName"></param>
         /// <param name="schemes"></param>
-        public static void AddWebAuthorization(this IServiceCollection services, string apiName, params string[] schemes)
+        public static void AddWebAuthorization(this IServiceCollection services, string apiName)
         {
             services.AddAuthorization(options =>
             {
@@ -108,11 +109,11 @@ namespace Shopping.Framework.Web
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("scope", apiName);
                 });
-                if (schemes.Length > 0)
+                if (schemes.Count > 0)
                 {
                     options.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes(schemes)
+                    .AddAuthenticationSchemes(schemes.ToArray())
                     .Build();
                 }
             });
@@ -124,7 +125,9 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddMemberJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            builder.AddJwtBearer("MemberBearer", options =>
+            string scheme = "MemberBearer";
+            schemes.Add(scheme);
+            builder.AddJwtBearer(scheme, options =>
             {
                 options.Authority = configuration["MemberIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;
@@ -142,7 +145,10 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddTenantJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            builder.AddJwtBearer("TenantBearer", options =>
+            string scheme = "TenantBearer";
+
+            schemes.Add(scheme);
+            builder.AddJwtBearer(scheme, options =>
             {
                 options.Authority = configuration["TenantIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;

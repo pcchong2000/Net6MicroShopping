@@ -35,7 +35,9 @@ namespace Shopping.Api.Order
             // 添加EFCore
             builder.Services.AddWebDbContext<OrderDbContext>(builder.Configuration["ConnectionString"]);
             // 添加认证
-            builder.Services.AddAuthentication().AddTenantJwtBearer(builder.Configuration).AddMemberJwtBearer(builder.Configuration);
+            builder.Services.AddAuthentication()
+                .AddTenantJwtBearer(builder.Configuration)
+                .AddMemberJwtBearer(builder.Configuration);
             // 添加授权
             builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
             // 添加跨域

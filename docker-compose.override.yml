@@ -81,6 +81,25 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
+  shopping.api.product:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
+      - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
+      - ApiName=productapi
+    ports:
+      - "80"
+  shopping.api.product.dapr:
+    command: [ "./daprd",
+    "-app-id", "productapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
+
   shopping.api.tenant:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -123,9 +142,5 @@ services:
       - "5200:80"
 
 
-  shopping.api.product:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
+
 

@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
 using Shopping.Framework.Domain.Entities.Members;
 using Shopping.Framework.EFCore.Members;
 using Shopping.Framework.Web;
@@ -25,7 +26,11 @@ namespace Shopping.Api.Member
                 Email = "member@qq.com",
 
             };
-            await _accountManage.Create(memeber, "123456");
+            if (!await _context.MemberInfos.AnyAsync(a => a.UserName == memeber.UserName))
+            {
+                await _accountManage.Create(memeber, "123456");
+            }
+                
         }
     }
 }

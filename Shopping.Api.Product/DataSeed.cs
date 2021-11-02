@@ -1,4 +1,5 @@
-﻿using Shopping.Api.Product.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
 using Shopping.Framework.Web;
 
@@ -100,10 +101,13 @@ namespace Shopping.Api.Product
             var list = new List<ProductCategory>();
             foreach (var item in productCategories)
             {
-                list.Add(item);
-                foreach (var item1 in item.Categories)
+                if (!await _context.ProductCategory.AnyAsync(a=>a.Name==item.Name))
                 {
-                    item1.ParentId = item.Id;
+                    list.Add(item);
+                    foreach (var item1 in item.Categories)
+                    {
+                        item1.ParentId = item.Id;
+                    }
                 }
             }
 

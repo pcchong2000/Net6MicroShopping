@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
 using Shopping.Framework.Domain.Entities.Tenants;
 using Shopping.Framework.EFCore.Tenants;
 using Shopping.Framework.Web;
@@ -26,36 +27,34 @@ namespace Shopping.Api.Tenant
                 Description = "",
                 Status = TenantStatus.Agree,
             };
-            await _context.TenantInfo.AddAsync(tenant);
-
-            var tenantAdmin = new TenantAdmin()
+            if (!await _context.TenantInfo.AnyAsync(a => a.TenantCode == tenant.TenantCode))
             {
-                TenantId = tenant.Id,
-                Name = "初始商户管理员",
-                UserName = "admin1",
+                await _context.TenantInfo.AddAsync(tenant);
 
-            };
-            var store = new TenantStore()
-            {
-                TenantId = tenant.Id,
-                StoreCode = "StoreCode",
-                Name = "初始商户门店",
-                Description = "",
-                Status = TenantStoreStatus.Agree,
-                CreatorId = tenantAdmin.Id,
-                CreatorName = tenantAdmin.Name
-            };
-            await _context.TenantStore.AddAsync(store);
+                var tenantAdmin = new TenantAdmin()
+                {
+                    TenantId = tenant.Id,
+                    Name = "初始商户管理员",
+                    UserName = "admin1",
 
+                };
+                var store = new TenantStore()
+                {
+                    TenantId = tenant.Id,
+                    StoreCode = "StoreCode",
+                    Name = "初始商户门店",
+                    Description = "",
+                    Status = TenantStoreStatus.Agree,
+                    CreatorId = tenantAdmin.Id,
+                    CreatorName = tenantAdmin.Name
+                };
+                await _context.TenantStore.AddAsync(store);
 
-            await _accountManage.Create(tenantAdmin, "123456");
+                await _accountManage.Create(tenantAdmin, "123456");
 
+                await _context.SaveChangesAsync();
+            }
 
-
-
-
-
-            await _context.SaveChangesAsync();
         }
     }
 }

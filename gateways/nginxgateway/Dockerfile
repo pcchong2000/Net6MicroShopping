@@ -7,19 +7,19 @@ RUN echo $'server {                                 \n\
     listen  [::]:80;                                \n\
     server_name  localhost;                         \n\
     location /api/order/ {                          \n\
-        proxy_pass   http://order.api/;             \n\
+        proxy_pass   http://shopping.api.order/;    \n\
     }                                               \n\
     location /api/product/ {                        \n\
-        proxy_pass   http://product.api/;           \n\
+        proxy_pass   http://shopping.api.product/;  \n\
     }                                               \n\
     location /api/member/ {                         \n\
-        proxy_pass   http://member.api/;            \n\
+        proxy_pass   http://shopping.api.member/;   \n\
     }                                               \n\
     location /api/pay/ {                            \n\
-        proxy_pass   http://pay.api/;               \n\
+        proxy_pass   http://shopping.api.pay/;      \n\
     }                                               \n\
     location /api/tenant/ {                         \n\
-        proxy_pass   http://tenant.api/;            \n\
+        proxy_pass   http://shopping.api.tenant/;   \n\
     }                                               \n\
 }                                                   \n\
 ' >/etc/nginx/conf.d/default.conf
