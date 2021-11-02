@@ -15,67 +15,74 @@ services:
     image: openzipkin/zipkin-slim
 
 
-  order.api:
-    image: ${DOCKER_REGISTRY-}orderapi
+  shopping.api.order:
+    image: ${DOCKER_REGISTRY-}shoppingapiorder
     build:
       context: .
-      dockerfile: Order.Api/Dockerfile
-  order.api.dapr:
+      dockerfile: Shopping.Api.Order/Dockerfile
+  shopping.api.order.dapr:
     image: "daprio/daprd:latest"
     depends_on:
-      - order.api
-    network_mode: "service:order.api"
+      - shopping.api.order
+    network_mode: "service:shopping.api.order"
 
 
-  member.api:
-    image: ${DOCKER_REGISTRY-}memberapi
+  shopping.api.member:
+    image: ${DOCKER_REGISTRY-}shoppingapimember
     build:
       context: .
-      dockerfile: Member.Api/Dockerfile
-  member.api.dapr:
+      dockerfile: Shopping.Api.Member/Dockerfile
+  shopping.api.member.dapr:
     image: "daprio/daprd:latest"
     depends_on:
-      - member.api
-    network_mode: "service:member.api"
+      - shopping.api.member
+    network_mode: "service:shopping.api.member"
 
-  pay.api:
-    image: ${DOCKER_REGISTRY-}payapi
+  shopping.api.pay:
+    image: ${DOCKER_REGISTRY-}shoppingapipay
     build:
       context: .
-      dockerfile: Pay.Api/Dockerfile
-  pay.api.dapr:
+      dockerfile: Shopping.Api.Pay/Dockerfile
+  shopping.api.pay.dapr:
     image: "daprio/daprd:latest"
     depends_on:
-      - pay.api
-    network_mode: "service:pay.api"
+      - shopping.api.pay
+    network_mode: "service:shopping.api.pay"
 
-  product.api:
-    image: ${DOCKER_REGISTRY-}productapi
+  shopping.api.product:
+    image: ${DOCKER_REGISTRY-}shoppingapiproduct
     build:
       context: .
-      dockerfile: Product.Api/Dockerfile
-  product.api.dapr:
+      dockerfile: Shopping.Api.Product/Dockerfile
+  shopping.api.product.dapr:
     image: "daprio/daprd:latest"
     depends_on:
-      - product.api
-    network_mode: "service:product.api"
+      - shopping.api.product
+    network_mode: "service:shopping.api.product"
 
-  tenant.api:
-    image: ${DOCKER_REGISTRY-}tenantapi
+  shopping.api.tenant:
+    image: ${DOCKER_REGISTRY-}shoppingapitenant
     build:
       context: .
-      dockerfile: Tenant.Api/Dockerfile
-  tenant.api.dapr:
+      dockerfile: Shopping.Api.Tenant/Dockerfile
+  shopping.api.tenant.dapr:
     image: "daprio/daprd:latest"
     depends_on:
-      - tenant.api
-    network_mode: "service:tenant.api"
+      - shopping.api.tenant
+    network_mode: "service:shopping.api.tenant"
 
-  identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
+  shopping.api.identitymember:
+    image: ${DOCKER_REGISTRY-}shoppingapiidentitymember
     build:
       context: .
-      dockerfile: IdentityMember.Api/Dockerfile
+      dockerfile: Shopping.Api.IdentityMember/Dockerfile
+
+
+  shopping.api.identitytenant:
+    image: ${DOCKER_REGISTRY-}shoppingapiidentitytenant
+    build:
+      context: .
+      dockerfile: Shopping.Api.IdentityTenant/Dockerfile
   
   nginxgateway:
     image: nginxgateway
@@ -84,9 +91,4 @@ services:
       dockerfile: gateways/nginxgateway/Dockerfile
 
 
-  identitytenant.api:
-    image: ${DOCKER_REGISTRY-}identitytenantapi
-    build:
-      context: .
-      dockerfile: IdentityTenant.Api/Dockerfile
 
