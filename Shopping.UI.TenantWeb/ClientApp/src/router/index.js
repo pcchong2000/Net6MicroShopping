@@ -2,13 +2,14 @@ import  {createRouter,createWebHashHistory}  from 'vue-router'
 // 定义一组路由
 const routes = [
     
-    { path: '/', component: () => import('../pages/Login.vue') },
-    { path: '/login', component: () => import('../pages/Login.vue') },
+    { path: '/', component: () => import('../pages/Index.vue') },
+    //{ path: '/login', component: () => import('../pages/Login.vue') },
     { path: '/logincallback', component: () => import('../pages/LoginCallback.vue') },
     { path: '/', component: () => import('../pages/Home.vue'),
       children:[
-        { path: '/index', component: () => import('../pages/Index.vue') },
+        { path: '/index', component: () => import('../pages/HomeIndex.vue') },
         { path: '/order/list', component: () => import('../pages/order/List.vue') },
+        { path: '/store/list', component: () => import('../pages/store/List.vue') },
       ]
     },
   ]

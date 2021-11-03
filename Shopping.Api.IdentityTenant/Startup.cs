@@ -30,12 +30,11 @@ namespace IdentityTenant.Api
         {
             services.AddControllersWithViews();
 
-            var builder = services.AddIdentityServer(options => {
-                options.AccessTokenJwtType = "BearerTenant";
-            })
+            var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients(Configuration))
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddProfileService<ProfileService>()
                 ;
             //.AddTestUsers(TestUsers.Users);

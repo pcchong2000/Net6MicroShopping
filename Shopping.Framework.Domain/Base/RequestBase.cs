@@ -18,8 +18,8 @@ namespace Shopping.Framework.Domain.Base
     }
     public class RequestBaseCode
     {
-        public static string Success = "Success";
-        public static string Fail = "Fail";
-        public static string Existed = "Existed";
+        public static string Success = "success";
+        public static string Fail = "fail";
+        public static string Existed = "existed";
     }
 }

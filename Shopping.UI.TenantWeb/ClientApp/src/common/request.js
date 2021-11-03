@@ -14,12 +14,10 @@ axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
-// Any status code that lie within the range of 2xx cause this function to trigger
-// Do something with response data
+
     return response;
 }, function (error) {
-// Any status codes that falls outside the range of 2xx cause this function to trigger
-// Do something with response error
+    //console.log(JSON.stringify(error));
     return Promise.reject(error);
 });
 
@@ -32,8 +30,8 @@ const proxyAxios={
         let resp =  await axios.delete(this.paramsToUrl(url,params));
         return resp.data;
     },
-    async post(url,data){
-        let resp =  await axios.post(url,data)
+    async post(url,data,headers){
+        let resp =  await axios.post(url,data,headers)
         return resp.data;
     },
     async put(url,data){

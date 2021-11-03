@@ -38,12 +38,12 @@ namespace IdentityTenant.Api
                     {
                         ClientId = "tenantjs",
                         ClientName = "JavaScript Client",
-                        AllowedGrantTypes = GrantTypes.Code,
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         RequireClientSecret = false,
 
-                        RedirectUris =           { JSUrl+"/#/logincallback" },
-                        PostLogoutRedirectUris = { JSUrl+"/#/login" },
-                        AllowedCorsOrigins =     { JSUrl },
+                        //RedirectUris =           { JSUrl+"/#/logincallback" },
+                        //PostLogoutRedirectUris = { JSUrl+"/#/login" },
+                        //AllowedCorsOrigins =     { JSUrl },
 
                         AllowedScopes = new List<string>
                         {

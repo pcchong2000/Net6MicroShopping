@@ -15,7 +15,7 @@
 <script >
 import Menu from '../components/Menu.vue'
 import Header from '../components/Header.vue'
-import oidcUserManager from '../common/oidc'
+//import oidcUserManager from '../common/oidc'
 export default {
   name: 'App',
   components: {
@@ -23,14 +23,14 @@ export default {
     Header
   },
   created(){
-    oidcUserManager.getUser().then((user)=> {
-        if (user) {
-            console.log("User:",user);
-            this.$router.push("/index");
-        }else {
-            oidcUserManager.signinRedirect();
-        }
-    });
+    // oidcUserManager.getUser().then((user)=> {
+    //     if (user) {
+    //         console.log("User:",user);
+    //         this.$router.push("/index");
+    //     }else {
+    //         oidcUserManager.signinRedirect();
+    //     }
+    // });
   }
 }
 </script>

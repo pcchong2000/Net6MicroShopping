@@ -11,7 +11,6 @@ namespace Shopping.Api.Member
     public class DataSeed : IDataSeed
     {
         private readonly IAccountManage<MemberInfo, MemberDbContext> _accountManage;
-        public MemberDbContext _context;
         public DataSeed(IAccountManage<MemberInfo, MemberDbContext> accountManage)
         {
             _accountManage = accountManage;
@@ -26,7 +25,8 @@ namespace Shopping.Api.Member
                 Email = "member@qq.com",
 
             };
-            if (!await _context.MemberInfos.AnyAsync(a => a.UserName == memeber.UserName))
+            
+            if (!await _accountManage.DbContext.MemberInfos.AnyAsync(a => a.UserName == memeber.UserName))
             {
                 await _accountManage.Create(memeber, "123456");
             }
