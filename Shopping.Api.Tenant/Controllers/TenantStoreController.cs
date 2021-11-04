@@ -2,30 +2,34 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Tenant.Applications.Commands;
 using Shopping.Api.Tenant.Applications.Querys;
+using Shopping.Framework.Web;
 
 namespace Shopping.Api.Tenant.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TenantStoreController : ControllerBase
+    public class StoreController : ControllerBase
     {
-
+        private ICurrentUserService _currentUser;
         private ISender _mediator;
-        private readonly ILogger<TenantStoreController> _logger;
+        private readonly ILogger<StoreController> _logger;
 
-        public TenantStoreController(ILogger<TenantStoreController> logger, ISender mediator)
+        public StoreController(ILogger<StoreController> logger, ISender mediator, ICurrentUserService currentUser)
         {
+            _currentUser = currentUser;
             _logger = logger;
             _mediator = mediator;
         }
         [HttpPost]
         public async Task<CreateStoreResponse> CreateStore(CreateStoreCommand store)
         {
+            store.TenantId = _currentUser.TenantId;
             return await _mediator.Send(store);
         }
         [HttpGet]
-        public async Task<StoreListResponse> GetList(StoreListQuery query)
+        public async Task<StoreListResponse> GetList([FromQuery]StoreListQuery query)
         {
+            query.TenantId= _currentUser.TenantId;
             return await _mediator.Send(query);
         }
         [HttpGet("{id}")]

@@ -8,7 +8,7 @@ namespace Shopping.Api.Tenant.Applications.Querys
 {
     public class StoreListQuery : RequestPageBase, IRequest<StoreListResponse>
     {
-        public string TenantId { get; set; }
+        public string? TenantId { get; set; }
     }
     public class StoreListResponse : ResponsePageBase<StoreListItemResponse>
     {

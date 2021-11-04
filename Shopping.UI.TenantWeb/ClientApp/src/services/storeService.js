@@ -1,6 +1,6 @@
 import axios from '../common/request';
 
-const serviceName="store";
+const serviceName="tenant";
 const storeService={
     getList:(params)    =>axios.get(`/api/${serviceName}/store`,params),
     getDetail:(params)  =>axios.get(`/api/${serviceName}/store`,params),

@@ -9,6 +9,9 @@
 export default {
   name: 'Header',
   async created(){
+    if(!localStorage.getItem("access_token")){
+      this.$router.push("/");
+    }
     //let current = await staffService.getStaffInfo();
   }
 }

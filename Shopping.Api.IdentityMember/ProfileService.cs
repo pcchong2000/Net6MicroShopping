@@ -27,8 +27,8 @@ namespace IdentityMember.Api
             var account = await _accountManage.GetAccountById(subjectId);
             List<Claim> claims = new List<Claim>();
 
-            claims.Add(new Claim("IdentityType", "IdentityMember"));
-            claims.Add(new Claim("Name", account.Name));
+            claims.Add(new Claim("identityType", "IdentityMember"));
+            claims.Add(new Claim("name", account.Name ?? ""));
             context.IssuedClaims = claims;
         }
 

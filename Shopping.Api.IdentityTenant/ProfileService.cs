@@ -27,9 +27,9 @@ namespace IdentityTenant.Api
             var account = await _accountManage.GetAccountById(subjectId);
             List<Claim> claims = new List<Claim>();
 
-            claims.Add(new Claim("IdentityType", "IdentityTenant"));
-            claims.Add(new Claim("TenantId", account.TenantId));
-            claims.Add(new Claim("Name", account.Name??""));
+            claims.Add(new Claim("identityType", "IdentityTenant"));
+            claims.Add(new Claim("tenantId", account.TenantId));
+            claims.Add(new Claim("name", account.Name??""));
             context.IssuedClaims = claims;
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
 namespace Shopping.Framework.Web
@@ -13,13 +14,13 @@ namespace Shopping.Framework.Web
             var user = _httpContextAccessor.HttpContext?.User;
             if (user != null)
             {
-                UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
-                TenantId = user.FindFirstValue("TenantId");
-                Name = user.FindFirstValue(ClaimTypes.Name);
+                UserId = user.FindFirstValue(JwtClaimTypes.Subject);
+                TenantId = user.FindFirstValue("tenantId");
+                Name = user.FindFirstValue(JwtClaimTypes.Name);
             }
         }
 
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
         public string? TenantId { get; set; }
         public string? Name { get; set; }
     }
