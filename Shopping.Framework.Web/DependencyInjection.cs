@@ -15,6 +15,11 @@ using System.Threading.Tasks;
 
 namespace Shopping.Framework.Web
 {
+    public class JwtBearerIdentity
+    {
+        public static string MemberBearer = "MemberBearer";
+        public static string TenantBearer = "TenantBearer";
+    }
     public static class DependencyInjection
     {
         public static void AddWebFreamework(this IServiceCollection services)
@@ -125,7 +130,7 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddMemberJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            string scheme = "MemberBearer";
+            string scheme = JwtBearerIdentity.MemberBearer;
             schemes.Add(scheme);
             builder.AddJwtBearer(scheme, options =>
             {
@@ -145,7 +150,7 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddTenantJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            string scheme = "TenantBearer";
+            string scheme = JwtBearerIdentity.TenantBearer;
 
             schemes.Add(scheme);
             builder.AddJwtBearer(scheme, options =>

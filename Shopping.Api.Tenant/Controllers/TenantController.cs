@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Tenant.Applications.Commands;
 
@@ -17,6 +18,7 @@ namespace Shopping.Api.Tenant.Controllers
             _mediator = mediator;
         }
         [HttpPost("Register")]
+        [AllowAnonymous]
         public async Task<RegisterTenantResponse> Register(RegisterTenantCommand register)
         {
             return await _mediator.Send(register);

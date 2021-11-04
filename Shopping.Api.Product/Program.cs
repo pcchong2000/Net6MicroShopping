@@ -22,7 +22,7 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 // 添加EFCore
 builder.Services.AddWebDbContext<ProductDbContext>(builder.Configuration["ConnectionString"]);
 // 添加认证
-builder.Services.AddAuthentication().AddTenantJwtBearer(builder.Configuration);
+builder.Services.AddAuthentication(JwtBearerIdentity.TenantBearer).AddTenantJwtBearer(builder.Configuration);
 // 添加授权
 builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
 // 添加跨域

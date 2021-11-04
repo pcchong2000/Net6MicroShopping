@@ -29,6 +29,7 @@ namespace Shopping.Api.Tenant.Controllers
         [HttpGet]
         public async Task<StoreListResponse> GetList([FromQuery]StoreListQuery query)
         {
+            var user =  HttpContext.User;
             query.TenantId= _currentUser.TenantId;
             return await _mediator.Send(query);
         }
