@@ -6,6 +6,9 @@ RUN echo $'server {                                 \n\
     listen       80;                                \n\
     listen  [::]:80;                                \n\
     server_name  localhost;                         \n\
+    location ~* \-in$ {                             \n\
+      #内部接口不匹配反向代理                       \n\
+    }                                               \n\
     location /api/order/ {                          \n\
         proxy_pass   http://shopping.api.order/;    \n\
     }                                               \n\

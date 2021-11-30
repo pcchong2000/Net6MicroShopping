@@ -18,10 +18,14 @@ namespace Shopping.Api.Order.Controllers
         }
 
         [HttpGet]
-
         public async Task<string> Get()
         {
             //return await _daprClient.InvokeMethodAsync<IEnumerable<Product>>(HttpMethod.Get, "productapi", "Product");
+            return "111111111111111";
+        }
+        [HttpGet("list-in")]
+        public async Task<string> Get111()
+        {
             return "111111111111111";
         }
         [HttpGet("test")]
