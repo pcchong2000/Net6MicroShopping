@@ -20,7 +20,7 @@ namespace Shopping.Framework.Web
             }
         }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public string? TenantId { get; set; }
         public string? Name { get; set; }
     }

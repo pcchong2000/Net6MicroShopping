@@ -11,7 +11,7 @@
 
 		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
 
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.0-rc.2.21480.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Shopping.Framework.EFCore\Shopping.Framework.EFCore.csproj" />

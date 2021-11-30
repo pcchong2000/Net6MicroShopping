@@ -22,13 +22,15 @@ namespace Shopping.Framework.Web
     }
     public static class DependencyInjection
     {
-        public static void AddWebFreamework(this IServiceCollection services)
+        public static IServiceCollection AddWebFreamework(this IServiceCollection services)
         {
             services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
             services.AddScoped(typeof(IAccountManage<,>), typeof(DefaultAccountManage<,>));
 
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            return services;
         }
         /// <summary>
         /// 更新数据库结构
@@ -62,9 +64,11 @@ namespace Shopping.Framework.Web
         /// </summary>
         /// <typeparam name="TDataSeed"></typeparam>
         /// <param name="services"></param>
-        public static void AddWebDataSeed<TDataSeed>(this IServiceCollection services) where TDataSeed : class, IDataSeed
+        public static IServiceCollection AddWebDataSeed<TDataSeed>(this IServiceCollection services) where TDataSeed : class, IDataSeed
         {
             services.AddScoped<IDataSeed, TDataSeed>();
+
+            return services;
         }
         /// <summary>
         /// EFCore
@@ -72,21 +76,21 @@ namespace Shopping.Framework.Web
         /// <typeparam name="TContext"></typeparam>
         /// <param name="services"></param>
         /// <param name="connectionString"></param>
-        public static void AddWebDbContext<TContext>(this IServiceCollection services, string connectionString) where TContext : DbContext
+        public static IServiceCollection AddWebDbContext<TContext>(this IServiceCollection services, string connectionString) where TContext : DbContext
         {
             services.AddDbContext<TContext>(options =>
             {
                 //options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
                 options.UseSqlServer(connectionString);
             });
+            return services;
         }
         /// <summary>
         /// 添加跨域
         /// </summary>
         /// <param name="services"></param>
-        public static void AddWebCors(this IServiceCollection services)
+        public static IServiceCollection AddWebCors(this IServiceCollection services)
         {
-
             services.AddCors(options =>
             {
                 options.AddPolicy("any", policy =>
@@ -97,6 +101,7 @@ namespace Shopping.Framework.Web
 
                 });
             });
+            return services;
         }
         public static List<string> schemes = new List<string>();
         /// <summary>
@@ -105,7 +110,7 @@ namespace Shopping.Framework.Web
         /// <param name="services"></param>
         /// <param name="apiName"></param>
         /// <param name="schemes"></param>
-        public static void AddWebAuthorization(this IServiceCollection services, string apiName)
+        public static IServiceCollection AddWebAuthorization(this IServiceCollection services, string apiName)
         {
             services.AddAuthorization(options =>
             {
@@ -122,6 +127,7 @@ namespace Shopping.Framework.Web
                     .Build();
                 }
             });
+            return services;
         }
         /// <summary>
         /// 会员认证
