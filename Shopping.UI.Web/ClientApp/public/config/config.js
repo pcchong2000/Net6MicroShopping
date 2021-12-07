@@ -10,3 +10,4 @@ var oidc_config = {
 
 window.oidc_config=oidc_config;
 window.apiurl="http://"+LOCALHOST_IP+":5200";
+window.TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf";

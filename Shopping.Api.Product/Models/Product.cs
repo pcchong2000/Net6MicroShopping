@@ -24,6 +24,8 @@ namespace Shopping.Api.Product.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
         public ProductStatus Status { get; set; }
+        [MaxLength(36)]
+        public string? StoreName { get; set; }
 
     }
     public enum ProductStatus

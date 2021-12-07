@@ -18,9 +18,15 @@ namespace Shopping.Api.Product.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<ProductListResponse> Get(ProductListQuery query)
+        public async Task<ProductListResponse> Get([FromQuery]ProductListQuery query)
         {
             return await _mediator.Send(query);
+
+        }
+        [HttpGet("Admin")]
+        public async Task<string> GetAdmin()
+        {
+            return "Admin";
 
         }
         [HttpPost]

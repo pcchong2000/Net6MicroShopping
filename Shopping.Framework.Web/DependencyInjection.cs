@@ -80,8 +80,8 @@ namespace Shopping.Framework.Web
         {
             services.AddDbContext<TContext>(options =>
             {
-                //options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
-                options.UseSqlServer(connectionString);
+                options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
+                //options.UseSqlServer(connectionString);
             });
             return services;
         }

@@ -8,8 +8,8 @@ namespace Shopping.Api.Product.Applications.Querys
 {
     public class ProductListQuery : RequestPageBase, IRequest<ProductListResponse>
     {
-        public string TenantId { get; set; }
-        public string StoreId { get; set; }
+        public string? TenantId { get; set; }
+        public string? StoreId { get; set; }
     }
     public class ProductListResponse : ResponsePageBase<ProductListItemResponse>
     {
@@ -17,12 +17,13 @@ namespace Shopping.Api.Product.Applications.Querys
     }
     public class ProductListItemResponse
     {
-        public string Id { get; set; }
-        public string TenantId { get; set; }
-        public string StoreId { get; set; }
-        public string ProductCategoryId { get; set; }
-        public string StoreProductCategoryId { get; set; }
-        public string Code { get; set; }
+        public string? Id { get; set; }
+        public string? TenantId { get; set; }
+        public string? StoreId { get; set; }
+        public string? StoreName { get; set; }
+        public string? ProductCategoryId { get; set; }
+        public string? StoreProductCategoryId { get; set; }
+        public string? Code { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
@@ -44,7 +45,7 @@ namespace Shopping.Api.Product.Applications.Querys
         public async Task<ProductListResponse> Handle(ProductListQuery request, CancellationToken cancellationToken)
         {
             ProductListResponse resp = new ProductListResponse();
-            resp.List = await _context.Product.Where(a => a.TenantId == request.TenantId).Select(a => new ProductListItemResponse()
+            resp.List = await _context.Product.Select(a => new ProductListItemResponse()
             {
                 Id = a.Id,
                 CreateTime = a.CreatTime,
@@ -61,6 +62,7 @@ namespace Shopping.Api.Product.Applications.Querys
                 Status = a.Status,
                 StoreId = a.StoreId,
                 StoreProductCategoryId = a.StoreProductCategoryId,
+                StoreName = a.StoreName,
             }).ToListAsync();
 
             return resp;

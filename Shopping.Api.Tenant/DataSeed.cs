@@ -22,6 +22,7 @@ namespace Shopping.Api.Tenant
         {
             var tenant = new TenantInfo()
             {
+                Id= "3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
                 Name = "初始商户",
                 TenantCode = "TenantCode",
                 Description = "",

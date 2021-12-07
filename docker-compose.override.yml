@@ -2,13 +2,22 @@ version: '3.4'
 
 services:
 
-  sqlserver:
-    environment:
-      - SA_PASSWORD=Admin123456
-      - ACCEPT_EULA=Y
-    ports:
-      - "5433:1433"
+  #sqlserver:
+  #  environment:
+  #    - SA_PASSWORD=Admin123456
+  #    - ACCEPT_EULA=Y
+  #  ports:
+  #    - "5433:1433"
 
+  mysql:
+    container_name: mysqlshopping
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    volumes:
+      - D://docker/mysqlshopping/db:/var/lib/mysql
+      - D://docker/mysqlshopping/config:/etc/my.cnf
+    ports:
+      - "3307:3306"
 
   rabbitmq:
     ports:
@@ -27,7 +36,7 @@ services:
   shopping.api.order:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_orderdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=order_db;user ID=root;Password=123456;
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=orderapi
@@ -46,7 +55,7 @@ services:
   shopping.api.member:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=memberapi
@@ -65,7 +74,7 @@ services:
   shopping.api.pay:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_paydb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=pay_db;user ID=root;Password=123456;
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=payapi
@@ -84,7 +93,7 @@ services:
   shopping.api.product:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_productdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=product_db;user ID=root;Password=123456;
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=productapi
@@ -103,7 +112,7 @@ services:
   shopping.api.tenant:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=tenantapi
@@ -123,7 +132,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_memberdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
       - JSUrl=http://${LOCALHOST_IP}:5201
     ports:
       - "5101:80"
@@ -131,7 +140,7 @@ services:
   shopping.api.identitytenant:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=sqlserver;Initial Catalog=shopping_tenantdb;Persist Security Info=True;User ID=sa;Password=Admin123456
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
       - JSUrl=http://${LOCALHOST_IP}:5202
     ports:
       - "5102:80"

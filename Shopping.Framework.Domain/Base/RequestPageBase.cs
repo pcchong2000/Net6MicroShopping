@@ -20,6 +20,15 @@ namespace Shopping.Framework.Domain.Base
     }
     public class ResponsePageBase<T> : RequestBase, IRequestPageBase
     {
+        public ResponsePageBase()
+        {
+
+        }
+        public ResponsePageBase(RequestPageBase request)
+        { 
+            this.PageIndex = request.PageIndex;
+            this.PageSize = request.PageSize;
+        }
         public IEnumerable<T> List { get; set; }
         public int PageIndex { get; set; }
         public int TotalCount { get; set; }

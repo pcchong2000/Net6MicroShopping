@@ -13,7 +13,7 @@ namespace Shopping.Api.Product.Controllers
         {
             _logger = logger;
         }
-
+        [HttpGet]
         public string Get()
         {
             return "123";
