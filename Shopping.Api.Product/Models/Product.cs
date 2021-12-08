@@ -30,8 +30,17 @@ namespace Shopping.Api.Product.Models
     }
     public enum ProductStatus
     {
+        /// <summary>
+        /// 待上架
+        /// </summary>
         WaitUp,
+        /// <summary>
+        /// 已上架
+        /// </summary>
         UpShelf,
+        /// <summary>
+        /// 已下架
+        /// </summary>
         DownShelf,
     }
 }

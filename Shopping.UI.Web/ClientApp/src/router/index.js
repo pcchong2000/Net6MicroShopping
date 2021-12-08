@@ -1,9 +1,11 @@
 import  {createRouter,createWebHashHistory}  from 'vue-router'
 // 定义一组路由
 const routes = [
+  { path: '/', component: () => import('../pages/Index.vue') },
   { path: '/login', component: () => import('../pages/Login.vue') },
   { path: '/logincallback', component: () => import('../pages/LoginCallback.vue') },
-  { path: '/', component: () => import('../pages/Index.vue') },
+  { path: '/product/category/:id', component: () => import('../pages/ProductList.vue') },
+  { path: '/product/:id', component: () => import('../pages/ProductDetail.vue') },
 ]
   
   //创建路由实例并传递 `routes` 配置

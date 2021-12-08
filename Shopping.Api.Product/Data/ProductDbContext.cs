@@ -8,11 +8,26 @@ namespace Shopping.Api.Product.Data
         public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
         {
         }
-        public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<Models.StoreProductCategory> StoreProductCategory { get; set; }
+        /// <summary>
+        /// 产品
+        /// </summary>
         public DbSet<Models.Product> Product { get; set; }
-        public DbSet<ProductModel> ProductModel { get; set; }
-        public DbSet<Models.ProductModelCategory> ProductModelCategory { get; set; }
+        /// <summary>
+        /// 产品全平台分类
+        /// </summary>
+        public DbSet<Models.ProductCategory> ProductCategory { get; set; }
+        /// <summary>
+        /// 产品门店分类
+        /// </summary>
+        public DbSet<Models.StoreProductCategory> StoreProductCategory { get; set; }
+        /// <summary>
+        /// 产品门店型号
+        /// </summary>
+        public DbSet<Models.StoreProductModel> StoreProductModel { get; set; }
+        /// <summary>
+        /// 产品门店型号分类
+        /// </summary>
+        public DbSet<Models.StoreProductModelCategory> StoreProductModelCategory { get; set; }
 
 
     }

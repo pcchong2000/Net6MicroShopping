@@ -3,19 +3,26 @@
 
     <el-main>
       <el-row :gutter="20">
-        <el-col :span="6"><div class="grid-content bg-purple"></div>1</el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div>2</el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div>3</el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div>4</el-col>
+        <el-col v-for="item in productCategorys" :key="item.id" :span="6">
+          <div class="grid-content bg-purple">
+            <router-link :to="'/product/category/'+item.id">{{item.name}}</router-link>
+          </div>
+        </el-col>
       </el-row>
     </el-main>
   </el-container>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import productService from '../services/productService'
+const productCategorys=ref([]);
 
-productService.getProductCategoryList({}); 
+productService.getProductCategoryList({}).then(resp=>{
+productCategorys.value=resp.list;
+//console.log(productCategorys)
+});
+
 </script>
 
 <style scoped>

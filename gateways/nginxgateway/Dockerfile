@@ -9,6 +9,9 @@ RUN echo $'server {                                 \n\
     location ~* \-in$ {                             \n\
       #内部接口不匹配反向代理                       \n\
     }                                               \n\
+    location /file/ {                               \n\
+        proxy_pass   http://shopping.api.file;     \n\
+    }                                               \n\
     location /api/order/ {                          \n\
         proxy_pass   http://shopping.api.order/;    \n\
     }                                               \n\

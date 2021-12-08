@@ -12,7 +12,7 @@ namespace Shopping.Api.Product.Applications.Commands
         public string StoreId { get; set; }
         public string ProductCategoryId { get; set; }
         public string StoreProductCategoryId { get; set; }
-        public string Code { get; set; }
+        public string? Code { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
@@ -21,20 +21,24 @@ namespace Shopping.Api.Product.Applications.Commands
         public string? CreatorId { get; set; }
         public string? CreatorName { get; set; }
         public ProductStatus Status { get; set; }
-        public List<ProductAddModelCategory> ModelCategoryList { get; set; }
+        public List<ProductAddModelCategory> StoreProductModelCategoryList { get; set; }
+        public List<ProductAddModel> StoreProductModelList { get; set; }
     }
     public class ProductAddModelCategory
     {
         public string? Name { get; set; }
+        public string? Code { get; set; }
+        public string? Items { get; set; }
         public string? Description { get; set; }
         public int Sort { get; set; }
-        public List<ProductAddModel> ModelList { get; set; }
     }
     public class ProductAddModel
     {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
+        public string? Value { get; set; }
+        public int Number { get; set; }
         public int Sort { get; set; }
+        public decimal Price { get; set; }
+        public string? Description { get; set; }
     }
     public class ProductAddResponse : RequestBase
     {
@@ -73,11 +77,11 @@ namespace Shopping.Api.Product.Applications.Commands
                 TenantId = request.TenantId,
 
             };
-            var productModels = new List<ProductModel>();
-            var categorys = new List<ProductModelCategory>();
-            request.ModelCategoryList.ForEach(a =>
+            var productModels = new List<StoreProductModel>();
+            var categorys = new List<StoreProductModelCategory>();
+            request.StoreProductModelCategoryList.ForEach(a =>
             {
-                var category = new ProductModelCategory()
+                var category = new StoreProductModelCategory()
                 {
                     CreatorId = product.CreatorId,
                     CreatorName = request.CreatorName,
@@ -87,27 +91,33 @@ namespace Shopping.Api.Product.Applications.Commands
                     Name = a.Name,
                     Sort = a.Sort,
                     Description = a.Description,
+                    Code = a.Code,
+                    Items = a.Items,
                 };
                 categorys.Add(category);
-                productModels.AddRange(a.ModelList.Select(b => new ProductModel()
-                {
-                    CreatorId = category.CreatorId,
-                    CreatorName = request.CreatorName,
-                    ProductId = product.Id,
-                    StoreId = request.StoreId,
-                    TenantId = request.TenantId,
-                    Name = b.Name,
-                    Sort = b.Sort,
-                    ProductModelCategoryId = category.Id,
-                    Description = b.Description,
-
-                }));
+                
 
 
             });
+
+            productModels.AddRange(request.StoreProductModelList.Select(b => new StoreProductModel()
+            {
+                CreatorId = product.CreatorId,
+                CreatorName = request.CreatorName,
+                ProductId = product.Id,
+                StoreId = request.StoreId,
+                TenantId = request.TenantId,
+                Sort = b.Sort,
+                Description = b.Description,
+                Number = b.Number,
+                Price = b.Price,
+                Value = b.Value,
+
+            }));
+
             await _context.Product.AddAsync(product);
-            await _context.ProductModelCategory.AddRangeAsync(categorys);
-            await _context.ProductModel.AddRangeAsync(productModels);
+            await _context.StoreProductModelCategory.AddRangeAsync(categorys);
+            await _context.StoreProductModel.AddRangeAsync(productModels);
             await _context.SaveChangesAsync();
             resp.Id = product.Id;
             return resp;

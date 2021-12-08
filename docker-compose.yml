@@ -95,3 +95,10 @@ services:
 
 
 
+
+  shopping.api.oss:
+    image: ${DOCKER_REGISTRY-}shoppingapioss
+    build:
+      context: .
+      dockerfile: Shopping.Api.OSS/Dockerfile
+

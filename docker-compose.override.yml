@@ -153,3 +153,12 @@ services:
 
 
 
+
+  shopping.api.oss:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - D://docker/shoppingfile:/app/wwwroot
+    ports:
+      - "5006:80"
+

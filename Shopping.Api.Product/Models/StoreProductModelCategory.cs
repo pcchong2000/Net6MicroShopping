@@ -5,22 +5,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Shopping.Api.Product.Models
 {
     /// <summary>
-    /// 平台的商品分类
+    /// 型号分类
+    /// 例如：尺寸(size)：28 29 30 31,颜色(color)：红 黄
+    /// 其中 尺寸是 Name,size  是 Code，  28,29,30,31是Items
+    /// 其中 颜色是 Name,color 是 Code，  红,黄  是Items
     /// </summary>
-    public class ProductCategory : EntityBase
+    public class StoreProductModelCategory : EntityTenantBase
     {
         [MaxLength(36)]
-        public string? ParentId { get; set; }
+        public string? ProductId { get; set; }
         [MaxLength(50)]
         public string? Name { get; set; }
         [MaxLength(50)]
         public string? Code { get; set; }
-        [MaxLength(200)]
-        public string? ImageUrl { get; set; }
+        [MaxLength(500)]
+        public string? Items { get; set; }
         [MaxLength(500)]
         public string? Description { get; set; }
         public int Sort { get; set; }
-        [NotMapped]
-        public List<ProductCategory> Categories { get; set; }
     }
 }
