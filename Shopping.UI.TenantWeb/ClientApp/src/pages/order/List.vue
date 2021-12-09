@@ -1,5 +1,5 @@
 <template>
-  <div> Staff List</div>
+  <div> Order List</div>
 </template>
 
 <script >

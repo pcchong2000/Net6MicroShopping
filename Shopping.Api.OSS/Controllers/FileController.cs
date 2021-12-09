@@ -17,7 +17,7 @@ namespace Shopping.Api.OSS.Controllers
             _logger = logger;
             _webhostEnv = webhostEnv;
         }
-
+        private static string UploadDirectory = "/upload";
         [HttpPost]
         [AllowAnonymous]
         public async Task<List<FileResponse>> Post()
@@ -38,8 +38,14 @@ namespace Shopping.Api.OSS.Controllers
                 {
                     if (contentDisposition!.IsFileDisposition())
                     {
+                        string[] fileNames = contentDisposition!.FileName.Value.Split('.');
+                        string fileName = Guid.NewGuid().ToString();
+                        if (fileNames.Length>=2)
+                        {
+                            fileName += $".{fileNames[fileNames.Length - 1]}";
+                        }
                         //相对路径
-                        string saveKey = "/upload/xxxxxx/" + contentDisposition!.FileName.Value;
+                        string saveKey = $"{UploadDirectory}/{DateTime.Now.ToString("yyyyMMdd")}/" + fileName;
 
                         //完整路径
                         string path = _webhostEnv.WebRootPath + saveKey;
@@ -57,7 +63,7 @@ namespace Shopping.Api.OSS.Controllers
                         resp.Add(new FileResponse()
                         {
                             FileName = contentDisposition.FileName.Value,
-                            PathUrl ="/file"+ saveKey,
+                            PathUrl = "/file" + saveKey.Replace(UploadDirectory,""),//去掉总文件夹路径
                         });
                     }
                 }
@@ -70,8 +76,8 @@ namespace Shopping.Api.OSS.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Get(string path)
         {
-            //完整路径
-            string filePath = _webhostEnv.WebRootPath +"/" +path;
+            //完整路径，加上总文件夹路径
+            string filePath = _webhostEnv.WebRootPath + UploadDirectory+"/" +path;
             if (System.IO.File.Exists(filePath))
             {
                 string fileName = Path.GetFileName(filePath).Split('.')[1];

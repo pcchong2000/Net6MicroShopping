@@ -55,7 +55,6 @@ namespace IdentityTenant.Api
             }
 
             app.UseStaticFiles();
-            app.UseRouting();
             app.UseCors("any");
             app.UseIdentityServer();
             //app.UseAuthorization();

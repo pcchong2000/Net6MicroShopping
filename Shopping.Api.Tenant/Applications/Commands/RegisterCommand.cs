@@ -18,7 +18,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
         public string Password { get; set; }
         public string Code { get; set; }
     }
-    public class RegisterTenantResponse : RequestBase
+    public class RegisterTenantResponse : ResponseBase
     {
     }
     public class CreateTodoListCommandHandler : IRequestHandler<RegisterTenantCommand, RegisterTenantResponse>
@@ -36,25 +36,25 @@ namespace Shopping.Api.Tenant.Applications.Commands
             RegisterTenantResponse resp = new RegisterTenantResponse();
             if (await _context.TenantInfo.AnyAsync(a => a.TenantCode == request.TenantCode))
             {
-                resp.Code = RequestBaseCode.Existed;
+                resp.Code = ResponseBaseCode.Existed;
                 resp.Message = "商户号已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.UserName == request.UserName))
             {
-                resp.Code = RequestBaseCode.Existed;
+                resp.Code = ResponseBaseCode.Existed;
                 resp.Message = "用户名已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.Email == request.Email))
             {
-                resp.Code = RequestBaseCode.Existed;
+                resp.Code = ResponseBaseCode.Existed;
                 resp.Message = "邮箱已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.PhoneNumber == request.PhoneNumber))
             {
-                resp.Code = RequestBaseCode.Existed;
+                resp.Code = ResponseBaseCode.Existed;
                 resp.Message = "手机号已存在";
                 return resp;
             }
@@ -79,7 +79,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
             };
             await _accountManage.Create(tenantAdmin, request.Password);
 
-            resp.Code = RequestBaseCode.Success;
+            resp.Code = ResponseBaseCode.Success;
             resp.Message = "";
             return resp;
         }

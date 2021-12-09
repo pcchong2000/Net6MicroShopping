@@ -3,23 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
 using Shopping.Framework.Domain.Base;
+using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Commands
 {
     public class ProductAddCommand : IRequest<ProductAddResponse>
     {
-        public string TenantId { get; set; }
         public string StoreId { get; set; }
-        public string ProductCategoryId { get; set; }
-        public string StoreProductCategoryId { get; set; }
-        public string? Code { get; set; }
+        public string? StoreName { get; set; }
+        public string? ProductCategoryId { get; set; }
+        public string? StoreProductCategoryId { get; set; }
+        public string Code { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
         public int Sort { get; set; }
         public decimal Price { get; set; }
-        public string? CreatorId { get; set; }
-        public string? CreatorName { get; set; }
         public ProductStatus Status { get; set; }
         public List<ProductAddModelCategory> StoreProductModelCategoryList { get; set; }
         public List<ProductAddModel> StoreProductModelList { get; set; }
@@ -40,22 +39,24 @@ namespace Shopping.Api.Product.Applications.Commands
         public decimal Price { get; set; }
         public string? Description { get; set; }
     }
-    public class ProductAddResponse : RequestBase
+    public class ProductAddResponse : ResponseBase
     {
         public string? Id { get; set; }
     }
     public class ProductAddCommandHandler : IRequestHandler<ProductAddCommand, ProductAddResponse>
     {
         private readonly ProductDbContext _context;
-        public ProductAddCommandHandler(ProductDbContext context)
+        private readonly ICurrentUserService _currentUser;
+        public ProductAddCommandHandler(ProductDbContext context, ICurrentUserService currentUser)
         {
             _context = context;
+            _currentUser = currentUser;
         }
 
         public async Task<ProductAddResponse> Handle(ProductAddCommand request, CancellationToken cancellationToken)
         {
             ProductAddResponse resp = new ProductAddResponse();
-            if (await _context.Product.AnyAsync(a => a.TenantId == request.TenantId && a.Code == request.Code))
+            if (await _context.Product.AnyAsync(a => a.TenantId == _currentUser.TenantId! && a.Code == request.Code))
             {
 
                 return resp;
@@ -63,19 +64,19 @@ namespace Shopping.Api.Product.Applications.Commands
             var product = new Models.Product()
             {
                 Code = request.Code,
-                CreatorId = request.CreatorId,
-                CreatorName = request.CreatorName,
                 Description = request.Description,
                 ImageUrl = request.ImageUrl,
                 Name = request.Name,
                 Price = request.Price,
-                ProductCategoryId = request.ProductCategoryId,
+                ProductCategoryId = request.ProductCategoryId!,
                 Status = request.Status,
                 Sort = request.Sort,
-                StoreId = request.StoreId,
-                StoreProductCategoryId = request.StoreProductCategoryId,
-                TenantId = request.TenantId,
-
+                StoreId = request.StoreId!,
+                StoreProductCategoryId = request.StoreProductCategoryId!,
+                TenantId = _currentUser.TenantId!,
+                CreatorId= _currentUser.Id!,
+                CreatorName = _currentUser.Name,
+                StoreName = request.StoreName,
             };
             var productModels = new List<StoreProductModel>();
             var categorys = new List<StoreProductModelCategory>();
@@ -84,10 +85,9 @@ namespace Shopping.Api.Product.Applications.Commands
                 var category = new StoreProductModelCategory()
                 {
                     CreatorId = product.CreatorId,
-                    CreatorName = request.CreatorName,
                     ProductId = product.Id,
                     StoreId = request.StoreId,
-                    TenantId = request.TenantId,
+                    TenantId = _currentUser.TenantId!,
                     Name = a.Name,
                     Sort = a.Sort,
                     Description = a.Description,
@@ -102,11 +102,11 @@ namespace Shopping.Api.Product.Applications.Commands
 
             productModels.AddRange(request.StoreProductModelList.Select(b => new StoreProductModel()
             {
-                CreatorId = product.CreatorId,
-                CreatorName = request.CreatorName,
+                CreatorId = _currentUser.Id!,
+                CreatorName = _currentUser.Name,
                 ProductId = product.Id,
                 StoreId = request.StoreId,
-                TenantId = request.TenantId,
+                TenantId = _currentUser.TenantId!,
                 Sort = b.Sort,
                 Description = b.Description,
                 Number = b.Number,

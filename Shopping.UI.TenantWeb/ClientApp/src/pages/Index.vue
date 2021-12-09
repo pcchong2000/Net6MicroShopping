@@ -131,7 +131,7 @@ export default {
           for (const key in loginResp) {
             localStorage.setItem(key,loginResp[key]);
           }
-          this.$router.push("/index");
+          this.$router.push("/store");
         }
       }).catch(error=>{
         this.loginResp=error.response.data;

@@ -14,13 +14,13 @@ namespace Shopping.Framework.Web
             var user = _httpContextAccessor.HttpContext?.User;
             if (user != null)
             {
-                UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                Id = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 TenantId = user.FindFirstValue("tenantId");
                 Name = user.FindFirstValue(ClaimTypes.Name);
             }
         }
 
-        public string? UserId { get; set; }
+        public string? Id { get; set; }
         public string? TenantId { get; set; }
         public string? Name { get; set; }
     }

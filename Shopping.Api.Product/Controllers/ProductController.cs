@@ -23,13 +23,19 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(query);
 
         }
+        [HttpGet("tenant")]
+        public async Task<ProductListResponse> GetTenant([FromQuery] ProductListQuery query)
+        {
+            return await _mediator.Send(query);
+
+        }
         [HttpGet("Admin")]
         public async Task<string> GetAdmin()
         {
             return "Admin";
 
         }
-        [HttpPost]
+        [HttpPost("tenant")]
         public async Task<ProductAddResponse> Post(ProductAddCommand query)
         {
             return await _mediator.Send(query);

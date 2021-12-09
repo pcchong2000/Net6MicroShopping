@@ -4,12 +4,13 @@ const routes = [
     
     { path: '/', component: () => import('../pages/Index.vue') },
     //{ path: '/login', component: () => import('../pages/Login.vue') },
-    { path: '/logincallback', component: () => import('../pages/LoginCallback.vue') },
+    // { path: '/logincallback', component: () => import('../pages/LoginCallback.vue') },
+    { path: '/store', component: () => import('../pages/store/List.vue')},
     { path: '/', component: () => import('../pages/Home.vue'),
       children:[
         { path: '/index', component: () => import('../pages/HomeIndex.vue') },
         { path: '/order/list', component: () => import('../pages/order/List.vue') },
-        { path: '/store/list', component: () => import('../pages/store/List.vue') },
+        { path: '/product/list', component: () => import('../pages/product/List.vue') },
       ]
     },
   ]

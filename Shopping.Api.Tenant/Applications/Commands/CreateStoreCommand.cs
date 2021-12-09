@@ -15,7 +15,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
         public string StoreCode { get; set; }
 
     }
-    public class CreateStoreResponse : RequestBase
+    public class CreateStoreResponse : ResponseBase
     {
 
     }
@@ -32,7 +32,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
             CreateStoreResponse resp = new CreateStoreResponse();
             if (await _context.TenantStore.AnyAsync(a => a.TenantId == request.TenantId && a.StoreCode == request.StoreCode))
             {
-                resp.Code = RequestBaseCode.Existed;
+                resp.Code = ResponseBaseCode.Existed;
                 resp.Message = "门店编号已存在";
                 return resp;
             }
@@ -48,7 +48,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
             await _context.TenantStore.AddAsync(store);
             await _context.SaveChangesAsync();
 
-            resp.Code = RequestBaseCode.Success;
+            resp.Code = ResponseBaseCode.Success;
             resp.Message = "";
 
             return resp;

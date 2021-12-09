@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Shopping.Framework.Domain.Base
 {
-    public class RequestBase
+    public class ResponseBase
     {
-        public string Code { get; set; } = RequestBaseCode.Success;
+        public string Code { get; set; } = ResponseBaseCode.Success;
         public string? Message { get; set; }
 
     }
-    public class RequestBase<T> : RequestBase
+    public class ResponseBase<T> : ResponseBase
     {
         public T Data { get; set; }
     }
-    public class RequestBaseCode
+    public class ResponseBaseCode
     {
         public static string Success = "success";
         public static string Fail = "fail";

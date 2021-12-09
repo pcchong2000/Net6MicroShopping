@@ -52,7 +52,7 @@ namespace IdentityTenant.Api
                      subject: sub,
                      authenticationMethod: AuthenticationMethods.Password,
                      customResponse: new Dictionary<string, object>() {
-                         { "code",RequestBaseCode.Success}
+                         { "code",ResponseBaseCode.Success}
                      }
                     );
                     return;
@@ -65,7 +65,7 @@ namespace IdentityTenant.Api
             }
 
             context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant,customResponse: new Dictionary<string, object>() {
-                         { "code",RequestBaseCode.Fail},
+                         { "code",ResponseBaseCode.Fail},
                          { "message","登录错误检查用户名密码"},
                      });
         }

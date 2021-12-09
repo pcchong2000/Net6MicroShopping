@@ -4,8 +4,11 @@
     <el-main>
       <el-row :gutter="20">
         <el-col v-for="item in productList" :key="item.id" :span="6" class="product-item">
-          <el-image style="width: 100px; height: 100px" :src="item.imageUrl" fit="fill"></el-image>
-          <router-link :to="'/product/'+item.id">{{item.name}}</router-link>
+          <router-link :to="'/product/'+item.id">
+            <el-image :src="item.imageUrl" fit="fill"></el-image>
+            <div>{{item.name}}</div>
+            <div>{{item.price}}</div>
+          </router-link>
         </el-col>
       </el-row>
     </el-main>
