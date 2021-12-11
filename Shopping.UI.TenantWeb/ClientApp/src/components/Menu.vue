@@ -16,7 +16,7 @@
             <span>商品管理</span>
           </template>
           <el-menu-item index="/product/list">商品列表</el-menu-item>
-          
+          <el-menu-item index="/store/productCategory">商品分类</el-menu-item>
         </el-sub-menu>
         <el-sub-menu  index="2">
           <template #title>

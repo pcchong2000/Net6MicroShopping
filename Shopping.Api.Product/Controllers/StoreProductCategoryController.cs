@@ -32,13 +32,13 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(reqeust);
         }
         [HttpGet("tenant")]
-        public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetTenantList(StoreProductCategoryTenantPageQuery reqeust)
+        public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetTenantList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
         {
 
             return await _mediator.Send(reqeust);
         }
         [HttpGet]
-        public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetList(StoreProductCategoryTenantPageQuery reqeust)
+        public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
         {
 
             return await _mediator.Send(reqeust);

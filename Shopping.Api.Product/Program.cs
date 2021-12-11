@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -21,10 +22,34 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // 添加EFCore
 builder.Services.AddWebDbContext<ProductDbContext>(builder.Configuration["ConnectionString"]);
+
 // 添加认证
-builder.Services.AddAuthentication(JwtBearerIdentity.TenantBearer).AddTenantJwtBearer(builder.Configuration);
+builder.Services.AddAuthentication(JwtBearerIdentity.TenantBearer)
+    .AddTenantJwtBearer(builder.Configuration)
+.AddMemberJwtBearer(builder.Configuration);
 // 添加授权
 builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
+//string IdentityServerUrl = builder.Configuration["MemberIdentityServerUrl"];
+//builder.Services.AddAuthentication("Bearer")
+//           .AddJwtBearer("Bearer", options =>
+//           {
+//               options.Authority = IdentityServerUrl;
+//               options.RequireHttpsMetadata = false;
+
+//               options.TokenValidationParameters = new TokenValidationParameters
+//               {
+//                   ValidateAudience = false
+//               };
+//           });
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("ApiScope", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireClaim("scope", "productapi");
+//    });
+//});
+
 // 添加跨域
 builder.Services.AddWebCors();
 
@@ -48,9 +73,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors("any");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCloudEvents();
+//app.UseCloudEvents();
 
 app.MapControllers();
-app.MapSubscribeHandler();
+//app.MapSubscribeHandler();
 
 app.Run();

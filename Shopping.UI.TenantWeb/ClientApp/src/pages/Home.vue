@@ -58,3 +58,22 @@ export default {
     margin-bottom: 40px;
   }
 </style>
+<style>
+.table-action{
+  margin: 10px 0;
+}
+.table-search{
+  border: 1px solid rgb(182, 182, 182);
+  border-radius: 10px;
+  padding: 0 10px;
+  margin: 10px 0;
+}
+.table-search-left{
+  padding-top: 20px;
+}
+.table-search-right{
+  display: flex !important;
+  align-items: center;
+  justify-content: end;
+}
+</style>

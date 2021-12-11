@@ -13,7 +13,6 @@ namespace Shopping.Api.Product.Applications.Querys
     public class StoreProductCategoryTenantPageQueryItemResponse
     {
         public string? Id { get; set; }
-        public string? ParentId { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
@@ -42,7 +41,7 @@ namespace Shopping.Api.Product.Applications.Querys
                     Description = a.Description,
                     ImageUrl = a.ImageUrl,
                     Sort = a.Sort,
-
+                    
                 }).ToListAsync();
 
             resp.List = list;

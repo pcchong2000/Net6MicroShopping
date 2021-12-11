@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
 using Shopping.Framework.Domain.Base;
+using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Querys
 {
@@ -23,6 +24,8 @@ namespace Shopping.Api.Product.Applications.Querys
         public string? StoreName { get; set; }
         public string? ProductCategoryId { get; set; }
         public string? StoreProductCategoryId { get; set; }
+        public string? ProductCategoryName { get; set; }
+        public string? StoreProductCategoryName { get; set; }
         public string? Code { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
@@ -45,25 +48,35 @@ namespace Shopping.Api.Product.Applications.Querys
         public async Task<ProductListResponse> Handle(ProductListQuery request, CancellationToken cancellationToken)
         {
             ProductListResponse resp = new ProductListResponse();
-            resp.List = await _context.Product.Select(a => new ProductListItemResponse()
-            {
-                Id = a.Id,
-                CreateTime = a.CreatTime,
-                CreatorId = a.CreatorId,
-                CreatorName = a.CreatorName,
-                Description = a.Description,
-                ImageUrl = a.ImageUrl,
-                Name = a.Name,
-                TenantId = a.TenantId,
-                Code = a.Code,
-                Price = a.Price,
-                ProductCategoryId = a.ProductCategoryId,
-                Sort = a.Sort,
-                Status = a.Status,
-                StoreId = a.StoreId,
-                StoreProductCategoryId = a.StoreProductCategoryId,
-                StoreName = a.StoreName,
-            }).ToListAsync();
+
+            var query = from p in _context.Product
+                        join pc in _context.ProductCategory on p.ProductCategoryId equals pc.Id into pc1 
+                        from pct in pc1.DefaultIfEmpty()
+                        join spc in _context.StoreProductCategory on p.StoreProductCategoryId equals spc.Id into spc1
+                        from spct in spc1.DefaultIfEmpty()
+                        select new ProductListItemResponse()
+                        {
+                            Id = p.Id,
+                            CreateTime = p.CreatTime,
+                            CreatorId = p.CreatorId,
+                            CreatorName = p.CreatorName,
+                            Description = p.Description,
+                            ImageUrl = p.ImageUrl,
+                            Name = p.Name,
+                            TenantId = p.TenantId,
+                            Code = p.Code,
+                            Price = p.Price,
+                            ProductCategoryId = p.ProductCategoryId,
+                            Sort = p.Sort,
+                            Status = p.Status,
+                            StoreId = p.StoreId,
+                            StoreProductCategoryId = p.StoreProductCategoryId,
+                            StoreName = p.StoreName,
+                            ProductCategoryName= pct.Name,
+                            StoreProductCategoryName= spct.Name,
+                        };
+
+            resp.List = await query.OrderByDescending(a=>a.Sort).PageList(request).ToListAsync();
 
             return resp;
         }

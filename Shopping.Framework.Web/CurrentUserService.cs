@@ -14,9 +14,9 @@ namespace Shopping.Framework.Web
             var user = _httpContextAccessor.HttpContext?.User;
             if (user != null)
             {
-                Id = user.FindFirstValue(ClaimTypes.NameIdentifier);
-                TenantId = user.FindFirstValue("tenantId");
-                Name = user.FindFirstValue(ClaimTypes.Name);
+                Id = user.Claims.FirstOrDefault(a=>a.Type==ClaimTypes.NameIdentifier)?.Value;
+                TenantId = user.Claims.FirstOrDefault(a => a.Type == "tenantId")?.Value;
+                Name = user.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Name)?.Value;
             }
         }
 

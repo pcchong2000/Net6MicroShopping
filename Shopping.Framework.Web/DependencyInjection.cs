@@ -159,7 +159,7 @@ namespace Shopping.Framework.Web
             string scheme = JwtBearerIdentity.TenantBearer;
 
             schemes.Add(scheme);
-            builder.AddJwtBearer(scheme, options =>
+            builder.AddJwtBearer(JwtBearerIdentity.TenantBearer, options =>
             {
                 options.Authority = configuration["TenantIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;

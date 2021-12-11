@@ -17,7 +17,7 @@ namespace Shopping.Api.Product.Controllers
             _logger = logger;
             _mediator = mediator;
         }
-        [HttpGet]
+        [HttpGet("tenant")]
         public async Task<ResponsePageBase<ProductCategoryPageQueryItemResponse>> Get([FromQuery] ProductCategoryPageQuery query)
         {
             return await _mediator.Send(query);

@@ -29,9 +29,7 @@ namespace Shopping.Api.Product.Applications.Querys
         {
             ResponsePageBase<ProductCategoryPageQueryItemResponse> resp =new ResponsePageBase<ProductCategoryPageQueryItemResponse>(request);
 
-            var list = await _context.ProductCategory.ToListAsync();
-
-            resp.List = list.Select(a => new ProductCategoryPageQueryItemResponse()
+            resp.List = await _context.ProductCategory.Select(a => new ProductCategoryPageQueryItemResponse()
             {
                 Id = a.Id,
                 Description = a.Description,
@@ -40,8 +38,7 @@ namespace Shopping.Api.Product.Applications.Querys
                 ParentId = a.ParentId,
                 Sort = a.Sort,
 
-            }).ToList();
-
+            }).ToListAsync();
 
             return resp;
         }

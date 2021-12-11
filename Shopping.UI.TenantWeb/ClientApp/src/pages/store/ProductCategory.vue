@@ -10,12 +10,6 @@
             <el-form-item label="编号">
               <el-input v-model="searchData.code"></el-input>
             </el-form-item>
-            <el-form-item label="编号">
-              <el-input v-model="searchData.code"></el-input>
-            </el-form-item>
-            <el-form-item label="编号">
-              <el-input v-model="searchData.code"></el-input>
-            </el-form-item>
           </el-form>
         </el-col>
         <el-col :span="4" class="table-search-right">
@@ -24,24 +18,36 @@
       </el-row>
     </div>
     <div class="table-action">
-      <el-button  type="info"  size="mini" @click="addClick">添加</el-button>
+      <el-button  type="info"  size="mini" @click="dialogVisible = true">添加</el-button>
     </div>
     <div class="table-data">
       <el-table :data="dataList" border style="width: 100%">
         <el-table-column prop="imageUrl" label="图片" width="180" />
         <el-table-column prop="name" label="名称" width="180" />
-        <el-table-column prop="code" label="编号" width="180" />
-        <el-table-column prop="productCategoryName" label="全站分类"  />
-        <el-table-column prop="storeProductCategoryName" label="门店分类"  />
-        <el-table-column prop="price" label="价格" />
-        <el-table-column fixed="right" label="Operations" width="120">
-          <template #default="scope">
-            <el-button type="text" size="small" @click.prevent="editRow(scope.row)">编辑</el-button>
-            <el-button type="text" size="small" @click.prevent="deleteRow(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
+        <el-table-column prop="sort" label="排序" width="180" />
+        <el-table-column prop="description" label="描述" />
       </el-table>
     </div>
+    <el-dialog v-model="dialogVisible" title="添加">
+      <el-form ref="login" label-position="left" :model="submitData" label-width="80px">
+
+        <el-form-item label="商品名称">
+          <el-input v-model="submitData.name"></el-input>
+        </el-form-item>
+        <el-form-item label="排序">
+          <el-input v-model="submitData.sort"></el-input>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="submitData.description"></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="submit">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -56,31 +62,35 @@ export default {
       searchData:{
         pageIndex:1,
         pageSize:10,
+        storeId:"",
       },
+      dialogVisible:false,
+      submitData:{},
       storeId:"",
       storeName:"",
     };
   },
   created(){
-    this.storeId=localStorage.getItem("storeId");
+    this.searchData.storeId=this.storeId=localStorage.getItem("storeId");
     this.storeName=localStorage.getItem("storeName");
     this.getDataList();
   },
   methods:{
     getDataList(){
-      productService.getProductList(this.searchData).then(a=>{
+      productService.getStoreProductCategoryList(this.searchData).then(a=>{
         console.log(a);
         this.dataList=a.list;
       });
     },
+    submit(){
 
-    addClick(){
-      this.$router.push("/product/edit");
-    },
+      this.submitData.storeId=this.storeId;
 
-    editRow(item){
-      this.$router.push("/product/edit?id="+item.id);
-    },
+      productService.postStoreProductCategory(this.submitData).then(resp=>{
+        this.dialogVisible=false;
+        this.getDataList();
+      });
+    }
   }
 }
 </script>

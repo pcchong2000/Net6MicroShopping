@@ -120,6 +120,7 @@ namespace Shopping.Api.Product
                     {
                         item1.Code = item.Code+item1.Code;
                         item1.ParentId = item.Id;
+                        list.Add(item1);
                     }
                 }
             }
