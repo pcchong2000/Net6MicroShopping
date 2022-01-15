@@ -47,17 +47,17 @@
             <el-input v-model="submitData.description"></el-input>
           </el-form-item>
         </el-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="submit">确定</el-button>
-          </span>
-        </template>
       </el-tab-pane>
       <el-tab-pane label="商品规格">
         
       </el-tab-pane>
     </el-tabs>
+    <el-form ref="submitbtnref" label-position="left" label-width="120px">
+      <el-form-item>
+        <el-button  @click="cancel">取消</el-button>
+        <el-button type="primary" @click="submit">确定</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -73,9 +73,11 @@ export default {
       storeProductCategoryList:[],
       storeId:"",
       storeName:"",
+      productId:"",
     };
   },
   created(){
+    this.productId=this.$route.query.id;
     this.storeId=localStorage.getItem("storeId");
     this.storeName=localStorage.getItem("storeName");
     this.getDetail();
@@ -84,9 +86,10 @@ export default {
   },
   methods:{
     getDetail(){
-      productService.getProductList(this.searchData).then(a=>{
+      let query={productId:this.productId};
+      productService.getProductDetail(query).then(a=>{
         console.log(a);
-        this.dataList=a.list;
+        this.submitData=a;
       });
     },
     getProductCategory(){
@@ -111,17 +114,20 @@ export default {
       if(this.submitData.id){
         productService.putProduct(this.submitData).then(resp=>{
           this.dialogVisible=false;
-          this.getDataList();
+          //this.getDataList();
         });
 
       }else{
         productService.postProduct(this.submitData).then(resp=>{
           this.dialogVisible=false;
-          this.getDataList();
+          //this.getDataList();
         });
       }
       
     },
+    cancel(){
+      this.$router.go(-1);
+    }
   }
 }
 </script>

@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Product.Applications.Commands;
 using Shopping.Api.Product.Applications.Querys;
+using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Controllers
 {
@@ -24,7 +26,18 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(query);
 
         }
-        [HttpGet("tenant")]
+        [HttpGet("detail")]
+        public async Task<ProductDetailQueryResponse> GetDetail([FromQuery] ProductDetailQuery query)
+        {
+            return await _mediator.Send(query);
+
+        }
+        [HttpGet(JwtBearerIdentity.TenantBearer+"/detail")]
+        public async Task<ProductDetailQueryResponse> GetTenantDetail([FromQuery] ProductDetailQuery query)
+        {
+            return await _mediator.Send(query);
+        }
+        [HttpGet(JwtBearerIdentity.TenantBearer)]
         public async Task<ProductListResponse> GetTenant([FromQuery] ProductListQuery query)
         {
             return await _mediator.Send(query);
@@ -36,13 +49,18 @@ namespace Shopping.Api.Product.Controllers
             return "Admin";
 
         }
-        [HttpPost("tenant")]
+        [HttpPost(JwtBearerIdentity.TenantBearer)]
+        
         public async Task<ProductAddResponse> Post(ProductEditCommand query)
         {
-
+            return await _mediator.Send(query);
+        }
+        [HttpPut(JwtBearerIdentity.TenantBearer)]
+        public async Task<ProductAddResponse> Put(ProductEditCommand query)
+        {
             var handlers = HttpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
             var Schemes = HttpContext.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>();
-            var list =await Schemes.GetRequestHandlerSchemesAsync();
+            var list = await Schemes.GetRequestHandlerSchemesAsync();
             foreach (var scheme in list)
             {
                 var handler = await handlers.GetHandlerAsync(HttpContext, scheme.Name) as IAuthenticationRequestHandler;
@@ -52,7 +70,7 @@ namespace Shopping.Api.Product.Controllers
                 }
             }
             var bbb = HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
-            
+
             var defaultAuthenticate = await Schemes.GetDefaultAuthenticateSchemeAsync();
             if (defaultAuthenticate != null)
             {
@@ -64,14 +82,6 @@ namespace Shopping.Api.Product.Controllers
                     HttpContext.User = result.Principal;
                 }
             }
-
-            return await _mediator.Send(query);
-
-        }
-        [HttpPut("tenant")]
-        public async Task<ProductAddResponse> Put(ProductEditCommand query)
-        {
-
             return await _mediator.Send(query);
 
         }

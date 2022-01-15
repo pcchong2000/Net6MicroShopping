@@ -17,8 +17,8 @@ namespace Shopping.Framework.Web
 {
     public class JwtBearerIdentity
     {
-        public static string MemberBearer = "MemberBearer";
-        public static string TenantBearer = "TenantBearer";
+        public const string MemberBearer = "member";
+        public const string TenantBearer = "tenant";
     }
     public static class DependencyInjection
     {
@@ -119,13 +119,13 @@ namespace Shopping.Framework.Web
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("scope", apiName);
                 });
-                if (schemes.Count > 0)
-                {
-                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes(schemes.ToArray())
-                    .Build();
-                }
+                //if (schemes.Count > 0)
+                //{
+                //    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                //    .RequireAuthenticatedUser()
+                //    .AddAuthenticationSchemes(schemes.ToArray())
+                //    .Build();
+                //}
             });
             return services;
         }
@@ -140,6 +140,15 @@ namespace Shopping.Framework.Web
             schemes.Add(scheme);
             builder.AddJwtBearer(scheme, options =>
             {
+                //https://docs.microsoft.com/zh-cn/aspnet/core/security/authentication/policyschemes?view=aspnetcore-6.0
+                //将身份验证操作转发到另一个方案
+                //1.  AddAuthentication  => DefaultChallengeScheme =JwtBearerIdentity.TenantBearer
+                //2.  options.ForwardChallenge = JwtBearerIdentity.TenantBearer
+                //3.
+                options.ForwardDefaultSelector = ctx => {
+                    string? sche = ctx.Request.Path.Value.Contains(JwtBearerIdentity.TenantBearer) ? JwtBearerIdentity.TenantBearer : null;
+                    return sche;
+                    };
                 options.Authority = configuration["MemberIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters

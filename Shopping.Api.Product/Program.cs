@@ -24,7 +24,7 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddWebDbContext<ProductDbContext>(builder.Configuration["ConnectionString"]);
 
 // 添加认证
-builder.Services.AddAuthentication(JwtBearerIdentity.TenantBearer)
+builder.Services.AddAuthentication(JwtBearerIdentity.MemberBearer)
     .AddTenantJwtBearer(builder.Configuration)
 .AddMemberJwtBearer(builder.Configuration);
 // 添加授权

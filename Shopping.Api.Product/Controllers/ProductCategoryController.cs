@@ -5,6 +5,9 @@ using Shopping.Framework.Domain.Base;
 
 namespace Shopping.Api.Product.Controllers
 {
+    /// <summary>
+    /// 总产品品类
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class ProductCategoryController : ControllerBase
@@ -18,6 +21,11 @@ namespace Shopping.Api.Product.Controllers
             _mediator = mediator;
         }
         [HttpGet("tenant")]
+        public async Task<ResponsePageBase<ProductCategoryPageQueryItemResponse>> GetTenant([FromQuery] ProductCategoryPageQuery query)
+        {
+            return await _mediator.Send(query);
+        }
+        [HttpGet]
         public async Task<ResponsePageBase<ProductCategoryPageQueryItemResponse>> Get([FromQuery] ProductCategoryPageQuery query)
         {
             return await _mediator.Send(query);

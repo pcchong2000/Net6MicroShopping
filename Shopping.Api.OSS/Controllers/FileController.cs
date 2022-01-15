@@ -30,7 +30,7 @@ namespace Shopping.Api.OSS.Controllers
 
             var section = await reader.ReadNextSectionAsync();
 
-            //读取 section  每个formData算一个 section  多文件上传时每个文件算一个 section
+            //读取 section  每个formData属性算一个 section  多文件上传时每个文件算一个 section
             while (section != null)
             {
                 var hasContentDispositionHeader = ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
