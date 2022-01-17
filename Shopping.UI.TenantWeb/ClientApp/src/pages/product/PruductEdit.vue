@@ -32,6 +32,17 @@
             <el-input v-model="submitData.code"></el-input>
           </el-form-item>
           <el-form-item label="图片">
+              <el-upload
+                class="avatar-uploader"
+                :action="uploadUrl"
+                :show-file-list="false"
+                :on-success="handleImageSuccess"
+                
+              >
+                <el-image v-if="submitData.imageUrl" :src="submitData.imageUrl" fit="contain" class="avatar" />
+                <el-icon v-else class="avatar-uploader-icon"><plus /></el-icon>
+              </el-upload>
+
             <el-input v-model="submitData.imageUrl"></el-input>
           </el-form-item>
           <el-form-item label="价格">
@@ -74,12 +85,14 @@ export default {
       storeId:"",
       storeName:"",
       productId:"",
+      uploadUrl:"",
     };
   },
   created(){
     this.productId=this.$route.query.id;
     this.storeId=localStorage.getItem("storeId");
     this.storeName=localStorage.getItem("storeName");
+    this.uploadUrl=apiurl+"/file";
     this.getDetail();
     this.getProductCategory();
     this.getStoreProductCategory();
@@ -127,11 +140,36 @@ export default {
     },
     cancel(){
       this.$router.go(-1);
+    },
+    handleImageSuccess(resp,file){
+      console.log(resp);
+      this.submitData.imageUrl=apiurl+resp[0].pathUrl;
     }
   }
 }
 </script>
 
 <style scoped>
-
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>

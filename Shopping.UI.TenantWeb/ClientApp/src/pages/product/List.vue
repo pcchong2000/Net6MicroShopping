@@ -28,7 +28,17 @@
     </div>
     <div class="table-data">
       <el-table :data="dataList" border style="width: 100%">
-        <el-table-column prop="imageUrl" label="图片" width="180" />
+        <el-table-column prop="imageUrl" label="图片" >
+          <template #default="scope">
+            <el-image :src="scope.row.imageUrl" fit="contain" class="avatar" >
+              <template #error>
+                <div class="image-slot">
+                  <el-icon><icon-picture /></el-icon>
+                </div>
+              </template>
+            </el-image>
+          </template>
+        </el-table-column>
         <el-table-column prop="name" label="名称" width="180" />
         <el-table-column prop="code" label="编号" width="180" />
         <el-table-column prop="productCategoryName" label="全站分类"  />
@@ -86,5 +96,8 @@ export default {
 </script>
 
 <style scoped>
-
+.avatar {
+  width: 120px;
+  height: 120px;
+}
 </style>

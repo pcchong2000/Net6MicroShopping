@@ -32,13 +32,13 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(query);
 
         }
-        [HttpGet(JwtBearerIdentity.TenantBearer+"/detail")]
+        [HttpGet(JwtBearerIdentity.TenantScheme +"/detail")]
         public async Task<ProductDetailQueryResponse> GetTenantDetail([FromQuery] ProductDetailQuery query)
         {
             return await _mediator.Send(query);
         }
-        [HttpGet(JwtBearerIdentity.TenantBearer)]
-        public async Task<ProductListResponse> GetTenant([FromQuery] ProductListQuery query)
+        [HttpGet(JwtBearerIdentity.TenantScheme)]
+        public async Task<ProductListTenantResponse> GetTenant([FromQuery] ProductListTenantQuery query)
         {
             return await _mediator.Send(query);
 
@@ -49,13 +49,13 @@ namespace Shopping.Api.Product.Controllers
             return "Admin";
 
         }
-        [HttpPost(JwtBearerIdentity.TenantBearer)]
+        [HttpPost(JwtBearerIdentity.TenantScheme)]
         
         public async Task<ProductAddResponse> Post(ProductEditCommand query)
         {
             return await _mediator.Send(query);
         }
-        [HttpPut(JwtBearerIdentity.TenantBearer)]
+        [HttpPut(JwtBearerIdentity.TenantScheme)]
         public async Task<ProductAddResponse> Put(ProductEditCommand query)
         {
             var handlers = HttpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();

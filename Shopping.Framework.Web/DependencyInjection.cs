@@ -17,8 +17,8 @@ namespace Shopping.Framework.Web
 {
     public class JwtBearerIdentity
     {
-        public const string MemberBearer = "member";
-        public const string TenantBearer = "tenant";
+        public const string MemberScheme = "member";
+        public const string TenantScheme = "tenant";
     }
     public static class DependencyInjection
     {
@@ -103,7 +103,7 @@ namespace Shopping.Framework.Web
             });
             return services;
         }
-        public static List<string> schemes = new List<string>();
+
         /// <summary>
         /// 授权
         /// </summary>
@@ -136,18 +136,14 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddMemberJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            string scheme = JwtBearerIdentity.MemberBearer;
-            schemes.Add(scheme);
-            builder.AddJwtBearer(scheme, options =>
+            builder.AddJwtBearer(JwtBearerIdentity.MemberScheme, options =>
             {
                 //https://docs.microsoft.com/zh-cn/aspnet/core/security/authentication/policyschemes?view=aspnetcore-6.0
                 //将身份验证操作转发到另一个方案
-                //1.  AddAuthentication  => DefaultChallengeScheme =JwtBearerIdentity.TenantBearer
-                //2.  options.ForwardChallenge = JwtBearerIdentity.TenantBearer
-                //3.
+                //1. options.ForwardChallenge = JwtBearerIdentity.TenantBearer  固定转发
+                //2. 动态转发
                 options.ForwardDefaultSelector = ctx => {
-                    string? sche = ctx.Request.Path.Value.Contains(JwtBearerIdentity.TenantBearer) ? JwtBearerIdentity.TenantBearer : null;
-                    return sche;
+                    return ctx.Request.Path.Value!.Contains(JwtBearerIdentity.TenantScheme) ? JwtBearerIdentity.TenantScheme : null;
                     };
                 options.Authority = configuration["MemberIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;
@@ -165,10 +161,7 @@ namespace Shopping.Framework.Web
         /// <param name="configuration"></param>
         public static AuthenticationBuilder AddTenantJwtBearer(this AuthenticationBuilder builder, IConfiguration configuration)
         {
-            string scheme = JwtBearerIdentity.TenantBearer;
-
-            schemes.Add(scheme);
-            builder.AddJwtBearer(JwtBearerIdentity.TenantBearer, options =>
+            builder.AddJwtBearer(JwtBearerIdentity.TenantScheme, options =>
             {
                 options.Authority = configuration["TenantIdentityServerUrl"];
                 options.RequireHttpsMetadata = false;

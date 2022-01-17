@@ -3,7 +3,7 @@ import axios from '../common/request';
 const serviceName="product";
 const productService={
     getProductList:(params)    =>axios.get(`/api/${serviceName}/product`,params),
-    getProductDetail:(params)  =>axios.get(`/api/${serviceName}/product`,params),
+    getProductDetail:(params)  =>axios.get(`/api/${serviceName}/product/`+params),
     postProduct:(data)        =>axios.post(`/api/${serviceName}/product`,data),
     putProduct:(data)          =>axios.put(`/api/${serviceName}/product`,data),
     deleteProduct:(params)  =>axios.delete(`/api/${serviceName}/product`,params),

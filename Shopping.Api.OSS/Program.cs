@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // 添加认证
-builder.Services.AddAuthentication(JwtBearerIdentity.TenantBearer)
+builder.Services.AddAuthentication(JwtBearerIdentity.MemberScheme)
     .AddTenantJwtBearer(builder.Configuration)
     .AddMemberJwtBearer(builder.Configuration);
 // 添加授权
