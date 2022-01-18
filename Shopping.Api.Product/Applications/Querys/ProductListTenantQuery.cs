@@ -54,6 +54,7 @@ namespace Shopping.Api.Product.Applications.Querys
                         from pct in pc1.DefaultIfEmpty()
                         join spc in _context.StoreProductCategory on p.StoreProductCategoryId equals spc.Id into spc1
                         from spct in spc1.DefaultIfEmpty()
+                        where !p.IsDeleted
                         select new ProductListTenantItemResponse()
                         {
                             Id = p.Id,

@@ -24,7 +24,7 @@
       </el-row>
     </div>
     <div class="table-action">
-      <el-button  type="info"  size="mini" @click="addClick">添加</el-button>
+      <el-button  type="primary"  size="mini" @click="addClick">添加</el-button>
     </div>
     <div class="table-data">
       <el-table :data="dataList" border style="width: 100%">
@@ -91,13 +91,19 @@ export default {
     editRow(item){
       this.$router.push("/product/edit?id="+item.id);
     },
+    deleteRow(item){
+      productService.deleteProduct({productId:item.id}).then(a=>{
+        console.log(a);
+        this.getDataList();
+      });
+    }
   }
 }
 </script>
 
 <style scoped>
 .avatar {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
 }
 </style>

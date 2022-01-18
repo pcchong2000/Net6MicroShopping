@@ -25,7 +25,7 @@ builder.Services.AddWebDbContext<ProductDbContext>(builder.Configuration["Connec
 
 // 添加认证
 builder.Services.AddAuthentication(JwtBearerIdentity.MemberScheme)
-    .AddTenantJwtBearer(builder.Configuration)
+.AddTenantJwtBearer(builder.Configuration)
 .AddMemberJwtBearer(builder.Configuration);
 // 添加授权
 builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
@@ -55,7 +55,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 //app.UseCloudEvents();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 //app.MapSubscribeHandler();
 
 app.Run();

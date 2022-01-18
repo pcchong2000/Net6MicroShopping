@@ -1,6 +1,5 @@
 <template>
   <el-container  class="container-body">
-
     <el-main>
       <el-row :gutter="20">
         <el-col v-for="item in productList" :key="item.id" :span="6" class="product-item">

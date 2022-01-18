@@ -42,12 +42,7 @@ html,body{
     text-align: center;
     line-height: 60px;
   }
-.container-body{
-    height: 100%;
-}
-.container-main{
-  height: 100%;
-}
+
 .el-aside {
   background-color: #545c64;
   color: #333;

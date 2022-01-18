@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Product.Applications.Commands;
 using Shopping.Api.Product.Applications.Querys;
@@ -38,6 +39,7 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(reqeust);
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
         {
 

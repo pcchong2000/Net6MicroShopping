@@ -78,11 +78,13 @@ namespace IdentityMember.Api
             app.UseStaticFiles();
             app.UseCors("any");
             app.UseIdentityServer();
-            //app.UseAuthorization();
+            
 
-            //eShopDapr的解决方案，cookie在Routing 之前
+            //eShopDapr的解决方案，UseIdentityServer在Routing 之前
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseRouting();
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Product.Applications.Commands;
 using Shopping.Api.Product.Applications.Querys;
+using Shopping.Framework.Domain.Base;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Controllers
@@ -21,12 +22,14 @@ namespace Shopping.Api.Product.Controllers
             _logger = logger;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ProductListResponse> Get([FromQuery]ProductListQuery query)
         {
             return await _mediator.Send(query);
 
         }
         [HttpGet("detail")]
+        [AllowAnonymous]
         public async Task<ProductDetailQueryResponse> GetDetail([FromQuery] ProductDetailQuery query)
         {
             return await _mediator.Send(query);
@@ -43,10 +46,10 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(query);
 
         }
-        [HttpGet("Admin")]
-        public async Task<string> GetAdmin()
+        [HttpDelete(JwtBearerIdentity.TenantScheme)]
+        public async Task<ResponseBase> DeleteTenant([FromQuery] ProductDeleteTenantCommand query)
         {
-            return "Admin";
+            return await _mediator.Send(query);
 
         }
         [HttpPost(JwtBearerIdentity.TenantScheme)]
