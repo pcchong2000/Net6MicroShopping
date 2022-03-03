@@ -12,10 +12,10 @@ services:
     image: rabbitmq:3-management-alpine
 
   redis:
-    image: redis:alpine
+    image: redis:latest
 
   zipkin:
-    image: openzipkin/zipkin-slim
+    image: openzipkin/zipkin
 
 
   shopping.api.order:
