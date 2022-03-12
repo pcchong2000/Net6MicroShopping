@@ -1,4 +1,4 @@
-var LOCALHOST_IP = "192.168.1.238";
+var LOCALHOST_IP = "192.168.0.172";
 var oidc_config = {
     authority: "http://" + LOCALHOST_IP+":5102",
     client_id: "tenantjs",
@@ -10,3 +10,4 @@ var oidc_config = {
 
 window.oidc_config=oidc_config;
 window.apiurl="http://"+LOCALHOST_IP+":5200";
+window.fileUploadApi=window.apiurl+"/file";

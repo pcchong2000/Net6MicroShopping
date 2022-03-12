@@ -4,33 +4,85 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shopping.Api.Product.Data;
+using Shopping.Api.Order.Data;
 
 #nullable disable
 
-namespace Shopping.Api.Product.Data.migrations
+namespace Shopping.Api.Order.Data.migrations
 {
-    [DbContext(typeof(ProductDbContext))]
-    [Migration("20211208081759_init")]
+    [DbContext(typeof(OrderDbContext))]
+    [Migration("20220312135347_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Shopping.Api.Product.Models.Product", b =>
+            modelBuilder.Entity("Shopping.Api.Order.Models.MemberAddress", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
+                    b.Property<string>("Address")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("CityCode")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("CountryCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("CountyCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("CreatTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("TownCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MemberAddress");
+                });
+
+            modelBuilder.Entity("Shopping.Api.Order.Models.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
 
                     b.Property<DateTime>("CreatTime")
                         .HasColumnType("datetime(6)");
@@ -44,31 +96,30 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductCategoryId")
+                    b.Property<string>("MemberId")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
+                    b.Property<string>("MemberName")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("OrderAddressId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<decimal>("OrderAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OrderNo")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -79,13 +130,9 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("StoreName")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("StoreProductCategoryId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -97,111 +144,66 @@ namespace Shopping.Api.Product.Data.migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Shopping.Api.Product.Models.ProductCategory", b =>
+            modelBuilder.Entity("Shopping.Api.Order.Models.OrderAddress", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                    b.Property<string>("Address")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CityCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CountryCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CountyCode")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreatTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
-                    b.Property<string>("ParentId")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderNo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TownCode")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategory");
+                    b.ToTable("OrderAddress");
                 });
 
-            modelBuilder.Entity("Shopping.Api.Product.Models.StoreProductCategory", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTime>("CreatTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("CreatorName")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StoreId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StoreProductCategory");
-                });
-
-            modelBuilder.Entity("Shopping.Api.Product.Models.StoreProductModel", b =>
+            modelBuilder.Entity("Shopping.Api.Order.Models.OrderItem", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -219,15 +221,23 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("OrderNo")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -237,7 +247,15 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<int>("Sort")
+                    b.Property<string>("ProductImageUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ProductName")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("StoreId")
@@ -250,27 +268,22 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
+                    b.Property<int>("Unit")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Value")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("StoreProductModel");
+                    b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("Shopping.Api.Product.Models.StoreProductModelCategory", b =>
+            modelBuilder.Entity("Shopping.Api.Order.Models.ShoppingCart", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("CreatTime")
                         .HasColumnType("datetime(6)");
@@ -284,27 +297,29 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Items")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("ProductId")
+                    b.Property<string>("MemberId")
+                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("ProductImageUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ProductName")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("StoreId")
                         .IsRequired()
@@ -316,12 +331,15 @@ namespace Shopping.Api.Product.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
+                    b.Property<int>("Unit")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoreProductModelCategory");
+                    b.ToTable("ShoppingCart");
                 });
 #pragma warning restore 612, 618
         }

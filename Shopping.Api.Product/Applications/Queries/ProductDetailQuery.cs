@@ -4,13 +4,13 @@ using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
 using Shopping.Framework.Domain.Base;
 
-namespace Shopping.Api.Product.Applications.Querys
+namespace Shopping.Api.Product.Applications.Queries
 {
     public class ProductDetailQuery : IRequest<ProductDetailQueryResponse>
     {
         public string ProductId { get; set; }
     }
-    public class ProductDetailQueryResponse: ResponseBase
+    public class ProductDetailQueryResponse : ResponseBase
     {
         public string Id { get; set; }
         public string ProductCategoryId { get; set; }

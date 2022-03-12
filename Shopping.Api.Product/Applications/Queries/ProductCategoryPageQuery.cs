@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
 using Shopping.Framework.Domain.Base;
 
-namespace Shopping.Api.Product.Applications.Querys
+namespace Shopping.Api.Product.Applications.Queries
 {
     public class ProductCategoryPageQuery : RequestPageBase, IRequest<ResponsePageBase<ProductCategoryPageQueryItemResponse>>
     {
     }
 
-    public class ProductCategoryPageQueryItemResponse 
+    public class ProductCategoryPageQueryItemResponse
     {
         public string? Id { get; set; }
         public string? ParentId { get; set; }
@@ -27,7 +27,7 @@ namespace Shopping.Api.Product.Applications.Querys
         }
         public async Task<ResponsePageBase<ProductCategoryPageQueryItemResponse>> Handle(ProductCategoryPageQuery request, CancellationToken cancellationToken)
         {
-            ResponsePageBase<ProductCategoryPageQueryItemResponse> resp =new ResponsePageBase<ProductCategoryPageQueryItemResponse>(request);
+            ResponsePageBase<ProductCategoryPageQueryItemResponse> resp = new ResponsePageBase<ProductCategoryPageQueryItemResponse>(request);
 
             resp.List = await _context.ProductCategory.Select(a => new ProductCategoryPageQueryItemResponse()
             {

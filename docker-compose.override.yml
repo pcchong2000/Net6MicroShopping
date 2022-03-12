@@ -98,7 +98,7 @@ services:
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=productapi
     ports:
-      - "80"
+      - "5004:80"
   shopping.api.product.dapr:
     command: [ "./daprd",
     "-app-id", "productapi",

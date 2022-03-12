@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Product.Applications.Commands;
-using Shopping.Api.Product.Applications.Querys;
+using Shopping.Api.Product.Applications.Queries;
 using Shopping.Framework.Domain.Base;
 
 namespace Shopping.Api.Product.Controllers

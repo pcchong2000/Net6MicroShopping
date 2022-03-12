@@ -52,6 +52,8 @@ namespace Shopping.Api.Order.Data.migrations
                 {
                     Id = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    StoreName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     MemberId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MemberName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)

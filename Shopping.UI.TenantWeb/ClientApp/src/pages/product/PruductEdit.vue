@@ -79,7 +79,7 @@ export default {
 
   data:()=>{
     return {
-      submitData:{},
+      submitData:{productCategoryId:'',storeProductCategoryId:'',},
       productCategoryList:[],
       storeProductCategoryList:[],
       storeId:"",
@@ -92,8 +92,11 @@ export default {
     this.productId=this.$route.query.id;
     this.storeId=localStorage.getItem("storeId");
     this.storeName=localStorage.getItem("storeName");
-    this.uploadUrl=apiurl+"/file";
-    this.getDetail();
+    this.uploadUrl=window.fileUploadApi;
+    if(this.productId){
+      this.getDetail();
+    }
+    
     this.getProductCategory();
     this.getStoreProductCategory();
   },

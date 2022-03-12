@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Product.Applications.Commands;
-using Shopping.Api.Product.Applications.Querys;
+using Shopping.Api.Product.Applications.Queries;
 using Shopping.Framework.Domain.Base;
 using Shopping.Framework.Web;
 

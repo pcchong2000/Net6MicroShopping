@@ -16,7 +16,7 @@ namespace Shopping.Framework.EFCore.Members.migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Shopping.Framework.Domain.Entities.Members.MemberInfo", b =>

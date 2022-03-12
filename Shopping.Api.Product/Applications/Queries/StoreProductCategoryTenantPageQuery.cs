@@ -4,7 +4,7 @@ using Shopping.Api.Product.Data;
 using Shopping.Framework.Domain.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Querys
+namespace Shopping.Api.Product.Applications.Queries
 {
     public class StoreProductCategoryTenantPageQuery : IRequest<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>>
     {
@@ -17,7 +17,7 @@ namespace Shopping.Api.Product.Applications.Querys
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
         public int Sort { get; set; }
-        
+
     }
     public class StoreProductCategoryTenantPageQueryHandler : IRequestHandler<StoreProductCategoryTenantPageQuery, ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>>
     {
@@ -41,9 +41,8 @@ namespace Shopping.Api.Product.Applications.Querys
                     Description = a.Description,
                     ImageUrl = a.ImageUrl,
                     Sort = a.Sort,
-                    
-                }).ToListAsync();
 
+                }).ToListAsync();
             resp.List = list;
 
             return resp;

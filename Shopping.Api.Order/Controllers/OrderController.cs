@@ -1,6 +1,10 @@
 using Dapr.Client;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shopping.Api.Order.Application.Members.Queries;
+using Shopping.Api.Order.Application.Tenants.Queries;
+using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.Controllers
 {
@@ -11,22 +15,33 @@ namespace Shopping.Api.Order.Controllers
     {
         private readonly ILogger<OrderController> _logger;
         private readonly DaprClient _daprClient;
-        public OrderController(ILogger<OrderController> logger, DaprClient daprClient)
+        private ISender _mediator;
+        public OrderController(ILogger<OrderController> logger, DaprClient daprClient, ISender mediator)
         {
             _logger = logger;
             _daprClient = daprClient;
+            _mediator=mediator;
         }
 
-        [HttpGet]
-        public async Task<string> Get()
+        [HttpGet(JwtBearerIdentity.TenantScheme)]
+        public async Task<OrderListQueryResponse> TenantGet([FromQuery] OrderListQuery query)
         {
-            //return await _daprClient.InvokeMethodAsync<IEnumerable<Product>>(HttpMethod.Get, "productapi", "Product");
-            return "111111111111111";
+            return await _mediator.Send(query);
         }
-        [HttpGet("list-in")]
-        public async Task<string> Get111()
+        [HttpGet(JwtBearerIdentity.TenantScheme+"/detail")]
+        public async Task<OrderDetailQueryResponse> TenantGetDetail([FromQuery] OrderDetailQuery query)
         {
-            return "111111111111111";
+            return await _mediator.Send(query);
+        }
+        [HttpGet]
+        public async Task<MembersOrderListQueryResponse> MemberGet([FromQuery] MembersOrderListQuery query)
+        {
+            return await _mediator.Send(query);
+        }
+        [HttpGet("detail")]
+        public async Task<MembersOrderDetailQueryResponse> MemberGetDetail([FromQuery] MembersOrderDetailQuery query)
+        {
+            return await _mediator.Send(query);
         }
         [HttpGet("test")]
         public async Task<int> Get2()

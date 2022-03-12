@@ -5,7 +5,7 @@ using Shopping.Api.Product.Models;
 using Shopping.Framework.Domain.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Querys
+namespace Shopping.Api.Product.Applications.Queries
 {
     public class ProductListQuery : RequestPageBase, IRequest<ProductListResponse>
     {
@@ -50,7 +50,7 @@ namespace Shopping.Api.Product.Applications.Querys
             ProductListResponse resp = new ProductListResponse();
 
             var query = from p in _context.Product
-                        join pc in _context.ProductCategory on p.ProductCategoryId equals pc.Id into pc1 
+                        join pc in _context.ProductCategory on p.ProductCategoryId equals pc.Id into pc1
                         from pct in pc1.DefaultIfEmpty()
                         join spc in _context.StoreProductCategory on p.StoreProductCategoryId equals spc.Id into spc1
                         from spct in spc1.DefaultIfEmpty()
@@ -72,11 +72,11 @@ namespace Shopping.Api.Product.Applications.Querys
                             StoreId = p.StoreId,
                             StoreProductCategoryId = p.StoreProductCategoryId,
                             StoreName = p.StoreName,
-                            ProductCategoryName= pct.Name,
-                            StoreProductCategoryName= spct.Name,
+                            ProductCategoryName = pct.Name,
+                            StoreProductCategoryName = spct.Name,
                         };
 
-            resp.List = await query.OrderByDescending(a=>a.Sort).PageList(request).ToListAsync();
+            resp.List = await query.OrderByDescending(a => a.Sort).PageList(request).ToListAsync();
 
             return resp;
         }

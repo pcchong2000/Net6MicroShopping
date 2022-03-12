@@ -16,7 +16,7 @@ namespace Shopping.Api.Order.Data.migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Shopping.Api.Order.Models.MemberAddress", b =>
@@ -126,6 +126,11 @@ namespace Shopping.Api.Order.Data.migrations
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()

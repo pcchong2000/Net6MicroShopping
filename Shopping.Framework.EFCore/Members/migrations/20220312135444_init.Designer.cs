@@ -11,14 +11,14 @@ using Shopping.Framework.EFCore.Members;
 namespace Shopping.Framework.EFCore.Members.migrations
 {
     [DbContext(typeof(MemberDbContext))]
-    [Migration("20211206032955_init")]
+    [Migration("20220312135444_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Shopping.Framework.Domain.Entities.Members.MemberInfo", b =>

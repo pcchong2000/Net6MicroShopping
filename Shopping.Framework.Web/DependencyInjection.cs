@@ -82,6 +82,7 @@ namespace Shopping.Framework.Web
             {
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
                 //options.UseSqlServer(connectionString);
+                //options.UseInMemoryDatabase(connectionString);
             });
             return services;
         }

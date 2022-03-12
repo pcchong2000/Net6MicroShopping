@@ -6,6 +6,8 @@ namespace Shopping.Api.Order.Models
 {
     public class Order : EntityTenantBase
     {
+        [MaxLength(100)]
+        public string StoreName { get; set; }
         [MaxLength(36)]
         public string MemberId { get; set; }
         [MaxLength(50)]
