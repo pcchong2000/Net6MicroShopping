@@ -26,6 +26,7 @@ namespace Shopping.Api.Product.Applications.Commands
     }
     public class ProductAddModelCategory
     {
+        public string? Id { get; set; }
         public string? Name { get; set; }
         public string? Code { get; set; }
         public string? Items { get; set; }
@@ -34,6 +35,7 @@ namespace Shopping.Api.Product.Applications.Commands
     }
     public class ProductAddModel
     {
+        public string? Id { get; set; }
         public string? Value { get; set; }
         public int Number { get; set; }
         public int Sort { get; set; }

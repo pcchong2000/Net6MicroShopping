@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Members\Commands\" />
     <Folder Include="Application\Tenants\Commands\" />
   </ItemGroup>
 

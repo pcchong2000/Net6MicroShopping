@@ -11,8 +11,8 @@ using Shopping.Api.Order.Data;
 namespace Shopping.Api.Order.Data.migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20220312135347_init")]
-    partial class init
+    [Migration("20220316154932_addColumn_modelvalue")]
+    partial class addColumn_modelvalue
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,7 +109,6 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("OrderAddressId")
-                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
@@ -143,6 +142,9 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderNo")
+                        .IsUnique();
 
                     b.ToTable("Order");
                 });
@@ -209,25 +211,17 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreatTime")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("CreatorName")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("MemberId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("OrderId")
                         .IsRequired()
@@ -251,24 +245,20 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
+                    b.Property<string>("ProductModelId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("ProductModelValue")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<string>("ProductName")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StoreId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateTime")

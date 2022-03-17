@@ -3,6 +3,7 @@ version: '3.4'
 services:
 
   #sqlserver:
+  #  container_name: shopping_sqlserver
   #  environment:
   #    - SA_PASSWORD=Admin123456
   #    - ACCEPT_EULA=Y
@@ -10,30 +11,34 @@ services:
   #    - "5433:1433"
 
   mysql:
-    container_name: mysqlshopping
+    container_name: shopping_mysql
     environment:
       MYSQL_ROOT_PASSWORD: "123456"
     volumes:
-      - D://docker/mysqlshopping/db:/var/lib/mysql
-      - D://docker/mysqlshopping/config:/etc/my.cnf
+      - D://docker/shoppingmysql/db:/var/lib/mysql
+      - D://docker/shoppingmysql/config:/etc/my.cnf
     ports:
       - "3307:3306"
 
   rabbitmq:
+    container_name: shopping_rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
 
   redis:
+    container_name: shopping_redis
     ports:
       - "5379:6379"
 
   zipkin:
+    container_name: shopping_zipkin
     ports:
       - "5411:9411"
 
 
   shopping.api.order:
+    container_name: shopping_order
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=order_db;user ID=root;Password=123456;
@@ -43,6 +48,7 @@ services:
     ports:
       - "5001:80"
   shopping.api.order.dapr:
+    container_name: shopping_order_dapr
     command: [ "./daprd",
     "-app-id", "orderapi", # app-id不可以有 .   这个写法 ordering.api 是错误的
     "-app-port", "80",
@@ -53,6 +59,7 @@ services:
       - "./dapr/configuration/:/configuration"
 
   shopping.api.member:
+    container_name: shopping_member
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
@@ -62,6 +69,7 @@ services:
     ports:
       - "5002:80"
   shopping.api.member.dapr:
+    container_name: shopping_member_dapr
     command: [ "./daprd",
     "-app-id", "memberapi",
     "-app-port", "80",
@@ -72,6 +80,7 @@ services:
       - "./dapr/configuration/:/configuration"
 
   shopping.api.pay:
+    container_name: shopping_pay
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=pay_db;user ID=root;Password=123456;
@@ -81,6 +90,7 @@ services:
     ports:
       - "5003:80"
   shopping.api.pay.dapr:
+    container_name: shopping_pay_dapr
     command: [ "./daprd",
     "-app-id", "payapi",
     "-app-port", "80",
@@ -91,6 +101,7 @@ services:
       - "./dapr/configuration/:/configuration"
 
   shopping.api.product:
+    container_name: shopping_product
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=product_db;user ID=root;Password=123456;
@@ -100,6 +111,7 @@ services:
     ports:
       - "5004:80"
   shopping.api.product.dapr:
+    container_name: shopping_product_dapr
     command: [ "./daprd",
     "-app-id", "productapi",
     "-app-port", "80",
@@ -110,6 +122,7 @@ services:
       - "./dapr/configuration/:/configuration"
 
   shopping.api.tenant:
+    container_name: shopping_tenant
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
@@ -119,6 +132,7 @@ services:
     ports:
       - "5005:80"
   shopping.api.tenant.dapr:
+    container_name: shopping_tenant_dapr
     command: [ "./daprd",
     "-app-id", "tenantapi",
     "-app-port", "80",
@@ -129,6 +143,7 @@ services:
       - "./dapr/configuration/:/configuration"
 
   shopping.api.identitymember:
+    container_name: shopping_identitymember
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
@@ -138,6 +153,7 @@ services:
       - "5101:80"
 
   shopping.api.identitytenant:
+    container_name: shopping_identitytenant
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
@@ -147,6 +163,7 @@ services:
 
 
   nginxgateway:
+    container_name: shopping_nginxgateway
     ports:
       - "5200:80"
 
@@ -155,6 +172,7 @@ services:
 
 
   shopping.api.oss:
+    container_name: shopping_oss
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:

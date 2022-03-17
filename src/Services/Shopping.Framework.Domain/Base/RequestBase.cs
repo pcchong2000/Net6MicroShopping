@@ -11,6 +11,14 @@ namespace Shopping.Framework.Domain.Base
         public string Code { get; set; } = ResponseBaseCode.Success;
         public string? Message { get; set; }
 
+        public static ResponseBase Success = new ResponseBase()
+        {
+            Code = ResponseBaseCode.Success
+        };
+        public static ResponseBase ServerError = new ResponseBase()
+        {
+            Code = ResponseBaseCode.ServerError
+        };
     }
     public class ResponseBase<T> : ResponseBase
     {
@@ -21,5 +29,6 @@ namespace Shopping.Framework.Domain.Base
         public static string Success = "success";
         public static string Fail = "fail";
         public static string Existed = "existed";
+        public static string ServerError = "server_error";
     }
 }

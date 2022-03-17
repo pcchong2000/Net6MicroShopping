@@ -32,7 +32,9 @@ namespace IdentityMember.Api
             var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients(Configuration));
+                .AddInMemoryClients(Config.Clients(Configuration))
+                .AddProfileService<ProfileService>()
+                ;
             //.AddTestUsers(TestUsers.Users);
 
             builder.AddDeveloperSigningCredential();

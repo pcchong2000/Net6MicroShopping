@@ -60,7 +60,7 @@ namespace Shopping.Api.Order.Data.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OrderNo = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    OrderAddressId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
+                    OrderAddressId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     OrderAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -136,22 +136,13 @@ namespace Shopping.Api.Order.Data.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductImageUrl = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MemberId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Unit = table.Column<int>(type: "int", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    StoreId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatorId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatorName = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,6 +183,12 @@ namespace Shopping.Api.Order.Data.migrations
                     table.PrimaryKey("PK_ShoppingCart", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_OrderNo",
+                table: "Order",
+                column: "OrderNo",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

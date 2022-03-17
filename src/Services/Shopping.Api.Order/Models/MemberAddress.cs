@@ -5,6 +5,10 @@ namespace Shopping.Api.Order.Models
 {
     public class MemberAddress : EntityBase
     {
+        public MemberAddress(string memberId)
+        {
+            MemberId=memberId;
+        }
         [MaxLength(36)]
         public string MemberId { get; set; }
         [MaxLength(50)]

@@ -49,13 +49,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseApiBaseException();
+app.UseCloudEvents();
 
 app.UseCors("any");
 app.UseAuthentication();
 app.UseAuthorization();
-//app.UseCloudEvents();
 
 app.MapControllers().RequireAuthorization();
-//app.MapSubscribeHandler();
+app.MapSubscribeHandler();
 
 app.Run();

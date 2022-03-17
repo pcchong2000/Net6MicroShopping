@@ -2,6 +2,7 @@ using Dapr.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shopping.Api.Order.Application.Members.Commands;
 using Shopping.Api.Order.Application.Members.Queries;
 using Shopping.Api.Order.Application.Tenants.Queries;
 using Shopping.Framework.Web;
@@ -14,12 +15,12 @@ namespace Shopping.Api.Order.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
-        private readonly DaprClient _daprClient;
+        
         private ISender _mediator;
-        public OrderController(ILogger<OrderController> logger, DaprClient daprClient, ISender mediator)
+        public OrderController(ILogger<OrderController> logger, ISender mediator)
         {
             _logger = logger;
-            _daprClient = daprClient;
+            
             _mediator=mediator;
         }
 
@@ -48,39 +49,18 @@ namespace Shopping.Api.Order.Controllers
         {
             //_daprClient.get
 
-            var httpClient = DaprClient.CreateInvokeHttpClient();
-            var resp = await httpClient.GetAsync("http://memberapi/member/test");
-            string respContent = await resp.Content.ReadAsStringAsync();
-            return await _daprClient.InvokeMethodAsync<int>(HttpMethod.Get, "memberapi", "member/test");
-
+            //var httpClient = DaprClient.CreateInvokeHttpClient();
+            //var resp = await httpClient.GetAsync("http://memberapi/member/test");
+            //string respContent = await resp.Content.ReadAsStringAsync();
+            //return await _daprClient.InvokeMethodAsync<int>(HttpMethod.Get, "memberapi", "member/test");
+            return 1;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(AddOrderDto addOrder)
+        public async Task<OrderCreateCommandResponse> Post(OrderCreateCommand addOrder)
         {
-            await _daprClient.PublishEventAsync("pubsub", "newOrder",
-                new List<JianKuCunDto>() {
-                    new JianKuCunDto
-                    {
-                        ProductId = addOrder.ProductId,
-                        Model = addOrder.Model,
-                        Number = addOrder.Number
 
-                    },
-            });
-            return Ok();
+            return await _mediator.Send(addOrder);
         }
     }
-    public class AddOrderDto
-    {
-        public string MemberId { get; set; }
-        public string ProductId { get; set; }
-        public string Model { get; set; }
-        public int Number { get; set; }
-    }
-    public class JianKuCunDto
-    {
-        public string ProductId { get; set; }
-        public string Model { get; set; }
-        public int Number { get; set; }
-    }
+
 }

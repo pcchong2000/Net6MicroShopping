@@ -4,6 +4,25 @@ namespace Shopping.Api.Order.Models
 {
     public class OrderAddress : EntityBase
     {
+        public OrderAddress()
+        { 
+        
+        }
+        public OrderAddress(Order order, MemberAddress memberAddress)
+        {
+
+            this.Address = memberAddress.Address;
+            this.CityCode = memberAddress.CityCode;
+            this.CountryCode = memberAddress.CountryCode;
+            this.CountyCode = memberAddress.CountyCode;
+            this.Name = memberAddress.Name;
+            this.Phone = memberAddress.Phone;
+            this.ProvinceCode = memberAddress.ProvinceCode;
+            this.TownCode = memberAddress.TownCode;
+            this.OrderId = order.Id;
+            this.OrderNo = order.OrderNo;
+            this.MemberId = order.MemberId;
+        }
         public string OrderId { get; set; }
         public string OrderNo { get; set; }
         public string MemberId { get; set; }

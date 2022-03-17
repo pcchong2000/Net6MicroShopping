@@ -31,7 +31,7 @@
     <el-dialog v-model="dialogVisible" title="添加">
       <el-form ref="login" label-position="left" :model="submitData" label-width="80px">
 
-        <el-form-item label="商品名称">
+        <el-form-item label="分类名称">
           <el-input v-model="submitData.name"></el-input>
         </el-form-item>
         <el-form-item label="排序">

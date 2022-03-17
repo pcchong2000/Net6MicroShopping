@@ -1,3 +1,4 @@
+using Dapr;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -21,12 +22,17 @@ namespace Shopping.Api.Product.Controllers
             _mediator = mediator;
             _logger = logger;
         }
+        [HttpPost("list-in")]
+        [AllowAnonymous]
+        public async Task<List<ProductListInQueryItemResponse>> GetIn(ProductListInQuery query)
+        {
+            return await _mediator.Send(query);
+        }
         [HttpGet]
         [AllowAnonymous]
         public async Task<ProductListResponse> Get([FromQuery]ProductListQuery query)
         {
             return await _mediator.Send(query);
-
         }
         [HttpGet("detail")]
         [AllowAnonymous]
@@ -61,32 +67,19 @@ namespace Shopping.Api.Product.Controllers
         [HttpPut(JwtBearerIdentity.TenantScheme)]
         public async Task<ProductAddResponse> Put(ProductEditCommand query)
         {
-            var handlers = HttpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
-            var Schemes = HttpContext.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>();
-            var list = await Schemes.GetRequestHandlerSchemesAsync();
-            foreach (var scheme in list)
-            {
-                var handler = await handlers.GetHandlerAsync(HttpContext, scheme.Name) as IAuthenticationRequestHandler;
-                if (handler != null && await handler.HandleRequestAsync())
-                {
-                    //return;
-                }
-            }
-            var bbb = HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
-
-            var defaultAuthenticate = await Schemes.GetDefaultAuthenticateSchemeAsync();
-            if (defaultAuthenticate != null)
-            {
-                var xxx = await bbb.AuthenticateAsync(HttpContext, defaultAuthenticate.Name);
-
-                var result = await HttpContext.AuthenticateAsync(defaultAuthenticate.Name);
-                if (result?.Principal != null)
-                {
-                    HttpContext.User = result.Principal;
-                }
-            }
             return await _mediator.Send(query);
-
         }
+        /// <summary>
+        /// ¸üÐÂ¿â´æ
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [Topic("pubsub", "newOrder")]
+        [HttpPut("kucun-in")]
+        public async Task<ResponseBase> PutKucun(ProductInUpdateReserveCommand query)
+        {
+            return await _mediator.Send(query);
+        }
+
     }
 }

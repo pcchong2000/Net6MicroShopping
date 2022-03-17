@@ -57,6 +57,7 @@ namespace Shopping.Api.Order
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseApiBaseException();
             app.UseCors("any");
             app.UseAuthentication();
             app.UseAuthorization();

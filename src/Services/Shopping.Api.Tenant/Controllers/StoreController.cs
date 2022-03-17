@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.Tenant.Applications.Commands;
 using Shopping.Api.Tenant.Applications.Querys;
@@ -37,6 +38,17 @@ namespace Shopping.Api.Tenant.Controllers
         public string GetDetail(string id)
         {
             return "123";
+        }
+        [HttpGet("detail-in/{id}")]
+        [AllowAnonymous]
+        public async Task<StoreDetailInQueryResponse> GetDetailIn(string id)
+        {
+
+            return await _mediator.Send(new StoreDetailInQuery()
+            {
+                Id = id
+            });
+
         }
     }
 }
