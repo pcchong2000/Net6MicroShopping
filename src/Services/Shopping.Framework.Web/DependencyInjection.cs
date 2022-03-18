@@ -81,7 +81,7 @@ namespace Shopping.Framework.Web
             services.AddDbContext<TContext>(options =>
             {
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"), options => {
-                    options.EnableRetryOnFailure(5);
+                    //options.EnableRetryOnFailure(5);
                     
                 });
                 //options.UseSqlServer(connectionString);

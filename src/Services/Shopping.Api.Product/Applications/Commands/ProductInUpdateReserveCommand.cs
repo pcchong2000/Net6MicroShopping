@@ -49,7 +49,14 @@ namespace Shopping.Api.Product.Applications.Commands
                     var productModel = productModels.FirstOrDefault(a=>a.ProductId==item.ProductId && a.Id==item.ProductModelId);
                     if (productModel != null)
                     {
-                        productModel.Number = productModel.Number - item.Number;
+                        if (productModel.Number > item.Number)
+                        {
+                            productModel.Number = productModel.Number - item.Number;
+                        }
+                        else
+                        {
+                            throw new Exception("此型号商品库存不足");
+                        }
                     }
                     else
                     {

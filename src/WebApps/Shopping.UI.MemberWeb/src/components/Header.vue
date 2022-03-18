@@ -14,18 +14,33 @@ export default {
     };
   },
   created(){
-    oidcUserManager.getUser().then((user)=> {
-        if (user) {
-          this.isLogin=true;
-            console.log("User:",user);
-            this.$router.push("/");
-        }
-    });
+
+  },
+  mounted(){
+    this.checkLogin();
   },
   methods:{
     login(){
-      oidcUserManager.signinRedirect();
+      this.checkLogin();
+      if(!this.isLogin){
+        oidcUserManager.signinRedirect();
+      }
+      
     },
+    checkLogin(){
+      oidcUserManager.getUser().then((user)=> {
+        if (user) {
+          this.isLogin=true;
+          console.log("User:",user);
+          this.$router.push("/");
+        }else{
+          console.log("User:",user);
+        }
+      }).catch(a=>{
+        console.log("Usercatch:",a);
+
+      });
+    }
   }
 }
 </script>

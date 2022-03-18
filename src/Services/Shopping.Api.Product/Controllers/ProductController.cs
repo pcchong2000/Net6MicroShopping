@@ -71,15 +71,16 @@ namespace Shopping.Api.Product.Controllers
         }
         /// <summary>
         /// 更新库存
+        /// dapr 订阅必须是post
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         [Topic("pubsub", "newOrder")]
-        [HttpPut("kucun-in")]
-        public async Task<ResponseBase> PutKucun(ProductInUpdateReserveCommand query)
+        [HttpPost("kucun-in")]
+        [AllowAnonymous]
+        public async Task<ResponseBase> newOrder(ProductInUpdateReserveCommand query)
         {
             return await _mediator.Send(query);
         }
-
     }
 }

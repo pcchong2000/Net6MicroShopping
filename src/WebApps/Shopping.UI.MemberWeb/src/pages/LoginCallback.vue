@@ -14,7 +14,10 @@ export default {
       localStorage.setItem("expires_at",userInfo.expires_at);
       localStorage.setItem("scope",userInfo.scope);
       localStorage.setItem("token_type",userInfo.token_type);
-      this.$router.push("/");
+      setInterval(a=>{
+        this.$router.push("/");
+      },1000);
+      
     }).catch(function (e) {
         console.error(e);
     });
