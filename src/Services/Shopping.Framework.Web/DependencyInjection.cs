@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Shopping.Framework.Web.AccountServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -175,6 +177,29 @@ namespace Shopping.Framework.Web
                 };
             });
             return builder;
+        }
+        /// <summary>
+        /// 商户认证
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="configuration"></param>
+        public static IServiceCollection AddHttpAndGrpc(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddGrpc();
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.Listen(IPAddress.Any, Convert.ToInt32(configuration["HttpPort"]), listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+                });
+
+                options.Listen(IPAddress.Any, Convert.ToInt32(configuration["GrpcPort"]), listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http2;
+                });
+            });
+            return services;
         }
     }
 }

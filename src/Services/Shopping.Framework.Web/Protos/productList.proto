@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "Shopping.Framework.Web.Product.Grpc.Proto";
+
+package ProductApi;
+
+service ProductListGrpc {
+	rpc GetProductListData(ProductListInRequestDto) returns (ProductListInQueryResponseDto) {}
+}
+
+message ProductListInRequestDto {
+    string StoreId = 1;
+    repeated string ProductIds = 2;
+}
+
+message ProductListInQueryResponseDto {
+    int32 Total = 1;
+    repeated  ProductListInQueryItemResponseDto Products = 2; 
+}
+message ProductListInQueryItemResponseDto {
+    string Id = 1;
+    string TenantId = 2;
+    string StoreName = 3;
+    string Code = 4;
+    string Name = 5;
+    string ImageUrl = 6;
+    double Price = 7;
+    int32 Status = 8;
+    repeated  ProductListInProductModelResponseDto ProductModels = 9; 
+}
+message ProductListInProductModelResponseDto {
+    string Id = 1;
+    string ProductId = 2;
+    string Value = 3;
+    int32 Number = 4;
+    double Price = 5;
+}

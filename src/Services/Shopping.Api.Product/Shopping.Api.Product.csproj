@@ -16,11 +16,15 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.34.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.34.0" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Shopping.Framework.Domain\Shopping.Framework.Domain.csproj" />
 		<ProjectReference Include="..\Shopping.Framework.Web\Shopping.Framework.Web.csproj" />
 	</ItemGroup>
-
+  <ItemGroup>
+    <Protobuf Include="..\Shopping.Framework.Web\Protos\*.proto" GrpcServices="Server" Link="Grpc\Protos\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

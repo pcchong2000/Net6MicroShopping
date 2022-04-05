@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Order.Data;
+using Shopping.Api.Order.Grpc.Services;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.Application.Members.Commands
@@ -54,6 +55,12 @@ namespace Shopping.Api.Order.Application.Members.Commands
         public List<string> ProductIds { get; set; }
         public string StoreId { get; set; }
     }
+    public class ProductListInQueryResponse
+    {
+        public int Status { get; set; }
+
+        public List<ProductListInQueryItemResponse> Products { get; set; }
+    }
     public class ProductListInQueryItemResponse
     {
         public string Id { get; set; }
@@ -90,10 +97,14 @@ namespace Shopping.Api.Order.Application.Members.Commands
         private ICurrentUserService _currentUser;
         private readonly OrderDbContext _context;
         private readonly DaprClient _daprClient;
-        public OrderCreateCommandHandler(ICurrentUserService currentUser, OrderDbContext context, DaprClient daprClient)
+        private readonly IProductService _productService;
+        public OrderCreateCommandHandler(ICurrentUserService currentUser, OrderDbContext context
+            , DaprClient daprClient
+            , IProductService productService)
         {
             _currentUser = currentUser;
             _context = context;
+            _productService = productService;
             _daprClient = daprClient;
         }
 
@@ -112,17 +123,14 @@ namespace Shopping.Api.Order.Application.Members.Commands
 
             var productQuery = new ProductListInQuery(request.StoreId, request.OrderItems.Select(a=>a.ProductId).ToList());
 
-            var productList = await _daprClient.InvokeMethodAsync<ProductListInQuery,List<ProductListInQueryItemResponse>>(HttpMethod.Post
-                , ApiServiceName.ProductServiceName
-                , ProductApiServiceInPath.ProductList
-                , productQuery);
+            var productList = await _productService.GetProductListGrpc(productQuery);
             
             var order = new Order.Models.Order(request.StoreId, request.StoreName, _currentUser.Id, _currentUser.Name, store.TenantId!);
             var jianKucunList = new List<JianKuCunItemDto>();
 
             foreach (var item in request.OrderItems)
             {
-                var product = productList.FirstOrDefault(a => a.Id == item.ProductId);
+                var product = productList.Products.FirstOrDefault(a => a.Id == item.ProductId);
                 if (product != null)
                 {
                     var productModel= product.ProductModels.Where(a=>a.Id==item.ProductModelId).FirstOrDefault();

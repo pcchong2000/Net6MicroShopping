@@ -12,6 +12,7 @@ using System.Reflection;
 using MediatR;
 using Shopping.Api.Order.Data;
 using Shopping.Framework.Web;
+using Shopping.Api.Order.Grpc.Services;
 
 namespace Shopping.Api.Order
 {
@@ -44,13 +45,17 @@ namespace Shopping.Api.Order
             builder.Services.AddWebCors();
 
             builder.Services.AddWebFreamework();
+            //添加Grpc和http 配置端口
+            builder.Services.AddHttpAndGrpc(builder.Configuration);
+
+            builder.Services.AddScoped<IProductService, ProductService>();
 
             var app = builder.Build();
 
             //初始化数据库和数据
             await app.Services.RunWebDataMigrate<OrderDbContext>();
 
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

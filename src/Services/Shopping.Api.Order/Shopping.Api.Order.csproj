@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Grpc.Net.Client" Version="2.44.0" />
 	  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -23,15 +24,18 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Grpc.Tools" Version="2.34.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Tenants\Commands\" />
-  </ItemGroup>
 
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="..\Shopping.Framework.Web\Protos\*.proto" GrpcServices="Client" Link="Grpc\Protos\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
   <ItemGroup>
 	  <ProjectReference Include="..\Shopping.Framework.Domain\Shopping.Framework.Domain.csproj" />
 	  <ProjectReference Include="..\Shopping.Framework.Web\Shopping.Framework.Web.csproj" />
   </ItemGroup>
-
 </Project>

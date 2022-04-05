@@ -45,6 +45,8 @@ services:
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=orderapi
+      - HttpPort=80
+      - GrpcPort=81
     ports:
       - "5001:80"
   shopping.api.order.dapr:
@@ -108,6 +110,8 @@ services:
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=productapi
+      - HttpPort=80
+      - GrpcPort=81
     ports:
       - "5004:80"
   shopping.api.product.dapr:

@@ -24,7 +24,7 @@ namespace Shopping.Api.Product.Controllers
         }
         [HttpPost("list-in")]
         [AllowAnonymous]
-        public async Task<List<ProductListInQueryItemResponse>> GetIn(ProductListInQuery query)
+        public async Task<ProductListInQueryResponse> GetIn(ProductListInQuery query)
         {
             return await _mediator.Send(query);
         }

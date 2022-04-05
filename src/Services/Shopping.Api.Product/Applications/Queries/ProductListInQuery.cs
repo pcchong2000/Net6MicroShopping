@@ -7,7 +7,7 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Queries
 {
-    public class ProductListInQuery : IRequest<List<ProductListInQueryItemResponse>>
+    public class ProductListInQuery : IRequest<ProductListInQueryResponse>
     {
         public ProductListInQuery(List<string> productIds)
         {
@@ -16,7 +16,12 @@ namespace Shopping.Api.Product.Applications.Queries
         public List<string> ProductIds { get; set; }
         public string StoreId { get; set; }
     }
+    public class ProductListInQueryResponse
+    {
+        public int Total { get; set; }
 
+        public List<ProductListInQueryItemResponse> Products { get; set; }
+    }
     public class ProductListInQueryItemResponse
     {
         public string? Id { get; set; }
@@ -39,7 +44,7 @@ namespace Shopping.Api.Product.Applications.Queries
         public int Number { get; set; }
         public decimal Price { get; set; }
     }
-    public class ProductListInQueryHandler : IRequestHandler<ProductListInQuery, List<ProductListInQueryItemResponse>>
+    public class ProductListInQueryHandler : IRequestHandler<ProductListInQuery, ProductListInQueryResponse>
     {
         private readonly ProductDbContext _context;
         public ProductListInQueryHandler(ProductDbContext context)
@@ -47,9 +52,9 @@ namespace Shopping.Api.Product.Applications.Queries
             _context = context;
         }
 
-        public async Task<List<ProductListInQueryItemResponse>> Handle(ProductListInQuery request, CancellationToken cancellationToken)
+        public async Task<ProductListInQueryResponse> Handle(ProductListInQuery request, CancellationToken cancellationToken)
         {
-            List<ProductListInQueryItemResponse> resp = new List<ProductListInQueryItemResponse>();
+            ProductListInQueryResponse resp = new ProductListInQueryResponse();
 
             var query = from p in _context.Product
                         join pc in _context.ProductCategory on p.ProductCategoryId equals pc.Id into pc1
@@ -78,7 +83,7 @@ namespace Shopping.Api.Product.Applications.Queries
                                             }).ToList()
                         };
 
-            resp = await query.ToListAsync();
+            resp.Products = await query.ToListAsync();
 
             return resp;
         }
