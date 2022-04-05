@@ -145,9 +145,13 @@ namespace Shopping.Framework.Web
             builder.AddJwtBearer(JwtBearerIdentity.MemberScheme, options =>
             {
                 //https://docs.microsoft.com/zh-cn/aspnet/core/security/authentication/policyschemes?view=aspnetcore-6.0
+                
+                //验证未通过之后执行其他方案的未通过流程，
+                //比如你网站用cookie验证身份，但是只对接google用户登录，验证失败时应该直接去google的失败处理，此时就可以 ForwardChallenge="google"
+                //options.ForwardChallenge = JwtBearerIdentity.TenantBearer
+
                 //将身份验证操作转发到另一个方案
-                //1. options.ForwardChallenge = JwtBearerIdentity.TenantBearer  固定转发
-                //2. 动态转发
+                //动态转发
                 options.ForwardDefaultSelector = ctx => {
                     return ctx.Request.Path.Value!.Contains(JwtBearerIdentity.TenantScheme) ? JwtBearerIdentity.TenantScheme : null;
                     };
@@ -155,8 +159,17 @@ namespace Shopping.Framework.Web
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateAudience = false
+                    ValidateAudience = false,
                 };
+                //另一设备登录挤退方案
+                //登录后token写入此用户最后登录设备号(或者其他可确认为单次登录的信息),同时ProfileService缓存此用户最后登录设备号
+                //在验证token 这里查询token和缓存是否一致，不一致返回认证失败；
+                //options.Events.OnTokenValidated = context => {
+                    //var cache = context.HttpContext.RequestServices.GetRequiredService<Redis>();
+                    //context.Fail("设备在其他地方登录");
+                    //context.Success();
+                    //return Task.CompletedTask; 
+                //};
             });
             return builder;
         }
