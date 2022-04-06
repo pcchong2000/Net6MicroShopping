@@ -4,9 +4,6 @@ option csharp_namespace = "Shopping.Framework.Web.Product.Grpc.Proto";
 
 package ProductApi;
 
-service ProductListGrpc {
-	rpc GetProductListData(ProductListInRequestDto) returns (ProductListInQueryResponseDto) {}
-}
 
 message ProductListInRequestDto {
     string StoreId = 1;
@@ -21,12 +18,13 @@ message ProductListInQueryItemResponseDto {
     string Id = 1;
     string TenantId = 2;
     string StoreName = 3;
-    string Code = 4;
-    string Name = 5;
-    string ImageUrl = 6;
-    double Price = 7;
-    int32 Status = 8;
-    repeated  ProductListInProductModelResponseDto ProductModels = 9; 
+    string StoreId = 4;
+    string Code = 5;
+    string Name = 6;
+    string ImageUrl = 7;
+    double Price = 8;
+    int32 Status = 9;
+    repeated  ProductListInProductModelResponseDto ProductModels = 10; 
 }
 message ProductListInProductModelResponseDto {
     string Id = 1;

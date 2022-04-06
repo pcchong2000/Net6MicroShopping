@@ -14,6 +14,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpAndGrpc(builder.Configuration);
 
 builder.Services.AddControllers().AddDapr();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -39,7 +40,9 @@ builder.Services.AddWebCors();
 builder.Services.AddWebFreamework();
 
 builder.Services.AddWebDataSeed<DataSeed>();
-builder.Services.AddHttpAndGrpc(builder.Configuration);
+
+
+
 var app = builder.Build();
 
 //初始化数据库和数据

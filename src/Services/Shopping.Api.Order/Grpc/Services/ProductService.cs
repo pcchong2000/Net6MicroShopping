@@ -1,4 +1,5 @@
 ﻿using Dapr.Client;
+using Grpc.Net.Client;
 using Shopping.Api.Order.Application.Members.Commands;
 using Shopping.Framework.Web;
 using Shopping.Framework.Web.Product.Grpc.Proto;
@@ -12,13 +13,9 @@ namespace Shopping.Api.Order.Grpc.Services
     }
     public class ProductService: IProductService
     {
-        //private readonly ProductListGrpc.ProductListGrpcClient _orderingGrpcClient;
         private readonly DaprClient _daprClient;
-        public ProductService(DaprClient daprClient
-            //,ProductListGrpc.ProductListGrpcClient orderingGrpcClient
-            )
+        public ProductService(DaprClient daprClient)
         {
-            //_orderingGrpcClient = orderingGrpcClient;
             _daprClient = daprClient;
         }
         public async Task<ProductListInQueryResponse> GetProductListHttp(ProductListInQuery query)
@@ -46,11 +43,31 @@ namespace Shopping.Api.Order.Grpc.Services
                 , "GetProductListData"
                 , request);
 
-
-            //var resp = await _orderingGrpcClient.GetProductListDataAsync(request);
-
-            ProductListInQueryResponse productList=new ProductListInQueryResponse();
-
+            ProductListInQueryResponse productList =new ProductListInQueryResponse();
+            productList.Products = new List<ProductListInQueryItemResponse>();
+            foreach (var item in resp.Products)
+            {
+                productList.Products.Add(new ProductListInQueryItemResponse()
+                {
+                    Code = item.Code,
+                    Id = item.Id,
+                    ImageUrl = item.ImageUrl,
+                    Name = item.Name,
+                    Price = (decimal)item.Price,
+                    Status = item.Status,
+                    StoreId = item.StoreId,
+                    TenantId = item.TenantId,
+                    StoreName = item.StoreName,
+                    ProductModels = item.ProductModels.Select(x => new StoreProductModelDto()
+                    {
+                        Id = x.Id,
+                        Number = x.Number,
+                        ProductId = x.ProductId,
+                        Value = x.Value,
+                        Price = (decimal)x.Price
+                    }).ToList()
+                });
+            }
             return productList;
         }
     }

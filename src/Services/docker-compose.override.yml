@@ -45,8 +45,6 @@ services:
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
       - ApiName=orderapi
-      - HttpPort=80
-      - GrpcPort=81
     ports:
       - "5001:80"
   shopping.api.order.dapr:
@@ -114,11 +112,13 @@ services:
       - GrpcPort=81
     ports:
       - "5004:80"
+      ## -app-protocol 设置grpc  -app-port 设置grpc端口
   shopping.api.product.dapr:
     container_name: shopping_product_dapr
     command: [ "./daprd",
     "-app-id", "productapi",
-    "-app-port", "80",
+    "-app-port", "81",
+    "-app-protocol","grpc",
     "-components-path", "/components",
     "-config", "/configuration/eshop-config.yaml" ]
     volumes:

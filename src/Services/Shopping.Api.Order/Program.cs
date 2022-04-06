@@ -13,6 +13,7 @@ using MediatR;
 using Shopping.Api.Order.Data;
 using Shopping.Framework.Web;
 using Shopping.Api.Order.Grpc.Services;
+using Shopping.Framework.Web.Product.Grpc.Proto;
 
 namespace Shopping.Api.Order
 {
@@ -45,8 +46,8 @@ namespace Shopping.Api.Order
             builder.Services.AddWebCors();
 
             builder.Services.AddWebFreamework();
-            //Ìí¼ÓGrpcºÍhttp ÅäÖÃ¶Ë¿Ú
-            builder.Services.AddHttpAndGrpc(builder.Configuration);
+            
+
 
             builder.Services.AddScoped<IProductService, ProductService>();
 

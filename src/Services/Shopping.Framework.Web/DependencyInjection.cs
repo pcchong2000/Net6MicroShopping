@@ -202,11 +202,12 @@ namespace Shopping.Framework.Web
 
             services.Configure<KestrelServerOptions>(options =>
             {
+                //nginx 走HttpPort
                 options.Listen(IPAddress.Any, Convert.ToInt32(configuration["HttpPort"]), listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
                 });
-
+                //grpc 走GrpcPort
                 options.Listen(IPAddress.Any, Convert.ToInt32(configuration["GrpcPort"]), listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http2;
