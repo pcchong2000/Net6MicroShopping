@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: eshop-statestore
+  name: statestore
   namespace: default
 spec:
   type: state.redis
@@ -13,3 +13,5 @@ spec:
     value: ""
   - name: actorStateStore
     value: "true"
+  - name: keyPrefix
+    value: none

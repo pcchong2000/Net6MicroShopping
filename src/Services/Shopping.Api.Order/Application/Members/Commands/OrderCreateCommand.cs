@@ -169,7 +169,8 @@ namespace Shopping.Api.Order.Application.Members.Commands
             await _context.OrderItem.AddRangeAsync(order.OrderItems);
             await _context.SaveChangesAsync();
 
-            
+            await _daprClient.SaveStateAsync("statestore", "order", order);
+
             await _daprClient.PublishEventAsync("pubsub", "newOrder", new JianKuCunDto {ProductModels= jianKucunList });
 
             rensp.OrderNo = order.OrderNo;

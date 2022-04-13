@@ -1,4 +1,5 @@
 ﻿using Dapr.AppCallback.Autogen.Grpc.v1;
+using Dapr.Client;
 using Dapr.Client.Autogen.Grpc.v1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -15,11 +16,13 @@ namespace Shopping.Api.Product.Grpc.Services
     {
         private readonly IMediator _mediator;
         private readonly ILogger<ProductListService> _logger;
-
-        public ProductListService(IMediator mediator, ILogger<ProductListService> logger)
+        private readonly DaprClient _daprClient;
+        public ProductListService(IMediator mediator, ILogger<ProductListService> logger, DaprClient daprClient)
         {
             _mediator = mediator;
             _logger = logger;
+            _daprClient = daprClient;
+
         }
 
         public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
@@ -28,6 +31,9 @@ namespace Shopping.Api.Product.Grpc.Services
             switch (request.Method)
             {
                 case "GetProductListData":
+                    
+                    var weatherForecast = await _daprClient.GetStateAsync<OrderDto>("statestore", "order");
+
                     var dto = request.Data.Unpack<ProductListInRequestDto>();
                     ProductListInQueryResponseDto resp = new ProductListInQueryResponseDto();
                     ProductListInQuery query = new ProductListInQuery(dto.ProductIds.ToList())
@@ -67,5 +73,17 @@ namespace Shopping.Api.Product.Grpc.Services
             }
             return response;
         }
+    }
+
+    public class OrderDto
+    {
+        public string? Id { get; set; }
+        public string? StoreName { get; set; }
+        
+        public string? MemberId { get; set; }
+        
+        public string? MemberName { get; set; }
+        
+        public string? OrderNo { get; set; }
     }
 }
