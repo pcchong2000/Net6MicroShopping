@@ -1,4 +1,4 @@
-var LOCALHOST_IP = "192.168.0.172";
+var LOCALHOST_IP = "192.168.1.100";
 var oidc_config = {
     authority: "http://" + LOCALHOST_IP+":5101",
     client_id: "productjs",
