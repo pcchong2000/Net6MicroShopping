@@ -16,7 +16,7 @@ services:
       MYSQL_ROOT_PASSWORD: "123456"
     volumes:
       - D://docker/shoppingmysql/db:/var/lib/mysql
-      - D://docker/shoppingmysql/config:/etc/my.cnf
+      - D://docker/shoppingmysql/config:/etc/mysql/conf.d
     ports:
       - "3307:3306"
 
