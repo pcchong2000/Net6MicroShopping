@@ -10,7 +10,7 @@ RUN echo $'server {                                 \n\
       #内部接口不匹配反向代理                       \n\
     }                                               \n\
     location /file {                                \n\
-        proxy_pass   http://shopping.api.oss/api/oss;       \n\
+        proxy_pass   http://shopping.api.oss;       \n\
     }                                               \n\
     location /api/oss {                            \n\
         proxy_pass   http://shopping.api.oss;       \n\

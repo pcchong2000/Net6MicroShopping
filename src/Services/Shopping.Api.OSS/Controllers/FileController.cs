@@ -70,7 +70,7 @@ namespace Shopping.Api.OSS.Controllers
 
             return resp;
         }
-        [HttpGet("{*path}")]
+        [HttpGet("/file/{*path}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get(string path)
         {
