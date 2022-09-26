@@ -7,9 +7,7 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Tenant.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class StoreController : ControllerBase
+    public class StoreController : ApiController
     {
         private ICurrentUserService _currentUser;
         private ISender _mediator;

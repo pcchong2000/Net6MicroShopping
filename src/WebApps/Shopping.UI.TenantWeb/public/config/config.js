@@ -10,4 +10,4 @@ var oidc_config = {
 
 window.oidc_config=oidc_config;
 window.apiurl="http://"+LOCALHOST_IP+":5200";
-window.fileUploadApi=window.apiurl+"/file";
+window.fileUploadApi=window.apiurl+"/api/oss/file";

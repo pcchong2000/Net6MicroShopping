@@ -5,9 +5,7 @@ using Shopping.Api.Tenant.Applications.Commands;
 
 namespace Shopping.Api.Tenant.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class TenantController : ControllerBase
+    public class TenantController : ApiController
     {
         private ISender _mediator;
         private readonly ILogger<TenantController> _logger;

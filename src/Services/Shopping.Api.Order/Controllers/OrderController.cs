@@ -9,10 +9,7 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    [Authorize]
-    public class OrderController : ControllerBase
+    public class OrderController : ApiController
     {
         private readonly ILogger<OrderController> _logger;
         

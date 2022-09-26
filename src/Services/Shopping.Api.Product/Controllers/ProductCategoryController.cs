@@ -9,9 +9,7 @@ namespace Shopping.Api.Product.Controllers
     /// <summary>
     /// 总产品品类
     /// </summary>
-    [ApiController]
-    [Route("[controller]")]
-    public class ProductCategoryController : ControllerBase
+    public class ProductCategoryController : ApiController
     {
         private ISender _mediator;
         private readonly ILogger<ProductCategoryController> _logger;

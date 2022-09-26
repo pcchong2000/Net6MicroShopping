@@ -10,9 +10,7 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : ApiController
     {
         private ISender _mediator;
         private readonly ILogger<ProductController> _logger;

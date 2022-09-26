@@ -7,9 +7,7 @@ using Shopping.Framework.Domain.Base;
 
 namespace Shopping.Api.Product.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class StoreProductCategoryController : ControllerBase
+    public class StoreProductCategoryController : ApiController
     {
 
         private ISender _mediator;

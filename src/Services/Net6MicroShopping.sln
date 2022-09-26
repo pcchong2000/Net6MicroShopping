@@ -71,7 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Product", "Sho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Tenant", "Shopping.Api.Tenant\Shopping.Api.Tenant.csproj", "{802B05C1-FB96-45A3-92B7-3916AB700ED5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{3F6E9CD6-2419-45A7-A997-F22ADC607EEE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oss", "oss", "{3F6E9CD6-2419-45A7-A997-F22ADC607EEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.OSS", "Shopping.Api.OSS\Shopping.Api.OSS.csproj", "{305B911D-EA64-475A-B42A-BD79F0CD130A}"
 EndProject

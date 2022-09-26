@@ -6,9 +6,7 @@ using System.Web;
 
 namespace Shopping.Api.OSS.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class FileController : ControllerBase
+    public class FileController : ApiController
     {
         private readonly ILogger<FileController> _logger;
         private IWebHostEnvironment _webhostEnv;

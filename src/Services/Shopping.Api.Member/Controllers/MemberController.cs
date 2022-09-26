@@ -3,9 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Shopping.Api.Member.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class MemberController : ControllerBase
+    public class MemberController : ApiController
     {
         private readonly ILogger<MemberController> _logger;
 

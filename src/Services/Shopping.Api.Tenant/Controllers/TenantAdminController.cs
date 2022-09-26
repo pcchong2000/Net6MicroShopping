@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Shopping.Api.Tenant.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class TenantAdminController : ControllerBase
+    public class TenantAdminController : ApiController
     {
 
         private ISender _mediator;
