@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentityMember.Api.Quickstart.Consent;
 using IdentityServer4.Configuration;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -17,8 +16,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Shopping.Api.IdentityMember.Quickstart.Consent;
 
-namespace IdentityMember.Api.Quickstart.Device
+namespace Shopping.Api.IdentityMember.Quickstart.Device
 {
     [Authorize]
     [SecurityHeaders]

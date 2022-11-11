@@ -14,7 +14,7 @@ using Shopping.Framework.Domain.Entities.Tenants;
 using Shopping.Framework.EFCore.Tenants;
 using Shopping.Framework.Domain.Base;
 
-namespace IdentityTenant.Api
+namespace Shopping.Api.IdentityTenant
 {
 
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator

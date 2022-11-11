@@ -11,7 +11,7 @@ using System;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 
-namespace IdentityMember.Api
+namespace Shopping.Api.IdentityMember
 {
     public class Program
     {

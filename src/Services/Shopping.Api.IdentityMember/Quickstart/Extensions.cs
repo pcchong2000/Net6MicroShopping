@@ -1,9 +1,9 @@
 using System;
-using IdentityMember.Api.Quickstart.Account;
+using Shopping.Api.IdentityMember.Quickstart.Account;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityMember.Api.Quickstart
+namespace Shopping.Api.IdentityMember.Quickstart
 {
     public static class Extensions
     {

@@ -16,7 +16,7 @@ using Shopping.Framework.EFCore.Tenants;
 using Shopping.Framework.Web;
 using System.IO;
 
-namespace IdentityTenant.Api
+namespace Shopping.Api.IdentityTenant
 {
     public class Startup
     {

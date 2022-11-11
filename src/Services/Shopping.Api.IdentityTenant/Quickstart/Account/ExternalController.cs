@@ -18,7 +18,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityTenant.Api.Quickstart.Account
+namespace Shopping.Api.IdentityTenant.Quickstart.Account
 {
     [SecurityHeaders]
     [AllowAnonymous]

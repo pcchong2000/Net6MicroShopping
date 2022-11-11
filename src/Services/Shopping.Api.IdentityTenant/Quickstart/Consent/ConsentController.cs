@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 using IdentityServer4.Validation;
 using System.Collections.Generic;
 using System;
-using IdentityTenant.Api.Quickstart;
+using Shopping.Api.IdentityTenant.Quickstart;
 
-namespace IdentityTenant.Api.Quickstart.Consent
+namespace Shopping.Api.IdentityTenant.Quickstart.Consent
 {
     /// <summary>
     /// This controller processes the consent UI

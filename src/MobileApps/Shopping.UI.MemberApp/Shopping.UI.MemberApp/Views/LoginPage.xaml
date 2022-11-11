@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Shopping.UI.MemberApp.LoginPage"
+             Shell.NavBarIsVisible="false"
+             Shell.TabBarIsVisible="false"
+             Title="LoginPage">
+    <VerticalStackLayout Padding="15">
+        <Image Source="jielun.png" Aspect="AspectFill" HeightRequest="80" WidthRequest="80"></Image>
+        <Entry Text="{Binding UserName}" Placeholder="Enter UserName"  />
+        <Entry Text="{Binding Password}" Placeholder="Enter Password"  />
+        <Button Text="Login" Command="{Binding LoginCommand}"  />
+    </VerticalStackLayout>
+</ContentPage>

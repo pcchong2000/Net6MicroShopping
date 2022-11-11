@@ -15,7 +15,7 @@ using Shopping.Framework.EFCore.Members;
 using Shopping.Framework.Web;
 using System.IO;
 
-namespace IdentityMember.Api
+namespace Shopping.Api.IdentityMember
 {
     public class Startup
     {
@@ -33,6 +33,7 @@ namespace IdentityMember.Api
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients(Configuration))
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddProfileService<ProfileService>()
                 ;
             //.AddTestUsers(TestUsers.Users);
@@ -80,7 +81,7 @@ namespace IdentityMember.Api
             app.UseStaticFiles();
             app.UseCors("any");
             app.UseIdentityServer();
-            
+
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });

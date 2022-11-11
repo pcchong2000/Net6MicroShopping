@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityMember.Api.Quickstart.Consent
+namespace Shopping.Api.IdentityMember.Quickstart.Consent
 {
     public class ConsentViewModel : ConsentInputModel
     {

@@ -12,13 +12,13 @@ using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
-using IdentityTenant.Api.Quickstart.Consent;
+using Shopping.Api.IdentityTenant.Quickstart.Consent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace IdentityTenant.Api.Quickstart.Device
+namespace Shopping.Api.IdentityTenant.Quickstart.Device
 {
     [Authorize]
     [SecurityHeaders]

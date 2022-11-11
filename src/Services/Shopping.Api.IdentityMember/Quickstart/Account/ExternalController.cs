@@ -1,4 +1,3 @@
-using IdentityMember.Api.Quickstart;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Shopping.Api.IdentityMember.Quickstart;
 using Shopping.Framework.Domain.Entities.Members;
 using Shopping.Framework.EFCore.Members;
 using Shopping.Framework.Web.AccountServices;
@@ -18,7 +18,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityMember.Api.Quickstart.Account
+namespace Shopping.Api.IdentityMember.Quickstart.Account
 {
     [SecurityHeaders]
     [AllowAnonymous]

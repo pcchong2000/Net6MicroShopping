@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityTenant.Api.Quickstart.Consent;
+using Shopping.Api.IdentityTenant.Quickstart.Consent;
 
-namespace IdentityTenant.Api.Quickstart.Device
+namespace Shopping.Api.IdentityTenant.Quickstart.Device
 {
     public class DeviceAuthorizationInputModel : ConsentInputModel
     {

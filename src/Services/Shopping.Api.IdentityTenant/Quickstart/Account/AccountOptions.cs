@@ -4,7 +4,7 @@
 
 using System;
 
-namespace IdentityTenant.Api.Quickstart.Account
+namespace Shopping.Api.IdentityTenant.Quickstart.Account
 {
     public class AccountOptions
     {

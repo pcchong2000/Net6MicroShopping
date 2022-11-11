@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentityTenant.Api.Quickstart.Diagnostics
+namespace Shopping.Api.IdentityTenant.Quickstart.Diagnostics
 {
     public class DiagnosticsViewModel
     {

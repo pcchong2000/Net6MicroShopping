@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IdentityMember.Api.Quickstart.Grants
+namespace Shopping.Api.IdentityMember.Quickstart.Grants
 {
     public class GrantsViewModel
     {

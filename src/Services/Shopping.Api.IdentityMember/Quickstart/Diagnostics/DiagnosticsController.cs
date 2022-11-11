@@ -4,11 +4,12 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Shopping.Api.IdentityMember.Quickstart.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityMember.Api.Quickstart.Diagnostics
+namespace Shopping.Api.IdentityMember.Quickstart.Diagnostics
 {
     [SecurityHeaders]
     [Authorize]

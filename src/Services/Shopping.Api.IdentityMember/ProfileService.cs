@@ -12,14 +12,14 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityMember.Api
+namespace Shopping.Api.IdentityMember
 {
     public class ProfileService : IProfileService
     {
         private readonly IAccountManage<MemberInfo, MemberDbContext> _accountManage;
         public ProfileService(IAccountManage<MemberInfo, MemberDbContext> accountManage)
         {
-            _accountManage= accountManage;
+            _accountManage = accountManage;
         }
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
@@ -37,7 +37,7 @@ namespace IdentityMember.Api
             string subjectId = context.Subject.GetSubjectId();
             var account = await _accountManage.GetAccountById(subjectId);
 
-            if (account!=null && !account.IsDeleted)
+            if (account != null && !account.IsDeleted)
             {
                 context.IsActive = true;
             }

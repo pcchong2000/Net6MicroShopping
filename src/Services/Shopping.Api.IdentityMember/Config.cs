@@ -7,7 +7,7 @@ using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace IdentityMember.Api
+namespace Shopping.Api.IdentityMember
 {
     public static class Config
     {
@@ -31,7 +31,8 @@ namespace IdentityMember.Api
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
-            string JSUrl = Configuration["JSUrl"];
+            string MemberWebUrl = Configuration["MemberWebUrl"];
+            string MemberMauiUrl = Configuration["MemberMauiUrl"];
             return new List<Client>
             {
                 new Client
@@ -40,10 +41,10 @@ namespace IdentityMember.Api
                         ClientName = "JavaScript Client",
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
-
-                        RedirectUris =           { JSUrl+"/#/logincallback" },
-                        PostLogoutRedirectUris = { JSUrl+"/#/login" },
-                        AllowedCorsOrigins =     { JSUrl },
+                        AllowOfflineAccess=true,
+                        RedirectUris =           { MemberWebUrl + "/#/logincallback" },
+                        PostLogoutRedirectUris = { MemberWebUrl + "/#/login" },
+                        AllowedCorsOrigins =     { MemberMauiUrl },
 
                         AllowedScopes = new List<string>
                         {
@@ -52,6 +53,46 @@ namespace IdentityMember.Api
                             "orderapi",
                             "memberapi",
                             "productapi",
+                            "payapi",
+                        }
+                    },
+                new Client
+                    {
+                        ClientId = "membermaui",
+                        ClientName = "maui Client",
+                        AllowedGrantTypes = GrantTypes.Code,
+                        RequireClientSecret = false,
+                        AllowOfflineAccess=true,
+                        RedirectUris =           { MemberMauiUrl + "/#/logincallback" },
+                        PostLogoutRedirectUris = { MemberMauiUrl + "/#/login" },
+                        AllowedCorsOrigins =     { MemberMauiUrl },
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
+                            "memberapi",
+                            "productapi",
+                            "payapi",
+                        }
+                    },
+                new Client
+                    {
+                        ClientId = "membermauipassword",
+                        ClientName = "maui Client",
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                        RequireClientSecret = false,
+                        AllowOfflineAccess=true,
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
+                            "memberapi",
+                            "productapi",
+                            "payapi",
                         }
                     },
             };

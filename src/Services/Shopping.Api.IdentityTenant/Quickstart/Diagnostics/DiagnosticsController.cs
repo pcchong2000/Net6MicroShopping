@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityTenant.Api.Quickstart.Diagnostics
+namespace Shopping.Api.IdentityTenant.Quickstart.Diagnostics
 {
     [SecurityHeaders]
     [Authorize]

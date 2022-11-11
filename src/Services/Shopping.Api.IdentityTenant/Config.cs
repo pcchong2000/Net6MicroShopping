@@ -7,7 +7,7 @@ using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace IdentityTenant.Api
+namespace Shopping.Api.IdentityTenant
 {
     public static class Config
     {
@@ -31,7 +31,7 @@ namespace IdentityTenant.Api
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
-            string JSUrl = Configuration["JSUrl"];
+            string TenantWebUrl = Configuration["TenantWebUrl"];
             return new List<Client>
             {
                 new Client
@@ -40,10 +40,10 @@ namespace IdentityTenant.Api
                         ClientName = "JavaScript Client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         RequireClientSecret = false,
-
-                        //RedirectUris =           { JSUrl+"/#/logincallback" },
-                        //PostLogoutRedirectUris = { JSUrl+"/#/login" },
-                        //AllowedCorsOrigins =     { JSUrl },
+                        AllowOfflineAccess=true,
+                        //RedirectUris =           { TenantWebUrl+"/#/logincallback" },
+                        //PostLogoutRedirectUris = { TenantWebUrl+"/#/login" },
+                        //AllowedCorsOrigins =     { TenantWebUrl },
 
                         AllowedScopes = new List<string>
                         {

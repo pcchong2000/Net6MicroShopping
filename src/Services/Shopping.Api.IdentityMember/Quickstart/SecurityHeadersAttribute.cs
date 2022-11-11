@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace IdentityMember.Api.Quickstart
+namespace Shopping.Api.IdentityMember.Quickstart
 {
     public class SecurityHeadersAttribute : ActionFilterAttribute
     {

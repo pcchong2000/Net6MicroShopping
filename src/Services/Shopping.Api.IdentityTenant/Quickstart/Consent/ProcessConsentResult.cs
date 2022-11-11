@@ -4,7 +4,7 @@
 
 using IdentityServer4.Models;
 
-namespace IdentityTenant.Api.Quickstart.Consent
+namespace Shopping.Api.IdentityTenant.Quickstart.Consent
 {
     public class ProcessConsentResult
     {

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace IdentityTenant.Api.Quickstart.Account
+namespace Shopping.Api.IdentityTenant.Quickstart.Account
 {
     public class LoginViewModel : LoginInputModel
     {

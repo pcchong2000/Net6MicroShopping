@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityTenant.Api
+namespace Shopping.Api.IdentityTenant
 {
     public class ProfileService : IProfileService
     {

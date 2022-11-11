@@ -15,7 +15,7 @@ using IdentityServer4.Validation;
 using System.Collections.Generic;
 using System;
 
-namespace IdentityMember.Api.Quickstart.Consent
+namespace Shopping.Api.IdentityMember.Quickstart.Consent
 {
     /// <summary>
     /// This controller processes the consent UI
