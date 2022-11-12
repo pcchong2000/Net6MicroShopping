@@ -25,12 +25,12 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
 
         public async Task<LoginResponseModel> LoginAsync(IEnumerable<KeyValuePair<string, string>> request)
         {
-            var resp= await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.LoginUrl, request);
+            var resp= await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint, request);
             
 
             return resp;
         }
-
+        
         public async Task TestAsync()
         {
             var resp = await _httpClient.GetAsync<LoginResponseModel>(Appsettings.TestUrl);

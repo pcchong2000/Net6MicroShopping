@@ -13,9 +13,17 @@ namespace Shopping.UI.MemberApp.Configs
 
 
         #region 登录接口
-        public static string ClientId = "membermauipassword";
-        public static string IdentityAddress =$"http://{IPAddress}:5101" ;
-        public static string LoginUrl = IdentityAddress + "/connect/token";
+        public static string IdentityAddress = $"http://{IPAddress}:5101";
+
+        public static string ClientPasswordId = "membermauipassword";
+        public static string ClientId = "membermaui";
+        public static string ClientSecret = "secret";
+        public static string ClientCallback = IdentityAddress+"/membermauicallback";
+
+        
+        public static string IdentityAuthorizeEndpoint = IdentityAddress + "/connect/authorize";
+        public static string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
+        public static string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
         public static string TestUrl = IdentityAddress + "/auth/test";
         #endregion
 

@@ -34,7 +34,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                 {"userName",userName },
                 {"password",password },
                 {"grant_type","password" },
-                {"client_id",Appsettings.ClientId },
+                {"client_id",Appsettings.ClientPasswordId },
             };
             var resp = await _accountService.LoginAsync(data);
             if (resp!=null)
@@ -54,6 +54,59 @@ namespace Shopping.UI.MemberApp.ViewModels
                 //((AppShell)Shell.Current).GotoHome();
 
                 await Shell.Current.GoToAsync("..");
+            }
+        }
+        [RelayCommand]
+        async Task LocalhostAccount()
+        {
+            //IdentityServerConstants.DefaultCookieAuthenticationScheme
+            await OnAuthenticate("oidc");
+        }
+        async Task OnAuthenticate(string scheme)
+        {
+            try
+            {
+                WebAuthenticatorResult r = null;
+
+                if (scheme.Equals("Apple", StringComparison.Ordinal) && DeviceInfo.Platform == DevicePlatform.iOS && DeviceInfo.Version.Major >= 13)
+                {
+                    // Make sure to enable Apple Sign In in both the
+                    // entitlements and the provisioning profile.
+                    var options = new AppleSignInAuthenticator.Options
+                    {
+                        IncludeEmailScope = true,
+                        IncludeFullNameScope = true,
+                    };
+                    r = await AppleSignInAuthenticator.AuthenticateAsync(options);
+                }
+                else
+                {
+                    var authUrl = new Uri(Appsettings.IdentityAuthUrl + scheme);
+                    var callbackUrl = new Uri("membermaui://");
+
+                    r = await WebAuthenticator.AuthenticateAsync(authUrl, callbackUrl);
+                }
+
+                //AuthToken = string.Empty;
+                //if (r.Properties.TryGetValue("name", out var name) && !string.IsNullOrEmpty(name))
+                //    AuthToken += $"Name: {name}{Environment.NewLine}";
+                //if (r.Properties.TryGetValue("email", out var email) && !string.IsNullOrEmpty(email))
+                //    AuthToken += $"Email: {email}{Environment.NewLine}";
+                //AuthToken += r?.AccessToken ?? r?.IdToken;
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Login canceled.");
+
+                //AuthToken = string.Empty;
+                //await DisplayAlertAsync("Login canceled.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed: {ex.Message}");
+
+                //AuthToken = string.Empty;
+                //await DisplayAlertAsync($"Failed: {ex.Message}");
             }
         }
     }

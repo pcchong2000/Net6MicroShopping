@@ -33,6 +33,7 @@ namespace Shopping.Api.IdentityMember
         {
             string MemberWebUrl = Configuration["MemberWebUrl"];
             string MemberMauiUrl = Configuration["MemberMauiUrl"];
+            string MemberIdentityServerUrl = Configuration["MemberIdentityServerUrl"];
             return new List<Client>
             {
                 new Client
@@ -56,16 +57,35 @@ namespace Shopping.Api.IdentityMember
                             "payapi",
                         }
                     },
+                //new Client
+                //{
+                //    ClientId = "mvc",
+                //    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                //    AllowedGrantTypes = GrantTypes.Code,
+                    
+                //    // where to redirect to after login
+                //    RedirectUris = { MemberIdentityServerUrl+"/signin-oidc" },
+
+                //    // where to redirect to after logout
+                //    PostLogoutRedirectUris = { MemberIdentityServerUrl+"/signout-callback-oidc" },
+
+                //    AllowedScopes = new List<string>
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile
+                //    }
+                //},
                 new Client
                     {
                         ClientId = "membermaui",
+                        ClientSecrets={ new Secret("secret".Sha256()) },
                         ClientName = "maui Client",
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
-                        RedirectUris =           { MemberMauiUrl + "/#/logincallback" },
-                        PostLogoutRedirectUris = { MemberMauiUrl + "/#/login" },
-                        AllowedCorsOrigins =     { MemberMauiUrl },
+                        
+                        RedirectUris =           { MemberMauiUrl + "/membermauicallback" },
 
                         AllowedScopes = new List<string>
                         {

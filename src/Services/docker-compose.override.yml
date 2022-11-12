@@ -152,8 +152,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
+      - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - MemberWebUrl=http://${LOCALHOST_IP}:5201
-      - MemberMauiUrl=http://${LOCALHOST_IP}:5201
+      - MemberMauiUrl=http://${LOCALHOST_IP}:5101
     ports:
       - "5101:80"
 

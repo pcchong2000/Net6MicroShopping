@@ -51,23 +51,6 @@ namespace Shopping.Api.IdentityMember
 
                     options.ClientId = "<insert here>";
                     options.ClientSecret = "<insert here>";
-                })
-                .AddOpenIdConnect("oidc", "Demo IdentityServer", options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-                    options.SaveTokens = true;
-
-                    options.Authority = "https://demo.identityserver.io/";
-                    options.ClientId = "interactive.confidential";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
                 });
         }
 
@@ -80,14 +63,15 @@ namespace Shopping.Api.IdentityMember
 
             app.UseStaticFiles();
             app.UseCors("any");
+            
             app.UseIdentityServer();
-
+            //app.UseAuthentication();
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseRouting();
-
-            //app.UseAuthorization();
+            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

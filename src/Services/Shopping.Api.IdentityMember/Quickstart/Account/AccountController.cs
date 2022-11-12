@@ -18,7 +18,9 @@ using Shopping.Framework.Domain.Entities.Members;
 using Shopping.Framework.EFCore.Members;
 using Shopping.Framework.Web.AccountServices;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Shopping.Api.IdentityMember.Quickstart.Account
@@ -233,7 +235,44 @@ namespace Shopping.Api.IdentityMember.Quickstart.Account
             return View();
         }
 
+        [HttpGet]
+        public async Task Auth(string scheme)
+        {
+            string callbackScheme = "membermaui";
+            var auth = await Request.HttpContext.AuthenticateAsync(scheme);
 
+            if (!auth.Succeeded
+                || auth?.Principal == null
+                || !auth.Principal.Identities.Any(id => id.IsAuthenticated))
+            {
+                // Not authenticated, challenge
+                await Request.HttpContext.ChallengeAsync(scheme);
+            }
+            else
+            {
+                var claims = auth.Principal.Identities.FirstOrDefault()?.Claims;
+                var email = string.Empty;
+                email = claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+
+                // Get parameters to send back to the callback
+                var qs = new Dictionary<string, string>
+                {
+                    { "access_token", auth.Properties.GetTokenValue("access_token") },
+                    { "refresh_token", auth.Properties.GetTokenValue("refresh_token") ?? string.Empty },
+                    { "expires_in", (auth.Properties.ExpiresUtc?.ToUnixTimeSeconds() ?? -1).ToString() },
+                    { "email", email }
+                };
+
+                // Build the result url
+                var url = callbackScheme + "://#" + string.Join(
+                    "&",
+                    qs.Where(kvp => !string.IsNullOrEmpty(kvp.Value) && kvp.Value != "-1")
+                    .Select(kvp => $"{WebUtility.UrlEncode(kvp.Key)}={WebUtility.UrlEncode(kvp.Value)}"));
+
+                // Redirect to final url
+                Request.HttpContext.Response.Redirect(url);
+            }
+        }
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
