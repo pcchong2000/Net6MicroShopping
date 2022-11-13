@@ -21,7 +21,7 @@ public partial class App : Application
             {
                 IAccountService.CurrentAccount = new AccountInfo()
                 {
-                    Token = token,
+                    AccessToken = token,
                     ExpiredTime = expiredTime
                 };
             }

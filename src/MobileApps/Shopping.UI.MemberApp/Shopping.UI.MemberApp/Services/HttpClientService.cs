@@ -31,7 +31,7 @@ namespace Shopping.UI.MemberApp.Services
             httpClient.DefaultRequestHeaders.Clear();
             if (IAccountService.CurrentAccount!=null)
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", IAccountService.CurrentAccount.Token);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", IAccountService.CurrentAccount.AccessToken);
             }
             else
             {

@@ -30,7 +30,18 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
 
             return resp;
         }
-        
+        public async Task SaveToken(LoginResponseModel resp)
+        {
+            IAccountService.CurrentAccount = new AccountInfo()
+            {
+                AccessToken = resp.access_token,
+                RefreshToken=resp.refresh_token,
+                ExpiredTime = DateTime.Now.AddMinutes(resp.expires_in),
+            };
+            await SecureStorage.Default.SetAsync("AccessToken", IAccountService.CurrentAccount.AccessToken);
+            await SecureStorage.Default.SetAsync("RefreshToken", IAccountService.CurrentAccount.RefreshToken);
+            await SecureStorage.Default.SetAsync("ExpiredTime", IAccountService.CurrentAccount.ExpiredTime.ToString("yyyy-MM-dd HH:mm:ss"));
+        }
         public async Task TestAsync()
         {
             var resp = await _httpClient.GetAsync<LoginResponseModel>(Appsettings.TestUrl);

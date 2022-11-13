@@ -38,7 +38,8 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
     }
     public class AccountInfo
     {
-        public string Token { get; set; }
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
         public DateTime ExpiredTime { get; set; }
     }
 

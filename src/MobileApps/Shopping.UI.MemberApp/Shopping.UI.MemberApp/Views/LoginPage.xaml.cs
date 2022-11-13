@@ -15,12 +15,14 @@ namespace Shopping.UI.MemberApp;
 public partial class LoginPage : ContentPage
 {
     private readonly HttpClientService _httpClient;
+    private readonly IAccountService _accountService;
     private string _codeVerifier;
-    public LoginPage(LoginPageViewModel vm, HttpClientService httpClientService)
+    public LoginPage(LoginPageViewModel vm, HttpClientService httpClientService, IAccountService accountService)
 	{
 		InitializeComponent();
 		BindingContext = vm;
         _httpClient= httpClientService;
+        _accountService = accountService;
 
         var dic = new Dictionary<string, string>();
         dic.Add("client_id", Appsettings.ClientId);
@@ -33,30 +35,25 @@ public partial class LoginPage : ContentPage
         dic.Add("code_challenge", CreateCodeChallenge());
         dic.Add("code_challenge_method", "S256");
 
-        string IdentityAuthorizeEndpoint = Create(dic);
+        string IdentityAuthorizeEndpoint = CreateAuthorizeEndpoint(dic);
 
         webView.Source = IdentityAuthorizeEndpoint;
         webView.Navigating += async (e,b) => {
             var unescapedUrl = System.Net.WebUtility.UrlDecode(b.Url);
             if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
             {
+                webView.HeightRequest = 0;
                 var authResponse = new AuthorizeResponse(unescapedUrl);
                 var resp = await GetTokenAsync(authResponse.Code);
 
-                IAccountService.CurrentAccount = new AccountInfo()
-                {
-                    Token = resp.access_token,
-                    ExpiredTime = DateTime.Now.AddMinutes(resp.expires_in),
-                };
-                await SecureStorage.Default.SetAsync("Token", IAccountService.CurrentAccount.Token);
-                await SecureStorage.Default.SetAsync("ExpiredTime", IAccountService.CurrentAccount.ExpiredTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                await _accountService.SaveToken(resp);
 
                 await Shell.Current.GoToAsync("..");
             }
         };
 
     }
-    public string Create(IDictionary<string, string> values)
+    public string CreateAuthorizeEndpoint(IDictionary<string, string> values)
     {
         var queryString = string.Join("&", values.Select(kvp => string.Format("{0}={1}", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value))).ToArray());
         return string.Format("{0}?{1}", Appsettings.IdentityAuthorizeEndpoint, queryString);

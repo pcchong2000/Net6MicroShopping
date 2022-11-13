@@ -9,6 +9,7 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
     public interface IAccountService
     {
         Task<LoginResponseModel> LoginAsync(IEnumerable<KeyValuePair<string, string>> request);
+        Task SaveToken(LoginResponseModel loginResponse);
         Task<AccountInfoResponseModel> MyInfoAsync();
         Task<AccountInfoResponseModel> UpdateAvatarAsync(Stream file,string name);
         Task TestAsync();

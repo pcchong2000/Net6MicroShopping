@@ -39,14 +39,8 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _accountService.LoginAsync(data);
             if (resp!=null)
             {
-                IAccountService.CurrentAccount = new AccountInfo()
-                {
-                    Token = resp.access_token,
-                    ExpiredTime = DateTime.Now.AddMinutes(resp.expires_in),
-                };
-                await SecureStorage.Default.SetAsync("Token", IAccountService.CurrentAccount.Token);
-                await SecureStorage.Default.SetAsync("ExpiredTime", IAccountService.CurrentAccount.ExpiredTime.ToString("yyyy-MM-dd HH:mm:ss"));
-
+                await _accountService.SaveToken(resp);
+                
                 //var shell = MauiProgram.Services.GetService<AppShell>();
                 //Application.Current.MainPage = shell;
                 

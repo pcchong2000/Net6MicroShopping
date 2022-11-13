@@ -57,25 +57,6 @@ namespace Shopping.Api.IdentityMember
                             "payapi",
                         }
                     },
-                //new Client
-                //{
-                //    ClientId = "mvc",
-                //    ClientSecrets = { new Secret("secret".Sha256()) },
-
-                //    AllowedGrantTypes = GrantTypes.Code,
-                    
-                //    // where to redirect to after login
-                //    RedirectUris = { MemberIdentityServerUrl+"/signin-oidc" },
-
-                //    // where to redirect to after logout
-                //    PostLogoutRedirectUris = { MemberIdentityServerUrl+"/signout-callback-oidc" },
-
-                //    AllowedScopes = new List<string>
-                //    {
-                //        IdentityServerConstants.StandardScopes.OpenId,
-                //        IdentityServerConstants.StandardScopes.Profile
-                //    }
-                //},
                 new Client
                     {
                         ClientId = "membermaui",
@@ -84,7 +65,7 @@ namespace Shopping.Api.IdentityMember
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
-                        
+                        //RequireConsent=true, 要求确认同意
                         RedirectUris =           { MemberMauiUrl + "/membermauicallback" },
 
                         AllowedScopes = new List<string>
