@@ -52,4 +52,41 @@
 	  <PackageReference Include="IdentityModel" Version="6.0.0" />
 	  <PackageReference Include="PCLCrypto" Version="2.0.147" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Views\homes\HomeView.xaml.cs">
+	    <DependentUpon>HomeView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\logins\LoginView.xaml.cs">
+	    <DependentUpon>LoginView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\myinfos\MyIndexView.xaml.cs">
+	    <DependentUpon>MyIndexView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\products\ProductDetailView.xaml.cs">
+	    <DependentUpon>ProductDetailView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\products\ProductCategoryView.xaml.cs">
+	    <DependentUpon>ProductCategoryView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\products\ProductListView.xaml.cs">
+	    <DependentUpon>ProductListView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\shopcarts\SubmmitOrderView.xaml.cs">
+	    <DependentUpon>SubmmitOrderView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\shopcarts\ShopCartView.xaml.cs">
+	    <DependentUpon>ShopCartView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Update="Views\products\ProductDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\products\ProductCategoryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\shopcarts\SubmmitOrderView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

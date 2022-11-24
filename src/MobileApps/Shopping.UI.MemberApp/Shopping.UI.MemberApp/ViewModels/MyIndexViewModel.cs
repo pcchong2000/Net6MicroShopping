@@ -2,16 +2,15 @@
 using CommunityToolkit.Mvvm.Input;
 using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services.AccountServices;
-using Shopping.UI.MemberApp.Services.BlogServices;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Shopping.UI.MemberApp.ViewModels
 {
-    public partial class MyIndexPageViewModel : ObservableObject
+    public partial class MyIndexViewModel : ObservableObject
     {
         private readonly IAccountService _accountService;
-        public MyIndexPageViewModel(IAccountService accountService)
+        public MyIndexViewModel(IAccountService accountService)
         {
             _accountService = accountService;
         }

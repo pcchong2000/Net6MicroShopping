@@ -10,19 +10,19 @@
         <ShellContent Title="首页"
                      Icon="tab_home.svg"
                       x:Name="homeTabItem"
-                     ContentTemplate="{DataTemplate local:HomePage}" />
-        <ShellContent Title="购物"
+                     ContentTemplate="{DataTemplate local:HomeView}" />
+        <ShellContent Title="分类"
                      Shell.TabBarIsVisible="false"
                      Icon="tab_favorites.svg"
                      
-                     ContentTemplate="{DataTemplate local:ProductListPage}" />
-        <ShellContent Title="消息"
+                     ContentTemplate="{DataTemplate local:ProductCategoryView}" />
+        <ShellContent Title="购物车"
                      Icon="tab_map.svg"
-                      
-                     ContentTemplate="{DataTemplate local:MessagePage}" />
+                     
+                     ContentTemplate="{DataTemplate local:ShopCartView}" />
         <ShellContent Title="我"
                      Icon="tab_settings.svg"
-                     ContentTemplate="{DataTemplate local:MyIndexPage}" />
+                     ContentTemplate="{DataTemplate local:MyIndexView}" />
     </TabBar>
     
 

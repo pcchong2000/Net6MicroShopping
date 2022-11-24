@@ -1,21 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shopping.UI.MemberApp.Configs;
-using Shopping.UI.MemberApp.Services.BlogServices;
+using Shopping.UI.MemberApp.Services.ProductServices;
+using Shopping.UI.MemberApp.Services.ProductServices.ProductModels;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Shopping.UI.MemberApp.ViewModels
 {
-    public partial class HomePageViewModel : ObservableObject
+    public partial class HomeViewModel : ObservableObject
     {
         
-        private readonly IBlogService _blogService;
-        public HomePageViewModel(IBlogService blogService)
+        private readonly IProductService _productService;
+        public HomeViewModel(IProductService productService)
         {
-            _blogService = blogService;
-            //_blogService = new BlogService(null);
-            blogList = new ObservableCollection<BlogListItemResponseModel>();
+            _productService = productService;
+            dataList = new ObservableCollection<ProductHomeResponseModel>();
             InitData();
         }
         async void InitData()
@@ -25,19 +25,17 @@ namespace Shopping.UI.MemberApp.ViewModels
             {
                 foreach (var item in BlogList)
                 {
-                    ItemHandler(item);
-                    blogList.Add(item);
+                    dataList.Add(item);
                 }
             }
-
         }
-        async Task<List<BlogListItemResponseModel>> GetDataAsync()
+        async Task<List<ProductHomeResponseModel>> GetDataAsync()
         {
-            return await _blogService.GetBlogListAsync(new BlogListRequestModel() { PageIndex = this.pageIndex, PageSize = pageSize });  
+            return await _productService.GetProductHomeAsync(new ProductHomeRequestModel() { PageIndex = this.pageIndex, PageSize = pageSize });  
         }
 
         [ObservableProperty]
-        public ObservableCollection<BlogListItemResponseModel> blogList;
+        public ObservableCollection<ProductHomeResponseModel> dataList;
         [ObservableProperty]
         public int pageIndex = 1;
         [ObservableProperty]
@@ -58,15 +56,14 @@ namespace Shopping.UI.MemberApp.ViewModels
             {
                 foreach (var item in nextData)
                 {
-                    ItemHandler(item);
-                    blogList.Add(item);
+                    dataList.Add(item);
                 }
             }
         }
         [RelayCommand]
-        async Task ItemClick(BlogListItemResponseModel blog)
+        async Task ItemClick(ProductListItemResponseModel blog)
         {
-            await Shell.Current.GoToAsync($"{nameof(BlogDetailPage)}?Id={blog.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ProductDetailView)}?Id={blog.Id}");
         }
         /// <summary>
         /// 下拉刷新
@@ -78,26 +75,11 @@ namespace Shopping.UI.MemberApp.ViewModels
             //isRefreshing = true;
             this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
             
-            var nextData = await GetDataAsync();
-            if (nextData!=null)
-            {
-                //清空数据
-                blogList.Clear();
-                foreach (var item in nextData)
-                {
-                    ItemHandler(item);
-                    blogList.Add(item);
-                }
-            }
+            
             
             isRefreshing = false;
 
             this.OnPropertyChanged("IsRefreshing");
-        }
-        private void ItemHandler(BlogListItemResponseModel item)
-        {
-            item.CoverImageUrl = Appsettings.BaseAddress + item.CoverImageUrl;
-            item.AccountAvatarUrl = Appsettings.BaseAddress + item.AccountAvatarUrl;
         }
     }
 }

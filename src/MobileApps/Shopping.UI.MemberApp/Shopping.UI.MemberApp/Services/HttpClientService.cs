@@ -125,7 +125,7 @@ namespace Shopping.UI.MemberApp.Services
                 //var login = MauiProgram.Services.GetService<LoginPage>();
                 //Application.Current.MainPage = login;
                 
-                await Shell.Current.GoToAsync(nameof(LoginPage));
+                await Shell.Current.GoToAsync(nameof(LoginView));
                 return default(TResponse);
             }
             else 

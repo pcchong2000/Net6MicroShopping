@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Shopping.UI.MemberApp.HomePage"
+             x:Class="Shopping.UI.MemberApp.HomeView"
              Shell.NavBarIsVisible="false"
              Shell.TabBarIsVisible="true"
              xmlns:viewmodel="clr-namespace:Shopping.UI.MemberApp.ViewModels">
     <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
-        <CollectionView x:Name="listview" ItemsSource="{Binding BlogList}"  
+        <CollectionView x:Name="listview" ItemsSource="{Binding DataList}"  
                     RemainingItemsThreshold="0"
                     RemainingItemsThresholdReachedCommand="{Binding NextPageDataCommand}"
                     >
@@ -17,7 +17,7 @@
                 <DataTemplate>
                     <Grid Padding="0,0,0,5" Margin="2,2" >
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomePageViewModel}}, Path=ItemClickCommand}" CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=ItemClickCommand}" CommandParameter="{Binding .}"/>
                         </Grid.GestureRecognizers>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="300" />

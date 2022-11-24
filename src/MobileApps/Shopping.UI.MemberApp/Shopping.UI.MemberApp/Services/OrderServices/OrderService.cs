@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shopping.UI.MemberApp.Services.BlogServices
+namespace Shopping.UI.MemberApp.Services.OrderServices
 {
-    public class BlogService : IBlogService
+    public class OrderService : IOrderService
     {
         private readonly HttpClientService _httpClient;
-        public BlogService(HttpClientService httpClient)
+        public OrderService(HttpClientService httpClient)
         {
             this._httpClient = httpClient;
         }

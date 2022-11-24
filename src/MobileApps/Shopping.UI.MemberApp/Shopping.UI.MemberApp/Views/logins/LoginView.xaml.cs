@@ -12,12 +12,12 @@ using static PCLCrypto.WinRTCrypto;
 
 namespace Shopping.UI.MemberApp;
 
-public partial class LoginPage : ContentPage
+public partial class LoginView : ContentPage
 {
     private readonly HttpClientService _httpClient;
     private readonly IAccountService _accountService;
     private string _codeVerifier;
-    public LoginPage(LoginPageViewModel vm, HttpClientService httpClientService, IAccountService accountService)
+    public LoginView(LoginViewModel vm, HttpClientService httpClientService, IAccountService accountService)
 	{
 		InitializeComponent();
 		BindingContext = vm;

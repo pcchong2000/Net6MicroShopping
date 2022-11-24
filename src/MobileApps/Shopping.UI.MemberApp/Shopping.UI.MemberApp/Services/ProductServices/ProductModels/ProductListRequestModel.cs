@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shopping.UI.MemberApp.Services.ProductServices
+namespace Shopping.UI.MemberApp.Services.ProductServices.ProductModels
 {
     public class ProductListItemResponseModel
     {
@@ -28,12 +28,5 @@ namespace Shopping.UI.MemberApp.Services.ProductServices
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
     }
-    public class ProductNextRequestModel
-    {
-        public string CurrentId { get; set; }
-        /// <summary>
-        /// 1 上一个  2 下一个
-        /// </summary>
-        public int Action { get; set; }
-    }
+
 }

@@ -2,9 +2,9 @@ using Shopping.UI.MemberApp.ViewModels;
 
 namespace Shopping.UI.MemberApp;
 
-public partial class HomePage : ContentPage
+public partial class HomeView : ContentPage
 {
-    public HomePage(HomePageViewModel vm)
+    public HomeView(HomeViewModel vm)
 	{
 		InitializeComponent();
 

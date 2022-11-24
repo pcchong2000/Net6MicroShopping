@@ -4,10 +4,10 @@ using Shopping.UI.MemberApp.ViewModels;
 
 namespace Shopping.UI.MemberApp;
 
-public partial class MyIndexPage : ContentPage
+public partial class MyIndexView : ContentPage
 {
-    private MyIndexPageViewModel _vm;
-    public MyIndexPage( MyIndexPageViewModel vm)
+    private MyIndexViewModel _vm;
+    public MyIndexView( MyIndexViewModel vm)
 	{
 		InitializeComponent();
         BindingContext = _vm = vm;
@@ -17,7 +17,7 @@ public partial class MyIndexPage : ContentPage
     {
         if (IAccountService.CurrentAccount == null)
         {
-           await Shell.Current.GoToAsync(nameof(LoginPage));
+           await Shell.Current.GoToAsync(nameof(LoginView));
         }
         else 
         {

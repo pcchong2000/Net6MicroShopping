@@ -1,10 +1,9 @@
 ﻿using Shopping.UI.MemberApp.Services;
 using Shopping.UI.MemberApp.Services.AccountServices;
-using Shopping.UI.MemberApp.Services.BlogServices;
-using Shopping.UI.MemberApp.Services.MessageServices;
 using Shopping.UI.MemberApp.Services.ProductServices;
 using Shopping.UI.MemberApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Shopping.UI.MemberApp.Services.OrderServices;
 
 namespace Shopping.UI.MemberApp;
 
@@ -26,32 +25,27 @@ public static class MauiProgram
 
         var services = builder.Services;
 
-        services.AddSingleton<IBlogService, BlogService>();
+        services.AddSingleton<IOrderService, OrderService>();
         services.AddSingleton<IProductService, ProductService>();
-        services.AddSingleton<IMessageService, MessageService>();
         services.AddSingleton<IAccountService, AccountService>();
         services.AddSingleton<HttpClientService>();
         
 
 
-        services.AddSingleton<HomePageViewModel>();
-        services.AddSingleton<BlogDetailPageViewModel>();
-        services.AddSingleton<MessagePageViewModel>();
-        services.AddSingleton<LoginPageViewModel>();
-        services.AddSingleton<MyIndexPageViewModel>();
+        services.AddSingleton<HomeViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<MyIndexViewModel>();
         
 
         services.AddSingleton<AppShell>();
-        services.AddSingleton<HomePage>();
-        services.AddSingleton<BlogDetailPage>();
-        services.AddSingleton<LoginPage>();
-        services.AddSingleton<MyIndexPage>();
+        services.AddSingleton<HomeView>();
+        services.AddSingleton<LoginView>();
+        services.AddSingleton<MyIndexView>();
         
 
-        Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
-        Routing.RegisterRoute(nameof(MessagePage), typeof(MessagePage));
-        Routing.RegisterRoute(nameof(BlogDetailPage), typeof(BlogDetailPage));
-        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
+        Routing.RegisterRoute(nameof(SubmmitOrderView), typeof(SubmmitOrderView));
+        Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
 
         var app = builder.Build();
         Services = app.Services;

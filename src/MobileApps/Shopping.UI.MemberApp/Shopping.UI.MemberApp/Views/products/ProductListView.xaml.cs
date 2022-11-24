@@ -2,13 +2,11 @@ using Shopping.UI.MemberApp.ViewModels;
 
 namespace Shopping.UI.MemberApp;
 
-public partial class BlogDetailPage : ContentPage
+public partial class ProductListView : ContentPage
 {
-    private BlogDetailPageViewModel blogDetailPageViewModel;
-    public BlogDetailPage(BlogDetailPageViewModel vm)
+	public ProductListView()
 	{
 		InitializeComponent();
-        BindingContext = blogDetailPageViewModel = vm;
 	}
     async void OnSwiped(object sender, SwipedEventArgs e)
     {
@@ -16,10 +14,12 @@ public partial class BlogDetailPage : ContentPage
         {
             case SwipeDirection.Left:
                 // Handle the swipe
-                await blogDetailPageViewModel.InitData("id1");
                 break;
             case SwipeDirection.Right:
-                blogDetailPageViewModel.GoBackCommand.Execute(null);
+                var shell = (AppShell)Shell.Current;
+                shell.GotoHome();
+                //await Shell.Current.GoToAsync(nameof(HomePage));//无底部切换效果
+                //await Shell.Current.GoToAsync("..");//无法返回到home
                 // Handle the swipe
                 break;
             case SwipeDirection.Up:
