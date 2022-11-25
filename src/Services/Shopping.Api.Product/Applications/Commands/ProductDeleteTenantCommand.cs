@@ -6,11 +6,15 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Commands
 {
-    public class ProductDeleteTenantCommand : IRequest<ResponseBase>
+    public class ProductDeleteTenantCommand : IRequest<ProductDeleteTenantResponse>
     {
         public string ProductId { get; set; }
     }
-    public class ProductDeleteTenantCommandHandler : IRequestHandler<ProductDeleteTenantCommand, ResponseBase>
+    public class ProductDeleteTenantResponse
+    {
+        public bool IsOk { get; set; }
+    }
+    public class ProductDeleteTenantCommandHandler : IRequestHandler<ProductDeleteTenantCommand, ProductDeleteTenantResponse>
     {
         private readonly ProductDbContext _context;
         private readonly ICurrentUserService _currentUser;
@@ -21,28 +25,18 @@ namespace Shopping.Api.Product.Applications.Commands
             _currentUser = currentUser;
             _logger = logger;
         }
-        public async Task<ResponseBase> Handle(ProductDeleteTenantCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDeleteTenantResponse> Handle(ProductDeleteTenantCommand request, CancellationToken cancellationToken)
         {
-            ResponseBase resp = new ResponseBase()
-            {
-                Code = ResponseBaseCode.Success
-            };
-            try
-            {
-                var product = await _context.Product.Where(a => a.Id == request.ProductId).FirstOrDefaultAsync();
-                if (product != null)
-                {
-                    product.IsDeleted = true;
-                }
+            ProductDeleteTenantResponse resp = new ProductDeleteTenantResponse();
 
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
+            var product = await _context.Product.Where(a => a.Id == request.ProductId).FirstOrDefaultAsync();
+            if (product != null)
             {
-                _logger.LogError(_currentUser.Name + ex.ToString());
-                resp.Code = ResponseBaseCode.Fail;
+                product.IsDeleted = true;
             }
-            
+            resp.IsOk = true;
+            await _context.SaveChangesAsync();
+
             return resp;
         }
     }

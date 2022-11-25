@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Shopping.UI.MemberApp.Services.ProductServices.ProductModels
 {
-    public class ProductListItemResponseModel
+    public class ProductDetailRequestModel: RequestBaseModel
+    {
+        public string Id { get; set; }
+    }
+    public class ProductDetailResponseModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -23,10 +27,6 @@ namespace Shopping.UI.MemberApp.Services.ProductServices.ProductModels
         public string VideoUrl { get; set; }
         public DateTime CreateTime { get; set; }
     }
-    public class ProductListRequestModel : RequestBaseModel
-    {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-    }
+    
 
 }

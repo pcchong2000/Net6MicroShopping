@@ -18,7 +18,7 @@ namespace Shopping.Framework.Domain.Base
         public int TotalCount { get; set; }
         public int PageSize { get; set; } = 10;
     }
-    public class ResponsePageBase<T> : ResponseBase, IRequestPageBase
+    public class ResponsePageBase<T> :IRequestPageBase
     {
         public ResponsePageBase()
         {

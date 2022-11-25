@@ -56,12 +56,12 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
 
         public async Task<AccountInfoResponseModel> MyInfoAsync()
         {
-            return await _httpClient.GetAsync<AccountInfoResponseModel>(Appsettings.MyInfoUrl);
+            return await _httpClient.GetAsync<AccountInfoResponseModel>(Appsettings.AccountMyInfo);
         }
 
         public async Task<AccountInfoResponseModel> UpdateAvatarAsync(Stream file,string name)
         {
-            return await _httpClient.PostFileAsync<AccountInfoResponseModel>(Appsettings.UpdateAvatar, file, name);
+            return await _httpClient.PostFileAsync<AccountInfoResponseModel>(Appsettings.AccountUpdateAvatar, file, name);
             
         }
     }

@@ -7,7 +7,7 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Commands
 {
-    public class StoreProductCategoryEditCommand : IRequest<ResponseBase>
+    public class StoreProductCategoryEditCommand : IRequest<string>
     {
         public string? Id { get; set; }
         public string? Name { get; set; }
@@ -17,7 +17,7 @@ namespace Shopping.Api.Product.Applications.Commands
         public int Sort { get; set; }
         public string StoreId { get; set; }
     }
-    public class StoreProductCategoryEditCommandHandler : IRequestHandler<StoreProductCategoryEditCommand, ResponseBase>
+    public class StoreProductCategoryEditCommandHandler : IRequestHandler<StoreProductCategoryEditCommand, string>
     {
         private readonly ProductDbContext _context;
         private readonly ICurrentUserService _currentUser;
@@ -27,10 +27,9 @@ namespace Shopping.Api.Product.Applications.Commands
             _currentUser = currentUser;
         }
 
-        public async Task<ResponseBase> Handle(StoreProductCategoryEditCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(StoreProductCategoryEditCommand request, CancellationToken cancellationToken)
         {
-            ResponseBase resp = new ResponseBase();
-
+            
             if (request.Id == null)
             {
                 StoreProductCategory storeProductCategory = new StoreProductCategory()
@@ -47,6 +46,8 @@ namespace Shopping.Api.Product.Applications.Commands
 
                 await _context.StoreProductCategory.AddAsync(storeProductCategory);
                 await _context.SaveChangesAsync();
+
+                return storeProductCategory.Id;
             }
             else
             {
@@ -61,14 +62,10 @@ namespace Shopping.Api.Product.Applications.Commands
 
 
                     await _context.SaveChangesAsync();
-
+                    
                 }
-                
-
             }
-
-
-            return resp;
+            return request.Id;
         }
     }
 }

@@ -16,5 +16,15 @@ namespace Shopping.Api.Member.Controllers
         {
             return "123";
         }
+        [HttpGet("myinfo")]
+        public string MyInfo()
+        {
+            return "123";
+        }
+        [HttpPost("updateAvatar")]
+        public string UpdateAvatar()
+        {
+            return "123";
+        }
     }
 }

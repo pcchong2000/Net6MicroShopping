@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shopping.UI.MemberApp.Services.OrderServices
 {
-    public class BlogListItemResponseModel
+    public class OrderListItemResponseModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -27,7 +27,7 @@ namespace Shopping.UI.MemberApp.Services.OrderServices
         public string AccountAvatarUrl { get; set; }
 
     }
-    public class BlogListRequestModel
+    public class OrderListRequestModel
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

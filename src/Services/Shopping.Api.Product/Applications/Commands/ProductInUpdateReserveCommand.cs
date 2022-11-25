@@ -7,7 +7,7 @@ using Shopping.Framework.Web;
 namespace Shopping.Api.Product.Applications.Commands
 {
 
-    public class ProductInUpdateReserveCommand : IRequest<ResponseBase>
+    public class ProductInUpdateReserveCommand : IRequest
     {
         public ProductInUpdateReserveCommand(List<JianKuCunItemDto> productModels)
         {
@@ -21,7 +21,7 @@ namespace Shopping.Api.Product.Applications.Commands
         public string ProductModelId { get; set; }
         public int Number { get; set; }
     }
-    public class ProductInUpdateReserveCommandHandler : IRequestHandler<ProductInUpdateReserveCommand, ResponseBase>
+    public class ProductInUpdateReserveCommandHandler : AsyncRequestHandler<ProductInUpdateReserveCommand>
     {
         private readonly ProductDbContext _context;
         private readonly ICurrentUserService _currentUser;
@@ -32,7 +32,7 @@ namespace Shopping.Api.Product.Applications.Commands
             _currentUser = currentUser;
             _logger = logger;
         }
-        public async Task<ResponseBase> Handle(ProductInUpdateReserveCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(ProductInUpdateReserveCommand request, CancellationToken cancellationToken)
         {
             ResponseBase resp = new ResponseBase()
             {
@@ -74,7 +74,6 @@ namespace Shopping.Api.Product.Applications.Commands
                 resp.Code = ResponseBaseCode.Fail;
             }
             
-            return resp;
         }
     }
 }

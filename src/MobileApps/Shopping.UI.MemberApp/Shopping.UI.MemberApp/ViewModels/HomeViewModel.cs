@@ -20,10 +20,10 @@ namespace Shopping.UI.MemberApp.ViewModels
         }
         async void InitData()
         {
-            var BlogList = await GetDataAsync();
-            if (BlogList != null)
+            var productList = await GetDataAsync();
+            if (productList != null)
             {
-                foreach (var item in BlogList)
+                foreach (var item in productList)
                 {
                     dataList.Add(item);
                 }

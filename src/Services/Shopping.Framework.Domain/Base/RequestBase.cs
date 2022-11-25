@@ -19,6 +19,13 @@ namespace Shopping.Framework.Domain.Base
         {
             Code = ResponseBaseCode.ServerError
         };
+        public static ResponseBase FailMessage(string msg)
+        {
+            return new ResponseBase() {
+            Code= ResponseBaseCode.Fail,
+            Message= msg
+            };
+        }
     }
     public class ResponseBase<T> : ResponseBase
     {

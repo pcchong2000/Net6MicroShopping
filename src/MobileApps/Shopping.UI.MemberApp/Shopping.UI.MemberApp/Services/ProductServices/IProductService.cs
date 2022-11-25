@@ -10,7 +10,7 @@ namespace Shopping.UI.MemberApp.Services.ProductServices
     public interface IProductService
     {
         Task<List<ProductListItemResponseModel>> GetProductListAsync(ProductListRequestModel request);
-        Task<ProductListItemResponseModel> GetProductDetailAsync(string id);
+        Task<ProductDetailResponseModel> GetProductDetailAsync(ProductDetailRequestModel request);
         Task<List<ProductCategoryResponseModel>> GetProductCategoryAsync();
         Task<List<ProductHomeResponseModel>> GetProductHomeAsync(ProductHomeRequestModel request);
     }

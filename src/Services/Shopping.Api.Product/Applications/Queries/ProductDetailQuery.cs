@@ -11,7 +11,7 @@ namespace Shopping.Api.Product.Applications.Queries
     {
         public string ProductId { get; set; }
     }
-    public class ProductDetailQueryResponse : ResponseBase
+    public class ProductDetailQueryResponse
     {
         public string Id { get; set; }
         public string ProductCategoryId { get; set; }

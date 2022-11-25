@@ -8,7 +8,7 @@ namespace Shopping.UI.MemberApp.Services.OrderServices
 {
     public interface IOrderService
     {
-        Task<List<BlogListItemResponseModel>> GetBlogListAsync(BlogListRequestModel request);
-        Task<BlogListItemResponseModel> GetBlogAsync(string id);
+        Task<List<OrderListItemResponseModel>> GetOrderListAsync(OrderListRequestModel request);
+        Task<OrderListItemResponseModel> GetOrderDetailAsync(string id);
     }
 }

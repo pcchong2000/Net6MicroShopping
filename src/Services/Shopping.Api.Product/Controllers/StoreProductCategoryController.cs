@@ -19,28 +19,24 @@ namespace Shopping.Api.Product.Controllers
             _mediator = mediator;
         }
         [HttpPost("tenant")]
-        public async Task<ResponseBase> Post(StoreProductCategoryEditCommand reqeust)
+        public async Task<string> Post(StoreProductCategoryEditCommand reqeust)
         {
-
             return await _mediator.Send(reqeust);
         }
         [HttpPut("tenant")]
-        public async Task<ResponseBase> Put(StoreProductCategoryEditCommand reqeust)
+        public async Task<string> Put(StoreProductCategoryEditCommand reqeust)
         {
-
             return await _mediator.Send(reqeust);
         }
         [HttpGet("tenant")]
         public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetTenantList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
         {
-
             return await _mediator.Send(reqeust);
         }
         [HttpGet]
         [AllowAnonymous]
         public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
         {
-
             return await _mediator.Send(reqeust);
         }
     }

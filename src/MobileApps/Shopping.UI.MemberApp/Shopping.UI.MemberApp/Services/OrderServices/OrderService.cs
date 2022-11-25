@@ -14,14 +14,14 @@ namespace Shopping.UI.MemberApp.Services.OrderServices
         {
             this._httpClient = httpClient;
         }
-        public async Task<List<BlogListItemResponseModel>> GetBlogListAsync(BlogListRequestModel request)
+        public async Task<List<OrderListItemResponseModel>> GetOrderListAsync(OrderListRequestModel request)
         {
-            var resp = await this._httpClient.GetAsync<BlogListRequestModel,List<BlogListItemResponseModel>>(Appsettings.BlogListUrl, request);
+            var resp = await this._httpClient.GetAsync<OrderListRequestModel,List<OrderListItemResponseModel>>(Appsettings.OrderList, request);
             return resp;
         }
-        public async Task<BlogListItemResponseModel> GetBlogAsync(string id)
+        public async Task<OrderListItemResponseModel> GetOrderDetailAsync(string id)
         {
-            return await this._httpClient.GetAsync<BlogListItemResponseModel>(Appsettings.BlogInfoUrl+ id);
+            return await this._httpClient.GetAsync<string,OrderListItemResponseModel>(Appsettings.OrderDetail,id);
             
         }
     }

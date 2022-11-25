@@ -1,4 +1,5 @@
-﻿using Shopping.UI.MemberApp.Services.ProductServices.ProductModels;
+﻿using Shopping.UI.MemberApp.Configs;
+using Shopping.UI.MemberApp.Services.ProductServices.ProductModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,23 +24,23 @@ namespace Shopping.UI.MemberApp.Services.ProductServices
         }
 
 
-        public async Task<ProductListItemResponseModel> GetProductDetailAsync(string id)
+        public async Task<ProductDetailResponseModel> GetProductDetailAsync(ProductDetailRequestModel request)
         {
-            ProductListItemResponseModel resp = await _httpClient.GetAsync<ProductListItemResponseModel>($"/api/blog");
+            ProductDetailResponseModel resp = await _httpClient.GetAsync<ProductDetailRequestModel, ProductDetailResponseModel>(Appsettings.ProductDetail, request);
 
             return resp;
         }
 
         public async Task<List<ProductCategoryResponseModel>> GetProductCategoryAsync()
         {
-            List<ProductCategoryResponseModel> resp = await _httpClient.GetAsync<List<ProductCategoryResponseModel>>($"/api/blog");
+            List<ProductCategoryResponseModel> resp = await _httpClient.GetAsync<List<ProductCategoryResponseModel>>(Appsettings.ProductCategoryList);
 
             return resp;
         }
 
-        public async Task<List<ProductHomeResponseModel>> GetProductHomeAsync(ProductHomeRequestModel request)
+        public async Task<ResponsePageBase<ProductHomeResponseModel>> GetProductHomeAsync(ProductHomeRequestModel request)
         {
-            List<ProductHomeResponseModel> resp = await _httpClient.GetAsync<List<ProductHomeResponseModel>>($"/api/blog");
+            ResponsePageBase<ProductHomeResponseModel> resp = await _httpClient.GetAsync<ProductHomeRequestModel, ResponsePageBase<ProductHomeResponseModel>>(Appsettings.ProductHome, request);
 
             return resp;
         }

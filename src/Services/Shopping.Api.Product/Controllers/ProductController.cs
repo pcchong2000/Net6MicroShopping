@@ -26,9 +26,15 @@ namespace Shopping.Api.Product.Controllers
         {
             return await _mediator.Send(query);
         }
+        [HttpGet("home")]
+        [AllowAnonymous]
+        public async Task<ResponsePageBase<ProductListItemResponse>> GetHome([FromQuery] ProductListQuery query)
+        {
+            return await _mediator.Send(query);
+        }
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ProductListResponse> Get([FromQuery]ProductListQuery query)
+        public async Task<ResponsePageBase<ProductListItemResponse>> Get([FromQuery]ProductListQuery query)
         {
             return await _mediator.Send(query);
         }
@@ -45,13 +51,13 @@ namespace Shopping.Api.Product.Controllers
             return await _mediator.Send(query);
         }
         [HttpGet(JwtBearerIdentity.TenantScheme)]
-        public async Task<ProductListTenantResponse> GetTenant([FromQuery] ProductListTenantQuery query)
+        public async Task<ResponsePageBase<ProductListTenantItemResponse>> GetTenant([FromQuery] ProductListTenantQuery query)
         {
             return await _mediator.Send(query);
 
         }
         [HttpDelete(JwtBearerIdentity.TenantScheme)]
-        public async Task<ResponseBase> DeleteTenant([FromQuery] ProductDeleteTenantCommand query)
+        public async Task<ProductDeleteTenantResponse> DeleteTenant([FromQuery] ProductDeleteTenantCommand query)
         {
             return await _mediator.Send(query);
 
@@ -76,9 +82,9 @@ namespace Shopping.Api.Product.Controllers
         [Topic("pubsub", "newOrder")]
         [HttpPost("kucun-in")]
         [AllowAnonymous]
-        public async Task<ResponseBase> newOrder(ProductInUpdateReserveCommand query)
+        public async Task newOrder(ProductInUpdateReserveCommand query)
         {
-            return await _mediator.Send(query);
+            await _mediator.Send(query);
         }
     }
 }

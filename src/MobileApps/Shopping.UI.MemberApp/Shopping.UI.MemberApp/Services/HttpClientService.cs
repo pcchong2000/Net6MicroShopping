@@ -43,7 +43,6 @@ namespace Shopping.UI.MemberApp.Services
         public async Task<TResponse> GetAsync<TResponse>(string url)
         {
             var httpClient = CreateHttpClient();
-            //var resp = await httpClient.GetAsync(url);
             var resp = await SendAsync(httpClient, url, HttpMethod.Get);
             return await FromJsonAsync<TResponse>(resp);
         }
@@ -164,15 +163,5 @@ namespace Shopping.UI.MemberApp.Services
             }
             return url.TrimEnd('&');
         }
-    }
-
-    public class ResponseBase
-    {
-        public string Code { get; set; }
-        public string Message { get; set; }
-    }
-    public class ResponseBase<T> : ResponseBase
-    {
-        public T Data { get; set; }
     }
 }

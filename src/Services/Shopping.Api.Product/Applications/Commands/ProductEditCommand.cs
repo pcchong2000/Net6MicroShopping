@@ -42,7 +42,7 @@ namespace Shopping.Api.Product.Applications.Commands
         public decimal Price { get; set; }
         public string? Description { get; set; }
     }
-    public class ProductAddResponse : ResponseBase
+    public class ProductAddResponse
     {
         public string? Id { get; set; }
     }
