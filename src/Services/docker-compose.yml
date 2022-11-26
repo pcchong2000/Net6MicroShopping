@@ -1,4 +1,4 @@
-version: '3.4'
+﻿version: '3.4'
 
 services:
   # docker run -d -p 7433:1433 -e SA_PASSWORD=Admin123456 -e ACCEPT_EULA=Y  mcr.microsoft.com/mssql/server:2019-latest

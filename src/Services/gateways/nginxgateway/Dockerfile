@@ -1,13 +1,13 @@
-# ÉèÖÃ»ù´¡¾µÏñ
+ï»¿# è®¾ç½®åŸºç¡€é•œåƒ
 FROM nginx:alpine
 
-#ÖØĞ´nginx ÅäÖÃ£¬\n\ »»ĞĞ
+#é‡å†™nginx é…ç½®ï¼Œ\n\ æ¢è¡Œ
 RUN echo $'server {                                 \n\
     listen       80;                                \n\
     listen  [::]:80;                                \n\
     server_name  localhost;                         \n\
     location ~* \-in$ {                             \n\
-      #ÄÚ²¿½Ó¿Ú²»Æ¥Åä·´Ïò´úÀí                       \n\
+      #å†…éƒ¨æ¥å£ä¸åŒ¹é…åå‘ä»£ç†                       \n\
     }                                               \n\
     location /file {                                \n\
         proxy_pass   http://shopping.api.oss;       \n\
