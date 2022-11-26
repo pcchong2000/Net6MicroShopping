@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Commands

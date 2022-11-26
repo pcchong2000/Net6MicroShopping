@@ -11,8 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Shopping.Framework.Application;
-using Shopping.Framework.EFCore.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
 using Shopping.Framework.Web;
 using System.IO;
 
@@ -41,7 +40,6 @@ namespace Shopping.Api.IdentityTenant
 
             builder.AddDeveloperSigningCredential();
 
-            services.AddApplication();
             services.AddWebFreamework();
             services.AddWebDbContext<TenantDbContext>(Configuration["ConnectionString"]);
             services.AddWebCors();

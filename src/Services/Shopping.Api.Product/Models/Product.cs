@@ -1,5 +1,5 @@
 ﻿
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

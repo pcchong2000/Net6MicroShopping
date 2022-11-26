@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Shopping.Framework.EFCore.Members;
+using Shopping.Framework.AccountEFCore.Members;
 using Shopping.Framework.Web;
 using System.IO;
 

@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Base;
-using Shopping.Framework.Domain.Entities.Tenants;
-using Shopping.Framework.EFCore.Tenants;
+using Shopping.Framework.AccountDomain.Entities.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
 
 namespace Shopping.Api.Tenant.Applications.Commands
 {
@@ -15,9 +14,9 @@ namespace Shopping.Api.Tenant.Applications.Commands
         public string StoreCode { get; set; }
 
     }
-    public class CreateStoreResponse : ResponseBase
+    public class CreateStoreResponse
     {
-
+        public string? Id { get; set; }
     }
     public class CreateStoreCommandHandler : IRequestHandler<CreateStoreCommand, CreateStoreResponse>
     {
@@ -32,8 +31,6 @@ namespace Shopping.Api.Tenant.Applications.Commands
             CreateStoreResponse resp = new CreateStoreResponse();
             if (await _context.TenantStore.AnyAsync(a => a.TenantId == request.TenantId && a.StoreCode == request.StoreCode))
             {
-                resp.Code = ResponseBaseCode.Existed;
-                resp.Message = "门店编号已存在";
                 return resp;
             }
 
@@ -47,10 +44,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
             };
             await _context.TenantStore.AddAsync(store);
             await _context.SaveChangesAsync();
-
-            resp.Code = ResponseBaseCode.Success;
-            resp.Message = "";
-
+            resp.Id= store.Id;
             return resp;
         }
     }

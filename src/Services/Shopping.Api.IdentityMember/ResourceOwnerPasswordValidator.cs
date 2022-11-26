@@ -8,12 +8,13 @@ using IdentityServer4.Events;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Shopping.Framework.Web.AccountServices;
 using Shopping.Framework.EFCore.Tenants;
-using Shopping.Framework.Domain.Base;
-using Shopping.Framework.Domain.Entities.Members;
+using Shopping.Framework.DomainBase.Base;
 using static IdentityModel.OidcConstants;
 using Shopping.Framework.EFCore.Members;
+using Shopping.Framework.AccountEFCore.Members;
+using Shopping.Framework.AccountDomain.Entities.Members;
+using Shopping.Framework.AccountApplication.AccountServices;
 
 namespace Shopping.Api.IdentityMember
 {

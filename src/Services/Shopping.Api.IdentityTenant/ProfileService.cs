@@ -1,10 +1,9 @@
 ﻿using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Entities.Tenants;
-using Shopping.Framework.EFCore.Tenants;
-using Shopping.Framework.Web.AccountServices;
+using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.AccountDomain.Entities.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,0 +1,37 @@
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Shopping.Api.Product.Applications.Commands;
+using Shopping.Api.Product.Applications.Queries;
+using Shopping.Framework.DomainBase.Base;
+
+namespace Shopping.Api.Product.TenantControllers
+{
+    public class TenantStoreProductCategoryController : TenantApiController
+    {
+        private ISender _mediator;
+        private readonly ILogger<TenantStoreProductCategoryController> _logger;
+
+        public TenantStoreProductCategoryController(ILogger<TenantStoreProductCategoryController> logger, ISender mediator)
+        {
+            _logger = logger;
+            _mediator = mediator;
+        }
+        [HttpPost]
+        public async Task<string> Post(StoreProductCategoryEditCommand reqeust)
+        {
+            return await _mediator.Send(reqeust);
+        }
+        [HttpPut]
+        public async Task<string> Put(StoreProductCategoryEditCommand reqeust)
+        {
+            return await _mediator.Send(reqeust);
+        }
+        [HttpGet]
+        public async Task<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>> GetTenantList([FromQuery] StoreProductCategoryTenantPageQuery reqeust)
+        {
+            return await _mediator.Send(reqeust);
+        }
+
+    }
+}

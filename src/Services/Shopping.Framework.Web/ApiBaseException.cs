@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

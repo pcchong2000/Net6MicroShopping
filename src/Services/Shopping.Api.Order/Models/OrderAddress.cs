@@ -1,4 +1,4 @@
-﻿using Shopping.Framework.Domain.Base;
+﻿using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Order.Models
 {

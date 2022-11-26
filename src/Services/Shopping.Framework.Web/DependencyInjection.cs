@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Shopping.Framework.Web.AccountServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +25,8 @@ namespace Shopping.Framework.Web
     {
         public static IServiceCollection AddWebFreamework(this IServiceCollection services)
         {
-            services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
-            services.AddScoped(typeof(IAccountManage<,>), typeof(DefaultAccountManage<,>));
+            //services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
+            //services.AddScoped(typeof(IAccountManage<,>), typeof(DefaultAccountManage<,>));
 
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -192,7 +191,7 @@ namespace Shopping.Framework.Web
             return builder;
         }
         /// <summary>
-        /// 商户认证
+        /// 添加服务监听
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configuration"></param>

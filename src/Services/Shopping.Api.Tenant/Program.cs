@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Shopping.Api.Tenant;
-using Shopping.Framework.Application;
-using Shopping.Framework.EFCore.Tenants;
+using Shopping.Framework.AccountApplication;
+using Shopping.Framework.AccountEFCore.Tenants;
 using Shopping.Framework.Web;
 using System.Reflection;
 
@@ -18,7 +18,6 @@ builder.Services.AddControllers(options => {
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplication();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 //add-migration init -Context TenantDbContext -OutputDir Tenants/migrations
@@ -32,6 +31,8 @@ builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
 
 // ÃÌº”øÁ”Ú
 builder.Services.AddWebCors();
+
+builder.Services.AddAccountApplication();
 
 builder.Services.AddWebFreamework();
 

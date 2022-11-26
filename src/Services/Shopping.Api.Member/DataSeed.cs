@@ -1,10 +1,8 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Entities.Members;
-using Shopping.Framework.EFCore.Members;
+﻿using Microsoft.EntityFrameworkCore;
+using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.AccountDomain.Entities.Members;
+using Shopping.Framework.AccountEFCore.Members;
 using Shopping.Framework.Web;
-using Shopping.Framework.Web.AccountServices;
 
 namespace Shopping.Api.Member
 {

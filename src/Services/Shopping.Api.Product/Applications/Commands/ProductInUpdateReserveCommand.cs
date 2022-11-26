@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Commands
@@ -34,10 +34,6 @@ namespace Shopping.Api.Product.Applications.Commands
         }
         protected override async Task Handle(ProductInUpdateReserveCommand request, CancellationToken cancellationToken)
         {
-            ResponseBase resp = new ResponseBase()
-            {
-                Code = ResponseBaseCode.Success
-            };
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
@@ -71,7 +67,7 @@ namespace Shopping.Api.Product.Applications.Commands
             {
                 await transaction.RollbackAsync();
                 _logger.LogError(_currentUser.Name + ex.ToString());
-                resp.Code = ResponseBaseCode.Fail;
+                throw;
             }
             
         }

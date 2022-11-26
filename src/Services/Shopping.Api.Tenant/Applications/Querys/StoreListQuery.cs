@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Base;
-using Shopping.Framework.Domain.Entities.Tenants;
-using Shopping.Framework.EFCore.Tenants;
+using Shopping.Framework.AccountDomain.Entities.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
+using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Tenant.Applications.Querys
 {

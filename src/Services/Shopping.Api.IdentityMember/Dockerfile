@@ -1,4 +1,4 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
@@ -7,9 +7,11 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Shopping.Api.IdentityMember/Shopping.Api.IdentityMember.csproj", "Shopping.Api.IdentityMember/"]
-COPY ["Shopping.Framework.Domain/Shopping.Framework.Domain.csproj", "Shopping.Framework.Domain/"]
+COPY ["Shopping.Framework.AccountApplication/Shopping.Framework.AccountApplication.csproj", "Shopping.Framework.AccountApplication/"]
+COPY ["Shopping.Framework.AccountDomain/Shopping.Framework.AccountDomain.csproj", "Shopping.Framework.AccountDomain/"]
+COPY ["Shopping.Framework.DomainBase/Shopping.Framework.DomainBase.csproj", "Shopping.Framework.DomainBase/"]
 COPY ["Shopping.Framework.Common/Shopping.Framework.Common.csproj", "Shopping.Framework.Common/"]
-COPY ["Shopping.Framework.EFCore/Shopping.Framework.EFCore.csproj", "Shopping.Framework.EFCore/"]
+COPY ["Shopping.Framework.AccountEFCore/Shopping.Framework.AccountEFCore.csproj", "Shopping.Framework.AccountEFCore/"]
 COPY ["Shopping.Framework.Web/Shopping.Framework.Web.csproj", "Shopping.Framework.Web/"]
 RUN dotnet restore "Shopping.Api.IdentityMember/Shopping.Api.IdentityMember.csproj"
 COPY . .
@@ -17,7 +19,7 @@ WORKDIR "/src/Shopping.Api.IdentityMember"
 RUN dotnet build "Shopping.Api.IdentityMember.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Shopping.Api.IdentityMember.csproj" -c Release -o /app/publish
+RUN dotnet publish "Shopping.Api.IdentityMember.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

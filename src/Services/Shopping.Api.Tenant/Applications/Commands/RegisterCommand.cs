@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Base;
-using Shopping.Framework.Domain.Entities.Tenants;
-using Shopping.Framework.EFCore.Tenants;
-using Shopping.Framework.Web.AccountServices;
+using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.AccountDomain.Entities.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
+using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Tenant.Applications.Commands
 {
@@ -18,8 +18,9 @@ namespace Shopping.Api.Tenant.Applications.Commands
         public string Password { get; set; }
         public string Code { get; set; }
     }
-    public class RegisterTenantResponse : ResponseBase
+    public class RegisterTenantResponse
     {
+        public string Id { get; set; }
     }
     public class CreateTodoListCommandHandler : IRequestHandler<RegisterTenantCommand, RegisterTenantResponse>
     {
@@ -36,26 +37,26 @@ namespace Shopping.Api.Tenant.Applications.Commands
             RegisterTenantResponse resp = new RegisterTenantResponse();
             if (await _context.TenantInfo.AnyAsync(a => a.TenantCode == request.TenantCode))
             {
-                resp.Code = ResponseBaseCode.Existed;
-                resp.Message = "商户号已存在";
+                //resp.Code = ResponseBaseCode.Existed;
+                //resp.Message = "商户号已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.UserName == request.UserName))
             {
-                resp.Code = ResponseBaseCode.Existed;
-                resp.Message = "用户名已存在";
+                //resp.Code = ResponseBaseCode.Existed;
+                //resp.Message = "用户名已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.Email == request.Email))
             {
-                resp.Code = ResponseBaseCode.Existed;
-                resp.Message = "邮箱已存在";
+                //resp.Code = ResponseBaseCode.Existed;
+                //resp.Message = "邮箱已存在";
                 return resp;
             }
             if (await _context.TenantAdmin.AnyAsync(a => a.PhoneNumber == request.PhoneNumber))
             {
-                resp.Code = ResponseBaseCode.Existed;
-                resp.Message = "手机号已存在";
+                //resp.Code = ResponseBaseCode.Existed;
+                //resp.Message = "手机号已存在";
                 return resp;
             }
 
@@ -79,8 +80,7 @@ namespace Shopping.Api.Tenant.Applications.Commands
             };
             await _accountManage.Create(tenantAdmin, request.Password);
 
-            resp.Code = ResponseBaseCode.Success;
-            resp.Message = "";
+            resp.Id = tenantAdmin.Id;
             return resp;
         }
     }

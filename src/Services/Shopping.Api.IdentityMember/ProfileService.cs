@@ -2,9 +2,9 @@
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Entities.Members;
-using Shopping.Framework.EFCore.Members;
-using Shopping.Framework.Web.AccountServices;
+using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.AccountDomain.Entities.Members;
+using Shopping.Framework.AccountEFCore.Members;
 using System;
 using System.Collections.Generic;
 using System.Linq;

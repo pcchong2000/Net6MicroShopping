@@ -1,10 +1,10 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.Domain.Entities.Tenants;
-using Shopping.Framework.EFCore.Tenants;
+using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.AccountDomain.Entities.Tenants;
+using Shopping.Framework.AccountEFCore.Tenants;
 using Shopping.Framework.Web;
-using Shopping.Framework.Web.AccountServices;
 
 namespace Shopping.Api.Tenant
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.Applications.Queries

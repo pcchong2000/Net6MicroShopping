@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Order.Data;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
+using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.Application.Tenants.Queries

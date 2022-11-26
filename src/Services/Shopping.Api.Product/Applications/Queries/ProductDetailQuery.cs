@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Applications.Commands;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Product.Applications.Queries
 {

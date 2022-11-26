@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shopping.Framework.Domain.Base;
+using Shopping.Framework.DomainBase.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
