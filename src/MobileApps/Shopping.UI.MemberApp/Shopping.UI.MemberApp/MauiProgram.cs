@@ -35,7 +35,7 @@ public static class MauiProgram
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<MyIndexViewModel>();
-        
+        services.AddSingleton<ProductCategoryViewModel>();
 
         services.AddSingleton<AppShell>();
         services.AddSingleton<HomeView>();
@@ -46,7 +46,8 @@ public static class MauiProgram
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
         Routing.RegisterRoute(nameof(SubmmitOrderView), typeof(SubmmitOrderView));
         Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
-
+        Routing.RegisterRoute(nameof(ProductDetailView), typeof(ProductDetailView));
+        Routing.RegisterRoute(nameof(ProductListView), typeof(ProductListView));
         var app = builder.Build();
         Services = app.Services;
         return app;

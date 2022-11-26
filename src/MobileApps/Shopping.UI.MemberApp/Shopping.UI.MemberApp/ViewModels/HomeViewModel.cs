@@ -15,7 +15,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         public HomeViewModel(IProductService productService)
         {
             _productService = productService;
-            dataList = new ObservableCollection<ProductHomeResponseModel>();
+            dataList = new ObservableCollection<ProductHomeItemResponseModel>();
             InitData();
         }
         async void InitData()
@@ -29,13 +29,14 @@ namespace Shopping.UI.MemberApp.ViewModels
                 }
             }
         }
-        async Task<List<ProductHomeResponseModel>> GetDataAsync()
+        async Task<List<ProductHomeItemResponseModel>> GetDataAsync()
         {
-            return await _productService.GetProductHomeAsync(new ProductHomeRequestModel() { PageIndex = this.pageIndex, PageSize = pageSize });  
+            var pageData = await _productService.GetProductHomeAsync(new ProductHomeRequestModel() { PageIndex = this.pageIndex, PageSize = pageSize });
+            return pageData.List;
         }
 
         [ObservableProperty]
-        public ObservableCollection<ProductHomeResponseModel> dataList;
+        public ObservableCollection<ProductHomeItemResponseModel> dataList;
         [ObservableProperty]
         public int pageIndex = 1;
         [ObservableProperty]

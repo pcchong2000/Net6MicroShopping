@@ -28,26 +28,11 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Border  Grid.Row="0"  StrokeThickness="0" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
-                            <Image Source="{Binding CoverImageUrl}"  Aspect="AspectFit"></Image>
+                            <Image Source="{Binding ImageUrl}"  Aspect="AspectFit"></Image>
                         </Border>
 
-                        <Label Grid.Row="1" Text="{Binding Title}" FontAttributes="Bold" FontSize="12" Padding="5,0" VerticalTextAlignment="Center" />
-                        <Grid  Grid.Row="2" Padding="5,0,10,0" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition  />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="50" />
-                            </Grid.ColumnDefinitions>
-                            <Border  Grid.Column="0"  StrokeThickness="1" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center"  StrokeShape="RoundRectangle 13" >
-                                <Image Source="{Binding AccountAvatarUrl}" Aspect="AspectFill"></Image>
-                            </Border>
-                            
-                            <Label  Grid.Column="1" Text="{Binding AccountName}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            <Label  Grid.Column="2" Text="{Binding Follow}" HorizontalOptions="End" VerticalOptions="Center" />
-                        </Grid>
+                        <Label Grid.Row="1" Text="{Binding Name}" FontAttributes="Bold" FontSize="12" Padding="5,0" VerticalTextAlignment="Center" />
+                        <Label Grid.Row="2" Text="{Binding Price}" HorizontalOptions="End" VerticalOptions="Center" />
                         
                     </Grid>
                 </DataTemplate>

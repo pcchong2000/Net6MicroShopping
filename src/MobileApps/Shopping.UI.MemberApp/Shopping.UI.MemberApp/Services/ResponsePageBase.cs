@@ -9,7 +9,7 @@ namespace Shopping.UI.MemberApp.Services
 {
     public class ResponsePageBase<T>
     {
-        public IEnumerable<T> List { get; set; }
+        public List<T> List { get; set; }
         public int PageIndex { get; set; }
         public int TotalCount { get; set; }
         public int PageSize { get; set; }

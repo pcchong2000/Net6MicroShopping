@@ -23,10 +23,8 @@ namespace Shopping.UI.MemberApp.Services.ProductServices.ProductModels
         public string VideoUrl { get; set; }
         public DateTime CreateTime { get; set; }
     }
-    public class ProductListRequestModel : RequestBaseModel
+    public class ProductListRequestModel : RequestPageBase
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
     }
 
 }

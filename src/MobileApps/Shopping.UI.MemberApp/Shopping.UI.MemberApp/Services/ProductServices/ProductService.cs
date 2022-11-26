@@ -16,9 +16,9 @@ namespace Shopping.UI.MemberApp.Services.ProductServices
         {
             this._httpClient = httpClient;
         }
-        public async Task<List<ProductListItemResponseModel>> GetProductListAsync(ProductListRequestModel request)
+        public async Task<ResponsePageBase<ProductListItemResponseModel>> GetProductListAsync(ProductListRequestModel request)
         {
-            List<ProductListItemResponseModel> resp = await _httpClient.GetAsync<List<ProductListItemResponseModel>>($"/api/blog");
+            ResponsePageBase<ProductListItemResponseModel> resp = await _httpClient.GetAsync<ResponsePageBase<ProductListItemResponseModel>>($"/api/blog");
             
             return resp;
         }
@@ -38,9 +38,9 @@ namespace Shopping.UI.MemberApp.Services.ProductServices
             return resp;
         }
 
-        public async Task<ResponsePageBase<ProductHomeResponseModel>> GetProductHomeAsync(ProductHomeRequestModel request)
+        public async Task<ResponsePageBase<ProductHomeItemResponseModel>> GetProductHomeAsync(ProductHomeRequestModel request)
         {
-            ResponsePageBase<ProductHomeResponseModel> resp = await _httpClient.GetAsync<ProductHomeRequestModel, ResponsePageBase<ProductHomeResponseModel>>(Appsettings.ProductHome, request);
+            ResponsePageBase<ProductHomeItemResponseModel> resp = await _httpClient.GetAsync<ProductHomeRequestModel, ResponsePageBase<ProductHomeItemResponseModel>>(Appsettings.ProductHome, request);
 
             return resp;
         }

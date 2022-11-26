@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shopping.UI.MemberApp.Services.ProductServices.ProductModels
 {
-    public class ProductDetailRequestModel: RequestBaseModel
+    public class ProductDetailRequestModel: RequestBase
     {
         public string Id { get; set; }
     }
