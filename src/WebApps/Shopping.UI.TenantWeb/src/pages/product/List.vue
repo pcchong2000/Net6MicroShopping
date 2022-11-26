@@ -80,7 +80,7 @@ export default {
     getDataList(){
       productService.getProductList(this.searchData).then(a=>{
         console.log(a);
-        this.dataList=a.list;
+        this.dataList=a.data.list;
       });
     },
 

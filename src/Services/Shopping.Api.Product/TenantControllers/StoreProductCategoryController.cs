@@ -7,12 +7,12 @@ using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Product.TenantControllers
 {
-    public class TenantStoreProductCategoryController : TenantApiController
+    public class StoreProductCategoryController : TenantApiController
     {
         private ISender _mediator;
-        private readonly ILogger<TenantStoreProductCategoryController> _logger;
+        private readonly ILogger<StoreProductCategoryController> _logger;
 
-        public TenantStoreProductCategoryController(ILogger<TenantStoreProductCategoryController> logger, ISender mediator)
+        public StoreProductCategoryController(ILogger<StoreProductCategoryController> logger, ISender mediator)
         {
             _logger = logger;
             _mediator = mediator;

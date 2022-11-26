@@ -56,18 +56,18 @@ const productModelSelect=ref({});
 
 productService.getProductDetail({ProductId:id}).then(resp=>{
   console.log(resp);
-  product.value=resp;
-  resp.storeProductModelCategoryList.forEach(item=>{
+  product.value=resp.data;
+  resp.data.storeProductModelCategoryList.forEach(item=>{
     item.items=JSON.parse(item.items);
     productModelSelect.value[item.code]='';
   });
   console.log(resp.storeProductModelCategoryList);
-  productModelCategory.value=resp.storeProductModelCategoryList;
+  productModelCategory.value=resp.data.storeProductModelCategoryList;
 
-  resp.storeProductModelList.forEach(item=>{
+  resp.data.storeProductModelList.forEach(item=>{
     item.value=JSON.parse(item.value);
   });
-  productModel.value=resp.storeProductModelList;
+  productModel.value=resp.data.storeProductModelList;
 });
 
 function init(){

@@ -24,7 +24,7 @@ console.log(route.params.id)
 
 const productList=ref([]);
 productService.getProductList({pageIndex:1,pageSize:10}).then(resp=>{
-  productList.value=resp.list;
+  productList.value=resp.data.list;
 })
 </script>
 

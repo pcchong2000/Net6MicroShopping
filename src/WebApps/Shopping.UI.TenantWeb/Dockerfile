@@ -1,11 +1,8 @@
 FROM node as build-stage
 WORKDIR /app
-COPY ["DaprTest.UI.Tenant/ClientVue/package*.json", "./"] 
-# RUN npm config set registry https://registry.npm.taobao.org
-RUN npm install
+RUN npm config set registry https://registry.npm.taobao.org
 COPY . .
-COPY ["DaprTest.UI.Tenant/ClientVue", "./"] 
-RUN npm run build
+RUN npm install && npm run build
 
 
 FROM nginx:alpine as production-stage

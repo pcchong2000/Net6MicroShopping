@@ -165,9 +165,9 @@ export default {
       let query={productId:this.productId};
       productService.getProductDetail(query).then(resp=>{
         console.log(resp);
-        this.submitData=resp;
-        this.modelCategoryList=resp.storeProductModelCategoryList;
-        this.productModelList=resp.storeProductModelList;
+        this.submitData=resp.data;
+        this.modelCategoryList=resp.data.storeProductModelCategoryList;
+        this.productModelList=resp.data.storeProductModelList;
         this.productModelList.forEach(item=>{
           item.value=JSON.parse(item.value)
         });

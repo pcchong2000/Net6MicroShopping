@@ -79,7 +79,7 @@ export default {
     getDataList(){
       productService.getStoreProductCategoryList(this.searchData).then(a=>{
         console.log(a);
-        this.dataList=a.list;
+        this.dataList=a.data.list;
       });
     },
     submit(){

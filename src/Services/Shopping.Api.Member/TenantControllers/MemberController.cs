@@ -3,11 +3,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Shopping.Api.Member.TenantControllers
 {
-    public class TenantMemberController : TenantApiController
+    public class MemberController : TenantApiController
     {
-        private readonly ILogger<TenantMemberController> _logger;
+        private readonly ILogger<MemberController> _logger;
 
-        public TenantMemberController(ILogger<TenantMemberController> logger)
+        public MemberController(ILogger<MemberController> logger)
         {
             _logger = logger;
         }

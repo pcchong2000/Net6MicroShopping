@@ -9,12 +9,12 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.TenantControllers
 {
-    public class TenantOrderController : TenantApiController
+    public class OrderController : TenantApiController
     {
-        private readonly ILogger<TenantOrderController> _logger;
+        private readonly ILogger<OrderController> _logger;
 
         private ISender _mediator;
-        public TenantOrderController(ILogger<TenantOrderController> logger, ISender mediator)
+        public OrderController(ILogger<OrderController> logger, ISender mediator)
         {
             _logger = logger;
 

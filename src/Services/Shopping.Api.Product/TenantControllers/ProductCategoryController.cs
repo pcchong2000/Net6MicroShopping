@@ -9,12 +9,12 @@ namespace Shopping.Api.Product.TenantControllers
     /// <summary>
     /// 总产品品类
     /// </summary>
-    public class TenantProductCategoryController : TenantApiController
+    public class ProductCategoryController : TenantApiController
     {
         private ISender _mediator;
-        private readonly ILogger<TenantProductCategoryController> _logger;
+        private readonly ILogger<ProductCategoryController> _logger;
 
-        public TenantProductCategoryController(ILogger<TenantProductCategoryController> logger, ISender mediator)
+        public ProductCategoryController(ILogger<ProductCategoryController> logger, ISender mediator)
         {
             _logger = logger;
             _mediator = mediator;

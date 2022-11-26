@@ -1,24 +1,24 @@
 import axios from '../common/request';
 
-const serviceName="product";
+const serviceName="/api/product/tenant";
 const productService={
-    getProductList:(params)    =>axios.get(`/api/${serviceName}/Product/tenant`,params),
-    getProductDetail:(params)  =>axios.get(`/api/${serviceName}/Product/tenant/detail`,params),
-    postProduct:(data)        =>axios.post(`/api/${serviceName}/Product/tenant`,data),
-    putProduct:(data)          =>axios.put(`/api/${serviceName}/Product/tenant`,data),
-    deleteProduct:(params)  =>axios.delete(`/api/${serviceName}/Product/tenant`,params),
+    getProductList:(params)    =>axios.get(`${serviceName}/Product`,params),
+    getProductDetail:(params)  =>axios.get(`${serviceName}/Product/detail`,params),
+    postProduct:(data)        =>axios.post(`${serviceName}/Product`,data),
+    putProduct:(data)          =>axios.put(`${serviceName}/Product`,data),
+    deleteProduct:(params)  =>axios.delete(`${serviceName}/Product`,params),
 
-    getProductCategoryList:(params)    =>axios.get(`/api/${serviceName}/ProductCategory/tenant`,params),
-    getProductCategoryDetail:(params)  =>axios.get(`/api/${serviceName}/ProductCategory/tenant`,params),
-    postProductCategory:(data)        =>axios.post(`/api/${serviceName}/ProductCategory/tenant`,data),
-    putProductCategory:(data)          =>axios.put(`/api/${serviceName}/ProductCategory/tenant`,data),
-    deleteProductCategory:(params)  =>axios.delete(`/api/${serviceName}/ProductCategory/tenant`,params),
+    getProductCategoryList:(params)    =>axios.get(`${serviceName}/ProductCategory`,params),
+    getProductCategoryDetail:(params)  =>axios.get(`${serviceName}/ProductCategory`,params),
+    postProductCategory:(data)        =>axios.post(`${serviceName}/ProductCategory`,data),
+    putProductCategory:(data)          =>axios.put(`${serviceName}/ProductCategory`,data),
+    deleteProductCategory:(params)  =>axios.delete(`${serviceName}/ProductCategory`,params),
 
-    getStoreProductCategoryList:(params)    =>axios.get(`/api/${serviceName}/StoreProductCategory/tenant`,params),
-    getStoreProductCategoryDetail:(params)  =>axios.get(`/api/${serviceName}/StoreProductCategory/tenant`,params),
-    postStoreProductCategory:(data)        =>axios.post(`/api/${serviceName}/StoreProductCategory/tenant`,data),
-    putStoreProductCategory:(data)          =>axios.put(`/api/${serviceName}/StoreProductCategory/tenant`,data),
-    deleteStoreProductCategory:(params)  =>axios.delete(`/api/${serviceName}/StoreProductCategory/tenant`,params),
+    getStoreProductCategoryList:(params)    =>axios.get(`${serviceName}/StoreProductCategory`,params),
+    getStoreProductCategoryDetail:(params)  =>axios.get(`${serviceName}/StoreProductCategory`,params),
+    postStoreProductCategory:(data)        =>axios.post(`${serviceName}/StoreProductCategory`,data),
+    putStoreProductCategory:(data)          =>axios.put(`${serviceName}/StoreProductCategory`,data),
+    deleteStoreProductCategory:(params)  =>axios.delete(`${serviceName}/StoreProductCategory`,params),
 };
 
 export default productService;

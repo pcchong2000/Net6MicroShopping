@@ -35,7 +35,7 @@ export default {
   created(){
     storeService.getList(this.pageRequest).then(resp=>{
       console.log(resp);
-      this.storeList=resp.list;
+      this.storeList=resp.data.list;
     });
 
   },

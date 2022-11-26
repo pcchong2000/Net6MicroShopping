@@ -10,12 +10,12 @@ using Shopping.Framework.Web;
 
 namespace Shopping.Api.Product.TenantControllers
 {
-    public class TenantProductController : TenantApiController
+    public class ProductController : TenantApiController
     {
         private ISender _mediator;
-        private readonly ILogger<TenantProductController> _logger;
+        private readonly ILogger<ProductController> _logger;
 
-        public TenantProductController(ILogger<TenantProductController> logger, ISender mediator)
+        public ProductController(ILogger<ProductController> logger, ISender mediator)
         {
             _mediator = mediator;
             _logger = logger;
