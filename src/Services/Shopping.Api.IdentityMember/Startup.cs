@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Shopping.Framework.AccountApplication;
 using Shopping.Framework.AccountEFCore.Members;
 using Shopping.Framework.Web;
 using System.IO;
@@ -39,6 +40,8 @@ namespace Shopping.Api.IdentityMember
             //.AddTestUsers(TestUsers.Users);
 
             builder.AddDeveloperSigningCredential();
+
+            services.AddAccountApplication();
 
             services.AddWebFreamework();
             services.AddWebDbContext<MemberDbContext>(Configuration["ConnectionString"]);
