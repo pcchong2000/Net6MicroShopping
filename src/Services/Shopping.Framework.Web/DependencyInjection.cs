@@ -163,11 +163,26 @@ namespace Shopping.Framework.Web
                 //另一设备登录挤退方案
                 //登录后token写入此用户最后登录设备号(或者其他可确认为单次登录的信息),同时ProfileService缓存此用户最后登录设备号
                 //在验证token 这里查询token和缓存是否一致，不一致返回认证失败；
-                //options.Events.OnTokenValidated = context => {
-                    //var cache = context.HttpContext.RequestServices.GetRequiredService<Redis>();
-                    //context.Fail("设备在其他地方登录");
-                    //context.Success();
-                    //return Task.CompletedTask; 
+                //options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
+                //{
+                //    OnTokenValidated= context =>
+                //    {
+                //        var currentLoginTime = context.Principal?.Claims.Where(a=>a.Type=="login_time").FirstOrDefault();
+                //        if (currentLoginTime != null)
+                //        {
+                //            //var cache = context.HttpContext.RequestServices.GetRequiredService<Redis>();
+                //            var loginTime = await cache.get("user_token_login_time");
+                //            if (loginTime != null)
+                //            {
+                //                if (currentLoginTime < loginTime)//不是最新登录的token
+                //                {
+                //                    context.Fail("设备在其他地方登录");
+                //                }
+                //            }
+                //            context.Success();
+                //        }
+                //        return Task.CompletedTask;
+                //    }
                 //};
             });
             return builder;
