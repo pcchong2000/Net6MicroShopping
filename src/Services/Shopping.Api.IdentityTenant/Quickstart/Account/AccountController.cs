@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shopping.Api.IdentityTenant.Data;
+using Shopping.Api.IdentityTenant.Models;
 using Shopping.Framework.AccountApplication.AccountServices;
-using Shopping.Framework.AccountDomain.Entities.Tenants;
-using Shopping.Framework.AccountEFCore.Tenants;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,12 +60,6 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
         {
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
-
-            if (vm.IsExternalLoginOnly)
-            {
-                // we only have one option for logging in and it's an external provider
-                return RedirectToAction("Challenge", "External", new { scheme = vm.ExternalLoginScheme, returnUrl });
-            }
 
             return View(vm);
         }
@@ -252,23 +246,9 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                     Username = context?.LoginHint,
                 };
 
-                if (!local)
-                {
-                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
-                }
 
                 return vm;
             }
-
-            var schemes = await _schemeProvider.GetAllSchemesAsync();
-
-            var providers = schemes
-                .Where(x => x.DisplayName != null)
-                .Select(x => new ExternalProvider
-                {
-                    DisplayName = x.DisplayName ?? x.Name,
-                    AuthenticationScheme = x.Name
-                }).ToList();
 
             var allowLocal = true;
             if (context?.Client.ClientId != null)
@@ -277,11 +257,6 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;
-
-                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
-                    {
-                        providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
-                    }
                 }
             }
 
@@ -291,7 +266,6 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
-                ExternalProviders = providers.ToArray()
             };
         }
 

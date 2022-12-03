@@ -9,5 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Shopping.Framework.DomainBase\Shopping.Framework.DomainBase.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Base\" />
+  </ItemGroup>
 
 </Project>

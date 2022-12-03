@@ -8,10 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Shopping.Api.IdentityMember/Shopping.Api.IdentityMember.csproj", "Shopping.Api.IdentityMember/"]
 COPY ["Shopping.Framework.AccountApplication/Shopping.Framework.AccountApplication.csproj", "Shopping.Framework.AccountApplication/"]
-COPY ["Shopping.Framework.AccountDomain/Shopping.Framework.AccountDomain.csproj", "Shopping.Framework.AccountDomain/"]
 COPY ["Shopping.Framework.DomainBase/Shopping.Framework.DomainBase.csproj", "Shopping.Framework.DomainBase/"]
 COPY ["Shopping.Framework.Common/Shopping.Framework.Common.csproj", "Shopping.Framework.Common/"]
-COPY ["Shopping.Framework.AccountEFCore/Shopping.Framework.AccountEFCore.csproj", "Shopping.Framework.AccountEFCore/"]
 COPY ["Shopping.Framework.Web/Shopping.Framework.Web.csproj", "Shopping.Framework.Web/"]
 RUN dotnet restore "Shopping.Api.IdentityMember/Shopping.Api.IdentityMember.csproj"
 COPY . .

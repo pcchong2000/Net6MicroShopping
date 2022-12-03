@@ -176,13 +176,13 @@ export default {
     getProductCategory(){
       productService.getProductCategoryList({pageIndex:1,pageSize:20}).then(a=>{
         console.log(a);
-        this.productCategoryList=a.list;
+        this.productCategoryList=a.data.list;
       });
     },
     getStoreProductCategory(){
       productService.getStoreProductCategoryList({pageIndex:1,pageSize:20,storeId:this.storeId}).then(a=>{
         console.log(a);
-        this.storeProductCategoryList=a.list;
+        this.storeProductCategoryList=a.data.list;
       });
     },
     submit(){

@@ -58,26 +58,6 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
-  shopping.api.member:
-    container_name: shopping_member
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
-      - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
-      - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
-      - ApiName=memberapi
-    ports:
-      - "5002:80"
-  shopping.api.member.dapr:
-    container_name: shopping_member_dapr
-    command: [ "./daprd",
-    "-app-id", "memberapi",
-    "-app-port", "80",
-    "-components-path", "/components",
-    "-config", "/configuration/eshop-config.yaml" ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
 
   shopping.api.pay:
     container_name: shopping_pay
@@ -125,26 +105,6 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
-  shopping.api.tenant:
-    container_name: shopping_tenant
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
-      - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
-      - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
-      - ApiName=tenantapi
-    ports:
-      - "5005:80"
-  shopping.api.tenant.dapr:
-    container_name: shopping_tenant_dapr
-    command: [ "./daprd",
-    "-app-id", "tenantapi",
-    "-app-port", "80",
-    "-components-path", "/components",
-    "-config", "/configuration/eshop-config.yaml" ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
 
   shopping.api.identitymember:
     container_name: shopping_identitymember
@@ -154,8 +114,20 @@ services:
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
       - MemberWebUrl=http://${LOCALHOST_IP}:5201
       - MemberMauiUrl=http://${LOCALHOST_IP}:5101
+      - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
+      - IssuerUri=http://${LOCALHOST_IP}:5101
     ports:
       - "5101:80"
+  shopping.api.identitymember.dapr:
+    container_name: shopping_identitymember_dapr
+    command: [ "./daprd",
+    "-app-id", "identitymember",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   shopping.api.identitytenant:
     container_name: shopping_identitytenant
@@ -163,9 +135,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
       - TenantWebUrl=http://${LOCALHOST_IP}:5202
+      - IssuerUri=http://${LOCALHOST_IP}:5102
     ports:
       - "5102:80"
-
+  shopping.api.identitytenant.dapr:
+    container_name: shopping_identitytenant_dapr
+    command: [ "./daprd",
+    "-app-id", "identitytenant",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   nginxgateway:
     container_name: shopping_nginxgateway

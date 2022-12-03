@@ -10,53 +10,95 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Shopping.Framework.Web;
+using System.Reflection;
+using Google.Api;
+using Microsoft.Extensions.Configuration;
+using Shopping.Api.IdentityTenant.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Shopping.Framework.AccountApplication;
+using IdentityServer4;
+using Microsoft.AspNetCore.Http;
+using MediatR;
 
 namespace Shopping.Api.IdentityTenant
 {
     public class Program
     {
-        public static int Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                // uncomment to write to Azure diagnostics stream
-                //.WriteTo.File(
-                //    @"D:\home\LogFiles\Application\identityserver.txt",
-                //    fileSizeLimitBytes: 1_000_000,
-                //    rollOnFileSizeLimit: true,
-                //    shared: true,
-                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
-                .CreateLogger();
+            var builder = WebApplication.CreateBuilder(args);
 
-            try
+            builder.Services.AddControllersWithViews(options => {
+                options.Filters.Add<ResponseFilter>();
+            });
+
+            builder.Services.AddIdentityServer(options => {
+                //docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
+                options.IssuerUri = builder.Configuration["IssuerUri"];
+            })
+                .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.Clients(builder.Configuration))
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+                .AddProfileService<ProfileService>()
+                .AddDeveloperSigningCredential();
+
+            builder.Services.AddAccountApplication();
+
+            builder.Services.AddWebFreamework();
+
+            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            builder.Services.AddWebDbContext<TenantDbContext>(builder.Configuration["ConnectionString"]);
+            builder.Services.AddWebDataSeed<DataSeed>();
+
+            builder.Services.AddWebCors();
+
+            builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.TenantScheme,options => {
+                options.ExpectedScope = "tenantapi";
+
+            });
+
+            builder.Services.AddAuthorization(options =>
             {
-                Log.Information("Starting host...");
-                CreateHostBuilder(args).Build().Run();
-                return 0;
-            }
-            catch (Exception ex)
+                options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>
+                {
+                    policy.AddAuthenticationSchemes(JwtBearerIdentity.TenantScheme);
+                    policy.RequireAuthenticatedUser();
+                });
+            });
+
+
+
+
+            var app = builder.Build();
+
+            //初始化数据库和数据
+            await app.Services.RunWebDataMigrate<TenantDbContext>();
+            await app.Services.RunWebDataSeed();
+
+
+            if (!app.Environment.IsDevelopment())
             {
-                Log.Fatal(ex, "Host terminated unexpectedly.");
-                return 1;
+                app.UseExceptionHandler("/Home/Error");
             }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            app.UseStaticFiles();
+            app.UseCors("any");
+
+            app.UseRouting();
+
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
     }
 }

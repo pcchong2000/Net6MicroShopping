@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.AccountDomain.Base;
+using Shopping.Framework.DomainBase.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

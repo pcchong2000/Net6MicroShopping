@@ -30,17 +30,6 @@ services:
     network_mode: "service:shopping.api.order"
 
 
-  shopping.api.member:
-    image: ${DOCKER_REGISTRY-}shoppingapimember
-    build:
-      context: .
-      dockerfile: Shopping.Api.Member/Dockerfile
-  shopping.api.member.dapr:
-    image: "daprio/daprd:latest"
-    depends_on:
-      - shopping.api.member
-    network_mode: "service:shopping.api.member"
-
   shopping.api.pay:
     image: ${DOCKER_REGISTRY-}shoppingapipay
     build:
@@ -63,29 +52,27 @@ services:
       - shopping.api.product
     network_mode: "service:shopping.api.product"
 
-  shopping.api.tenant:
-    image: ${DOCKER_REGISTRY-}shoppingapitenant
-    build:
-      context: .
-      dockerfile: Shopping.Api.Tenant/Dockerfile
-  shopping.api.tenant.dapr:
-    image: "daprio/daprd:latest"
-    depends_on:
-      - shopping.api.tenant
-    network_mode: "service:shopping.api.tenant"
-
   shopping.api.identitymember:
     image: ${DOCKER_REGISTRY-}shoppingapiidentitymember
     build:
       context: .
       dockerfile: Shopping.Api.IdentityMember/Dockerfile
-
+  shopping.api.identitymember.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - shopping.api.identitymember
+    network_mode: "service:shopping.api.identitymember"
 
   shopping.api.identitytenant:
     image: ${DOCKER_REGISTRY-}shoppingapiidentitytenant
     build:
       context: .
       dockerfile: Shopping.Api.IdentityTenant/Dockerfile
+  shopping.api.identitytenant.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - shopping.api.identitytenant
+    network_mode: "service:shopping.api.identitytenant"
   
   nginxgateway:
     image: nginxgateway
