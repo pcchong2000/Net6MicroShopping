@@ -1,11 +1,13 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = window.apiurl;
-axios.defaults.headers.common['Authorization'] = "Bearer "+localStorage.getItem("access_token");
-axios.defaults.headers.post['Content-Type'] = 'application/josn';
 
 axios.interceptors.request.use(function (config) {
 // Do something before request is sent
+    let token=localStorage.getItem("access_token");
+    if(token){
+        config.headers['Authorization'] = "Bearer "+token;
+    }
     return config;
 }, function (error) {
 // Do something with request error

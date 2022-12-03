@@ -224,7 +224,7 @@ export default {
     },
     handleImageSuccess(resp,file){
       console.log(resp);
-      this.submitData.imageUrl=apiurl+resp[0].pathUrl;
+      this.submitData.imageUrl=apiurl+resp.data[0].pathUrl;
     },
     showAddModelCategory(e,code){
       if(code){
