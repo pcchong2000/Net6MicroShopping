@@ -13,13 +13,13 @@ using System.IO;
 using System.Threading.Tasks;
 using Google.Api;
 using Microsoft.Extensions.Configuration;
-using Shopping.Framework.AccountEFCore.Members;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Shopping.Framework.Web;
 using Shopping.Framework.AccountApplication;
 using IdentityServer4;
 using Microsoft.AspNetCore.Http;
+using Shopping.Api.IdentityMember.Data;
 
 namespace Shopping.Api.IdentityMember
 {
@@ -91,14 +91,13 @@ namespace Shopping.Api.IdentityMember
             app.UseStaticFiles();
             app.UseCors("any");
 
-            //app.UseIdentityServer();
+            app.UseIdentityServer();
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseRouting();
 
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.MapControllerRoute(

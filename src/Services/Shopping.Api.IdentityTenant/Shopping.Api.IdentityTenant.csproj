@@ -19,4 +19,10 @@
 		<ProjectReference Include="..\Shopping.Framework.AccountApplication\Shopping.Framework.AccountApplication.csproj" />
 		<ProjectReference Include="..\Shopping.Framework.Web\Shopping.Framework.Web.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Views\Account\Login.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
 </Project>

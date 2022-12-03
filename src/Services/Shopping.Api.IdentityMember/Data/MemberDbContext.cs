@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shopping.Framework.AccountDomain.Entities.Members;
+using Shopping.Api.IdentityMember.Models;
 
-namespace Shopping.Framework.AccountEFCore.Members
+namespace Shopping.Api.IdentityMember.Data
 {
     public class MemberDbContext : DbContext
     {

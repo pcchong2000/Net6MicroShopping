@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shopping.Api.IdentityMember.Data;
-using Shopping.Api.IdentityMember.Models;
-using Shopping.Api.IdentityMember.Quickstart;
+using Shopping.Api.IdentityTenant.Data;
+using Shopping.Api.IdentityTenant.Models;
 using Shopping.Framework.AccountApplication.AccountServices;
 using System;
 using System.Collections.Generic;
@@ -18,13 +17,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Shopping.Api.IdentityMember.Quickstart.Account
+namespace Shopping.Api.IdentityTenant.Quickstart.Account
 {
     [SecurityHeaders]
     [AllowAnonymous]
     public class ExternalController : Controller
     {
-        private readonly IAccountManage<MemberInfo, MemberDbContext> _accountManage;
+        private readonly IAccountManage<TenantAdmin, TenantDbContext> _accountManage;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly ILogger<ExternalController> _logger;
@@ -35,7 +34,7 @@ namespace Shopping.Api.IdentityMember.Quickstart.Account
             IClientStore clientStore,
             IEventService events,
             ILogger<ExternalController> logger,
-            IAccountManage<MemberInfo, MemberDbContext> accountManage)
+            IAccountManage<TenantAdmin, TenantDbContext> accountManage)
         {
             _interaction = interaction;
             _clientStore = clientStore;
@@ -69,8 +68,8 @@ namespace Shopping.Api.IdentityMember.Quickstart.Account
                     { "scheme", scheme },
                 }
             };
-
-            return Challenge(props, scheme);
+            var sss= Challenge(props, scheme);
+            return sss;
 
         }
 
@@ -143,7 +142,7 @@ namespace Shopping.Api.IdentityMember.Quickstart.Account
             return Redirect(returnUrl);
         }
 
-        private (MemberInfo member, string provider, string providerUserId, IEnumerable<Claim> claims) FindUserFromExternalProvider(AuthenticateResult result)
+        private (TenantAdmin account, string provider, string providerUserId, IEnumerable<Claim> claims) FindUserFromExternalProvider(AuthenticateResult result)
         {
             var externalUser = result.Principal;
 
@@ -162,19 +161,18 @@ namespace Shopping.Api.IdentityMember.Quickstart.Account
             var providerUserId = userIdClaim.Value;
 
             // find external user
-            var thirdUser = _accountManage.DbContext.ThirdPartyBinds.Where(a => a.Scheme == provider && a.OpenId == providerUserId).FirstOrDefault();
 
-            var member = _accountManage.GetAccountById(thirdUser.MemberId).Result;
+            var account = _accountManage.GetAccountById(providerUserId).Result;
 
-            return (member, provider, providerUserId, claims);
+            return (account, provider, providerUserId, claims);
         }
 
-        private MemberInfo AutoProvisionUser(string provider, string providerUserId, IEnumerable<Claim> claims)
+        private TenantAdmin AutoProvisionUser(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
-            var member = new MemberInfo() { };
-            _accountManage.Create(member, Guid.NewGuid().ToString());
+            var account = new TenantAdmin() { };
+            _accountManage.Create(account, Guid.NewGuid().ToString());
             //var user = _users.AutoProvisionUser(provider, providerUserId, claims.ToList());
-            return member;
+            return account;
         }
 
         // if the external login is OIDC-based, there are certain things we need to preserve to make logout work

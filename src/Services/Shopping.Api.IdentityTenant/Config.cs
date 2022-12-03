@@ -31,19 +31,17 @@ namespace Shopping.Api.IdentityTenant
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
-            string TenantWebUrl = Configuration["TenantWebUrl"];
+            string TenantWebCallbackUrl = Configuration["TenantWebCallbackUrl"];
             return new List<Client>
             {
-                new Client
+                 new Client
                     {
                         ClientId = "tenantjs",
                         ClientName = "JavaScript Client",
-                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                        AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
-                        //RedirectUris =           { TenantWebUrl+"/#/logincallback" },
-                        //PostLogoutRedirectUris = { TenantWebUrl+"/#/login" },
-                        //AllowedCorsOrigins =     { TenantWebUrl },
+                        RedirectUris =           { TenantWebCallbackUrl},
 
                         AllowedScopes = new List<string>
                         {
@@ -56,6 +54,44 @@ namespace Shopping.Api.IdentityTenant
                             "payapi",
                         }
                     },
+                //new Client
+                //    {
+                //        ClientId = "tenantjs",
+                //        ClientName = "JavaScript Client",
+                //        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                //        RequireClientSecret = false,
+                //        AllowOfflineAccess=true,
+                //        AllowedScopes = new List<string>
+                //        {
+                //            IdentityServerConstants.StandardScopes.OpenId,
+                //            IdentityServerConstants.StandardScopes.Profile,
+                //            "orderapi",
+                //            "memberapi",
+                //            "productapi",
+                //            "tenantapi",
+                //            "payapi",
+                //        }
+                //    },
+                new Client
+                {
+                    ClientId = "mvc",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    
+                    // where to redirect to after login
+                    RedirectUris = { "https://localhost:6002/signin-oidc" },
+
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "https://localhost:6002/signout-callback-oidc" },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "orderapi"
+                    }
+                }
             };
         }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shopping.Api.IdentityMember.Data;
+using Shopping.Api.IdentityMember.Models;
 using Shopping.Framework.AccountApplication.AccountServices;
-using Shopping.Framework.AccountDomain.Entities.Members;
-using Shopping.Framework.AccountEFCore.Members;
 using Shopping.Framework.Web;
 using System.Threading.Tasks;
 

@@ -112,9 +112,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
-      - MemberWebUrl=http://${LOCALHOST_IP}:5201
-      - MemberMauiUrl=http://${LOCALHOST_IP}:5101
-      - TenantIdentityServerUrl=http://${LOCALHOST_IP}:5102
+      - MemberWebCallbackUrl=http://${LOCALHOST_IP}:5201/#/logincallback
+      - MemberMauiCallbackUrl=http://${LOCALHOST_IP}:5101/membermauicallback
+      - TenantIdentityCallbackUrl=http://${LOCALHOST_IP}:5102/signin-oidc
       - IssuerUri=http://${LOCALHOST_IP}:5101
     ports:
       - "5101:80"
@@ -134,7 +134,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
-      - TenantWebUrl=http://${LOCALHOST_IP}:5202
+      - TenantWebCallbackUrl=http://${LOCALHOST_IP}:5202/#/logincallback
+      - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - IssuerUri=http://${LOCALHOST_IP}:5102
     ports:
       - "5102:80"

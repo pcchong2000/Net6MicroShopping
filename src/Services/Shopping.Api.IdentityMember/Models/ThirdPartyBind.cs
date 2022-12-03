@@ -2,21 +2,21 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shopping.Framework.AccountDomain.Entities.Members
+namespace Shopping.Api.IdentityMember.Models
 {
     [Table("ThirdPartyBind")]
     public class ThirdPartyBind : EntityBase
     {
         [MaxLength(36)]
-        public string? MemberId { get; set; }
+        public string MemberId { get; set; }
         [MaxLength(50)]
-        public string? NickName { get; set; }
+        public string NickName { get; set; }
         [MaxLength(200)]
-        public string? OpenId { get; set; }
+        public string OpenId { get; set; }
         [MaxLength(200)]
-        public string? UnionId { get; set; }
+        public string UnionId { get; set; }
         [MaxLength(200)]
-        public string? Scheme { get; set; }
+        public string Scheme { get; set; }
         public ThirdPartyType SourceType { get; set; }
 
     }

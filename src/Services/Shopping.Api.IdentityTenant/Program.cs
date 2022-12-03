@@ -22,6 +22,7 @@ using Shopping.Framework.AccountApplication;
 using IdentityServer4;
 using Microsoft.AspNetCore.Http;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shopping.Api.IdentityTenant
 {
@@ -60,7 +61,24 @@ namespace Shopping.Api.IdentityTenant
             builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.TenantScheme,options => {
                 options.ExpectedScope = "tenantapi";
 
-            });
+            }).AddOpenIdConnect(JwtBearerIdentity.MemberScheme, "会员账号", options =>
+            {
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+                options.SaveTokens = true;
+
+                options.Authority = builder.Configuration["MemberIdentityServerUrl"];
+                options.ClientId = "tenantAdmin";
+                options.ClientSecret = "secret";
+                options.ResponseType = "code";
+
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "role"
+                };
+            }); ;
 
             builder.Services.AddAuthorization(options =>
             {
@@ -88,9 +106,13 @@ namespace Shopping.Api.IdentityTenant
             app.UseStaticFiles();
             app.UseCors("any");
 
+            app.UseIdentityServer();
+
+            //eShopDapr的解决方案，UseIdentityServer在Routing 之前
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+
             app.UseRouting();
 
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.MapControllerRoute(

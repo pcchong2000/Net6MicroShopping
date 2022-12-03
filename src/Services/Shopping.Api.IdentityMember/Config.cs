@@ -31,9 +31,9 @@ namespace Shopping.Api.IdentityMember
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
-            string MemberWebUrl = Configuration["MemberWebUrl"];
-            string MemberMauiUrl = Configuration["MemberMauiUrl"];
-            string MemberIdentityServerUrl = Configuration["MemberIdentityServerUrl"];
+            string MemberWebCallbackUrl = Configuration["MemberWebCallbackUrl"];
+            string MemberMauiCallbackUrl = Configuration["MemberMauiCallbackUrl"];
+            string TenantIdentityCallbackUrl = Configuration["TenantIdentityCallbackUrl"];
             return new List<Client>
             {
                 new Client
@@ -43,10 +43,7 @@ namespace Shopping.Api.IdentityMember
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
-                        RedirectUris =           { MemberWebUrl + "/#/logincallback" },
-                        PostLogoutRedirectUris = { MemberWebUrl + "/#/login" },
-                        AllowedCorsOrigins =     { MemberMauiUrl },
-
+                        RedirectUris =           { MemberWebCallbackUrl },
                         AllowedScopes = new List<string>
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
@@ -67,7 +64,7 @@ namespace Shopping.Api.IdentityMember
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
                         //RequireConsent=true, 要求确认同意
-                        RedirectUris =           { MemberMauiUrl + "/membermauicallback" },
+                        RedirectUris =           { MemberMauiCallbackUrl },
 
                         AllowedScopes = new List<string>
                         {
@@ -99,6 +96,43 @@ namespace Shopping.Api.IdentityMember
                             "ossapi",
                         }
                     },
+                new Client
+                    {
+                        ClientId = "tenantAdmin",
+                        ClientName = "tenantAdmin Client",
+                        ClientSecrets={ new Secret("secret".Sha256()), },
+                        AllowedGrantTypes = GrantTypes.Code,
+                        AllowOfflineAccess=true,
+                        RedirectUris =           { TenantIdentityCallbackUrl },
+                        //RedirectUris = { "https://localhost:44302/signin-oidc" },
+                        //FrontChannelLogoutUri = "https://localhost:44302/signout-oidc",
+                        //PostLogoutRedirectUris = { "https://localhost:44302/signout-callback-oidc" },
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                        }
+                    },
+             new Client
+                {
+                    ClientId = "mvc",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    
+                    // where to redirect to after login
+                    RedirectUris = { "https://localhost:6002/signin-oidc" },
+
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "https://localhost:6002/signout-callback-oidc" },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "orderapi"
+                    }
+                }
             };
         }
 

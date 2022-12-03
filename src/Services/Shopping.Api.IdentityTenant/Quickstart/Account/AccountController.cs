@@ -250,6 +250,16 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                 return vm;
             }
 
+            var schemes = await _schemeProvider.GetAllSchemesAsync();
+
+            var providers = schemes
+                .Where(x => x.DisplayName != null)
+                .Select(x => new ExternalProvider
+                {
+                    DisplayName = x.DisplayName ?? x.Name,
+                    AuthenticationScheme = x.Name
+                }).ToList();
+
             var allowLocal = true;
             if (context?.Client.ClientId != null)
             {
@@ -257,6 +267,11 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;
+
+                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+                    {
+                        providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+                    }
                 }
             }
 
@@ -266,6 +281,7 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
+                ExternalProviders = providers.ToArray()
             };
         }
 
