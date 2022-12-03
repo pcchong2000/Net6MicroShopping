@@ -8,7 +8,6 @@ using IdentityServer4.Events;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Shopping.Framework.EFCore.Tenants;
 using Shopping.Framework.DomainBase.Base;
 using static IdentityModel.OidcConstants;
 using Shopping.Framework.EFCore.Members;

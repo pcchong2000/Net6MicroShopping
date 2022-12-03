@@ -22,11 +22,11 @@ namespace Shopping.Api.IdentityMember
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("orderapi", "My API"),
                 new ApiScope("memberapi", "My API"),
+                new ApiScope("orderapi", "My API"),
                 new ApiScope("payapi", "My API"),
                 new ApiScope("productapi", "My API"),
-                new ApiScope("tenantapi", "My API"),
+                new ApiScope("ossapi", "My API"),
             };
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
@@ -51,10 +51,11 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
-                            "orderapi",
                             "memberapi",
+                            "orderapi",
                             "productapi",
                             "payapi",
+                            "ossapi",
                         }
                     },
                 new Client
@@ -72,10 +73,11 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
+                            IdentityServerConstants.LocalApi.ScopeName,
                             "orderapi",
-                            "memberapi",
                             "productapi",
                             "payapi",
+                            "ossapi",
                         }
                     },
                 new Client
@@ -90,10 +92,11 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
+                            IdentityServerConstants.LocalApi.ScopeName,
                             "orderapi",
-                            "memberapi",
                             "productapi",
                             "payapi",
+                            "ossapi",
                         }
                     },
             };

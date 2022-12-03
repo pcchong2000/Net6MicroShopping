@@ -1,12 +1,11 @@
-﻿using Shopping.Framework.DomainBase.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shopping.Framework.AccountDomain.Base
+namespace Shopping.Framework.DomainBase.Base
 {
     public interface IUserBase : IEntityBase
     {

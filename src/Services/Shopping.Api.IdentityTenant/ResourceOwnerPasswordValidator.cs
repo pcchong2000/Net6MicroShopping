@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Shopping.Framework.DomainBase.Base;
-using Shopping.Framework.AccountEFCore.Tenants;
-using Shopping.Framework.AccountDomain.Entities.Tenants;
 using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Api.IdentityTenant.Data;
+using Shopping.Api.IdentityTenant.Models;
 
 namespace Shopping.Api.IdentityTenant
 {

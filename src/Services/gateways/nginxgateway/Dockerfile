@@ -20,15 +20,15 @@ RUN echo $'server {                                 \n\
     }                                               \n\
     location /api/product {                         \n\
         proxy_pass   http://shopping.api.product;   \n\
-    }                                               \n\
-    location /api/member {                          \n\
-        proxy_pass   http://shopping.api.member;    \n\
-    }                                               \n\
+    }                                               \n\                                  
     location /api/pay {                             \n\
         proxy_pass   http://shopping.api.pay;       \n\
     }                                               \n\
+    location /api/member {                          \n\
+        proxy_pass   http://shopping.api.identitymember;    \n\
+    }                                               \n\
     location /api/tenant {                          \n\
-        proxy_pass   http://shopping.api.tenant;    \n\
+        proxy_pass   http://shopping.api.identitytenant;    \n\
     }                                               \n\
 }                                                   \n\
 ' >/etc/nginx/conf.d/default.conf
