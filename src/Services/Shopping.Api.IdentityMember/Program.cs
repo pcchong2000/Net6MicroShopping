@@ -54,19 +54,11 @@ namespace Shopping.Api.IdentityMember
 
             builder.Services.AddWebCors();
 
+            builder.Services.AddSameSiteCookiePolicy();
+
             builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.MemberScheme, options => {
                 options.ExpectedScope = "memberapi";
             }).AddTenantJwtBearer(builder.Configuration);
-
-            //builder.Services.AddAuthentication()
-            //    .AddGoogle("Google", options =>
-            //    {
-            //        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-            //        options.ClientId = "<insert here>";
-            //        options.ClientSecret = "<insert here>";
-            //    });
-
 
             builder.Services.AddAuthorization(options =>
             {
@@ -88,15 +80,18 @@ namespace Shopping.Api.IdentityMember
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCookiePolicy();
+
             app.UseStaticFiles();
+
             app.UseCors("any");
+
+            app.UseRouting();
 
             app.UseIdentityServer();
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
-            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
-
-            app.UseRouting();
+            //app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
             app.UseAuthorization();
 

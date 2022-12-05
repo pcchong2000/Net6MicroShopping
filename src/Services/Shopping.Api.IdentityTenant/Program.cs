@@ -77,7 +77,7 @@ namespace Shopping.Api.IdentityTenant
 
             builder.Services.AddWebCors();
 
-            
+            builder.Services.AddSameSiteCookiePolicy();
 
             builder.Services.AddAuthorization(options =>
             {
@@ -102,16 +102,19 @@ namespace Shopping.Api.IdentityTenant
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseCookiePolicy();
+
             app.UseStaticFiles();
+
             app.UseCors("any");
 
-            
+            app.UseRouting();
 
             app.UseIdentityServer();
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
-            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
-            app.UseRouting();
+            //app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+            
             app.UseAuthorization();
 
             app.MapControllerRoute(

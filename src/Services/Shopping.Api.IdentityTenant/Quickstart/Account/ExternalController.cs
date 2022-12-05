@@ -175,7 +175,7 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
 
         private async Task<TenantAdmin> AutoProvisionUser(string provider, string providerUserId,string teantnId, IEnumerable<Claim> claims)
         {
-            throw new Exception("error");
+            throw new Exception("error:系统是平台，tenant无账号应该不让登录,应该是邀请制");
             //系统是平台，tenant无账号应该不让登录,应该是邀请制
             //系统是saas，会员端登录已经确定tenant，,tenantId直接使用用户登陆后的tenantId
             var account = new TenantAdmin() { TenantId="123456",UserName= Guid.NewGuid().ToString() };

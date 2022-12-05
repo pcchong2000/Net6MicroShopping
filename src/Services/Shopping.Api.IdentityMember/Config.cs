@@ -114,20 +114,6 @@ namespace Shopping.Api.IdentityMember
                             "orderapi"
                         }
                     },
-             new Client
-                {
-                    ClientId = "mvc",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "https://localhost:6002/signin-oidc" },
-                    PostLogoutRedirectUris = { "https://localhost:6002/signout-callback-oidc" },
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi"
-                    }
-                }
             };
         }
 
