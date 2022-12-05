@@ -1,4 +1,4 @@
-using IdentityModel;
+﻿using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Services;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shopping.Api.IdentityTenant.Data;
 using Shopping.Api.IdentityTenant.Models;
@@ -23,23 +24,25 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
     [AllowAnonymous]
     public class ExternalController : Controller
     {
-        private readonly IAccountManage<TenantAdmin, TenantDbContext> _accountManage;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly ILogger<ExternalController> _logger;
         private readonly IEventService _events;
-
+        private readonly TenantDbContext _context;
+        private readonly IAccountManage<TenantAdmin, TenantDbContext> _accountManage;
         public ExternalController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events,
             ILogger<ExternalController> logger,
+            TenantDbContext context,
             IAccountManage<TenantAdmin, TenantDbContext> accountManage)
         {
             _interaction = interaction;
             _clientStore = clientStore;
             _logger = logger;
             _events = events;
+            _context = context;
             _accountManage = accountManage;
         }
 
@@ -81,7 +84,6 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
         {
             // read external identity from the temporary cookie
             var result = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-            var result1 = await HttpContext.AuthenticateAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
             if (result?.Succeeded != true)
             {
                 throw new Exception("External authentication error");
@@ -94,13 +96,13 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
             }
 
             // lookup our user and external provider info
-            var (user, provider, providerUserId, claims) = FindUserFromExternalProvider(result);
+            var (user, teantnId, provider, providerUserId, claims) =await FindUserFromExternalProvider(result);
             if (user == null)
             {
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                user = AutoProvisionUser(provider, providerUserId, claims);
+                user =await AutoProvisionUser(provider, providerUserId, teantnId, claims);
             }
 
             // this allows us to collect any additional claims or properties
@@ -143,7 +145,7 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
             return Redirect(returnUrl);
         }
 
-        private (TenantAdmin account, string provider, string providerUserId, IEnumerable<Claim> claims) FindUserFromExternalProvider(AuthenticateResult result)
+        private async Task<(TenantAdmin account, string teantnId, string provider, string providerUserId, IEnumerable<Claim> claims)> FindUserFromExternalProvider(AuthenticateResult result)
         {
             var externalUser = result.Principal;
 
@@ -160,18 +162,24 @@ namespace Shopping.Api.IdentityTenant.Quickstart.Account
 
             var provider = result.Properties.Items["scheme"];
             var providerUserId = userIdClaim.Value;
-
+            string? teantnId = externalUser.FindFirstValue("tenantId");
             // find external user
+            if (teantnId==null)
+            {
+                return (null, teantnId, provider, providerUserId, claims);
+            }
+            var account = await _context.TenantAdmin.Where(a=>a.UserName==providerUserId&&a.TenantId== teantnId).FirstOrDefaultAsync();
 
-            var account = _accountManage.GetAccountById(providerUserId).Result;
-
-            return (account, provider, providerUserId, claims);
+            return (account, teantnId, provider, providerUserId, claims);
         }
 
-        private TenantAdmin AutoProvisionUser(string provider, string providerUserId, IEnumerable<Claim> claims)
+        private async Task<TenantAdmin> AutoProvisionUser(string provider, string providerUserId,string teantnId, IEnumerable<Claim> claims)
         {
-            var account = new TenantAdmin() { };
-            _accountManage.Create(account, Guid.NewGuid().ToString());
+            throw new Exception("error");
+            //系统是平台，tenant无账号应该不让登录,应该是邀请制
+            //系统是saas，会员端登录已经确定tenant，,tenantId直接使用用户登陆后的tenantId
+            var account = new TenantAdmin() { TenantId="123456",UserName= Guid.NewGuid().ToString() };
+            var result = await _accountManage.Create(account, Guid.NewGuid().ToString());
             //var user = _users.AutoProvisionUser(provider, providerUserId, claims.ToList());
             return account;
         }

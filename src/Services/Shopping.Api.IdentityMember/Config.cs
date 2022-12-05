@@ -1,4 +1,4 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+Ôªø// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -63,7 +63,7 @@ namespace Shopping.Api.IdentityMember
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
-                        //RequireConsent=true, “™«Û»∑»œÕ¨“‚
+                        //RequireConsent=true, Ë¶ÅÊ±ÇÁ°ÆËÆ§ÂêåÊÑè
                         RedirectUris =           { MemberMauiCallbackUrl },
 
                         AllowedScopes = new List<string>
@@ -100,7 +100,7 @@ namespace Shopping.Api.IdentityMember
                     {
                         ClientId = "tenantAdmin",
                         ClientName = "tenantAdmin Client",
-                        ClientSecrets={ new Secret("secret".Sha256()), },
+                        ClientSecrets = { new Secret("secret".Sha256()) },
                         AllowedGrantTypes = GrantTypes.Code,
                         AllowOfflineAccess=true,
                         RedirectUris =           { TenantIdentityCallbackUrl },
@@ -111,21 +111,16 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi"
                         }
                     },
              new Client
                 {
                     ClientId = "mvc",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-
                     AllowedGrantTypes = GrantTypes.Code,
-                    
-                    // where to redirect to after login
                     RedirectUris = { "https://localhost:6002/signin-oidc" },
-
-                    // where to redirect to after logout
                     PostLogoutRedirectUris = { "https://localhost:6002/signout-callback-oidc" },
-
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

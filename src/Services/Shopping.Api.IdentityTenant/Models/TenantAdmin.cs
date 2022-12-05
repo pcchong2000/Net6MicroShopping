@@ -11,6 +11,5 @@ namespace Shopping.Api.IdentityTenant.Models
         [MaxLength(200)]
         public string ImageUrl { get; set; }
         public string TenantId { get; set; }
-
     }
 }

@@ -47,6 +47,25 @@ namespace Shopping.Api.IdentityTenant
                 .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential();
 
+            builder.Services.AddOidcStateDataFormatterCache(JwtBearerIdentity.MemberScheme);
+
+            builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.TenantScheme, options => {
+                options.ExpectedScope = "tenantapi";
+            }).AddOpenIdConnect(JwtBearerIdentity.MemberScheme, "会员账号", options =>
+            {
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+                
+                options.Authority = builder.Configuration["MemberIdentityServerUrl"];
+                options.ClientId = "tenantAdmin";
+                options.ClientSecret = "secret";
+                options.ResponseType = "code";
+                options.RequireHttpsMetadata = false;
+                options.SaveTokens = true;
+                options.Scope.Add("orderapi");
+
+            });
+
             builder.Services.AddAccountApplication();
 
             builder.Services.AddWebFreamework();
@@ -58,24 +77,7 @@ namespace Shopping.Api.IdentityTenant
 
             builder.Services.AddWebCors();
 
-            builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.TenantScheme,options => {
-                options.ExpectedScope = "tenantapi";
-
-            }).AddOpenIdConnect(JwtBearerIdentity.MemberScheme, "会员账号", options =>
-            {
-                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-
-                options.SaveTokens = true;
-
-                options.Authority = builder.Configuration["MemberIdentityServerUrl"];
-                options.ClientId = "tenantAdmin";
-                options.ClientSecret = "secret";
-                options.ResponseType = "code";
-                
-                options.RequireHttpsMetadata = false;
-                
-            });
+            
 
             builder.Services.AddAuthorization(options =>
             {
@@ -103,13 +105,13 @@ namespace Shopping.Api.IdentityTenant
             app.UseStaticFiles();
             app.UseCors("any");
 
+            
+
             app.UseIdentityServer();
 
             //eShopDapr的解决方案，UseIdentityServer在Routing 之前
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(
