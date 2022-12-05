@@ -65,20 +65,17 @@ namespace Shopping.Api.IdentityTenant
             {
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+
                 options.SaveTokens = true;
 
                 options.Authority = builder.Configuration["MemberIdentityServerUrl"];
                 options.ClientId = "tenantAdmin";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
-
+                
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = "name",
-                    RoleClaimType = "role"
-                };
-            }); ;
+                
+            });
 
             builder.Services.AddAuthorization(options =>
             {
