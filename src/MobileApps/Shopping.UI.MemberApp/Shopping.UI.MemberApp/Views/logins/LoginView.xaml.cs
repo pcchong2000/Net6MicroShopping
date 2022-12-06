@@ -1,4 +1,4 @@
-using IdentityModel;
+﻿using IdentityModel;
 using IdentityModel.Client;
 using PCLCrypto;
 using Shopping.UI.MemberApp.Configs;

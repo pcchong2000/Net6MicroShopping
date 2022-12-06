@@ -70,7 +70,8 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
-                            IdentityServerConstants.LocalApi.ScopeName,
+                            IdentityServerConstants.StandardScopes.OfflineAccess,
+                            "memberapi",
                             "orderapi",
                             "productapi",
                             "payapi",
@@ -89,7 +90,8 @@ namespace Shopping.Api.IdentityMember
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
-                            IdentityServerConstants.LocalApi.ScopeName,
+                            IdentityServerConstants.StandardScopes.OfflineAccess,
+                            "memberapi",
                             "orderapi",
                             "productapi",
                             "payapi",
