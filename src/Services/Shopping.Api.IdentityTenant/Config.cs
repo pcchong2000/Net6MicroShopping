@@ -22,11 +22,11 @@ namespace Shopping.Api.IdentityTenant
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("orderapi", "My API"),
-                new ApiScope("memberapi", "My API"),
-                new ApiScope("payapi", "My API"),
-                new ApiScope("productapi", "My API"),
-                new ApiScope("tenantapi", "My API"),
+                new ApiScope("orderapi", "order API"),
+                new ApiScope("memberapi", "member API"),
+                new ApiScope("payapi", "pay API"),
+                new ApiScope("productapi", "product API"),
+                new ApiScope("tenantapi", "tenant API"),
             };
 
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
@@ -40,6 +40,7 @@ namespace Shopping.Api.IdentityTenant
                         ClientName = "JavaScript Client",
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
+                        RequireConsent=true, //要求确认同意
                         AllowOfflineAccess=true,
                         RedirectUris =           { TenantWebCallbackUrl},
 
@@ -47,6 +48,7 @@ namespace Shopping.Api.IdentityTenant
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
+                            IdentityServerConstants.StandardScopes.OfflineAccess,
                             "orderapi",
                             "memberapi",
                             "productapi",

@@ -30,7 +30,8 @@ services:
     container_name: shopping_redis
     ports:
       - "5379:6379"
-
+    #command:
+    #  --requirepass "xxxxxxxx"
   zipkin:
     container_name: shopping_zipkin
     ports:
