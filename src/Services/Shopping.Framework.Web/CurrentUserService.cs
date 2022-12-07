@@ -14,15 +14,17 @@ namespace Shopping.Framework.Web
             var user = _httpContextAccessor.HttpContext?.User;
             if (user != null)
             {
-                Id = user.Claims.FirstOrDefault(a=>a.Type==ClaimTypes.NameIdentifier)?.Value;
-                Name = user.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Name)?.Value;
-                TenantId = user.Claims.FirstOrDefault(a => a.Type == "tenantId")?.Value;
+
+                Id = user.Claims?.FirstOrDefault(a=>a.Type==ClaimTypes.NameIdentifier)?.Value;
+                Name = user.Claims?.FirstOrDefault(a => a.Type == ClaimTypes.Name)?.Value;
+                TenantId = user.Claims?.FirstOrDefault(a => a.Type == "tenantId")?.Value;
+                ClientId = user.Claims?.FirstOrDefault(a => a.Type == "client_id")?.Value;
             }
         }
 
         public string Id { get; set; }
         public string Name { get; set; }
         public string? TenantId { get; set; }
-        
+        public string? ClientId { get; set; }
     }
 }
