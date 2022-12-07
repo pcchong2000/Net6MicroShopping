@@ -28,7 +28,7 @@ namespace Shopping.Api.Pay.Data.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OrderAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)

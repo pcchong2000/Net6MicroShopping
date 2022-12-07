@@ -58,9 +58,18 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         public string Name { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public DateTime? BirthdayTime { get; set; }
-        public string? Phone { get; set; } = null!;
+        public string? PhoneNumber { get; set; } = null!;
         public string? Email { get; set; } = null!;
         public string AvatarUrl { get; set; } = null!;
         public DateTime CreateTime { get; set; }
+    }
+
+    public class UpdateAvatarModel { 
+        public string AvatarUrl { get; set; }
+    }
+    public class FileResponse
+    {
+        public string PathUrl { get; set; }
+        public string FileName { get; set; }
     }
 }

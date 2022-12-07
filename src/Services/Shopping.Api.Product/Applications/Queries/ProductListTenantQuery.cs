@@ -58,7 +58,7 @@ namespace Shopping.Api.Product.Applications.Queries
                         select new ProductListTenantItemResponse()
                         {
                             Id = p.Id,
-                            CreateTime = p.CreatTime,
+                            CreateTime = p.CreateTime,
                             CreatorId = p.CreatorId,
                             CreatorName = p.CreatorName,
                             Description = p.Description,

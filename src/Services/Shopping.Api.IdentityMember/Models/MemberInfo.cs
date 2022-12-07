@@ -1,4 +1,5 @@
 ﻿using Shopping.Framework.DomainBase.Base;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,7 +10,8 @@ namespace Shopping.Api.IdentityMember.Models
     {
         [MaxLength(50)]
         public string NickName { get; set; }
-        [MaxLength(200)]
-        public string ImageUrl { get; set; }
+        [MaxLength(500)]
+        public string AvatarUrl { get; set; }
+        public DateTime? BirthdayTime { get; set; }
     }
 }

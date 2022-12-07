@@ -35,7 +35,7 @@ namespace Shopping.Api.Product.Data.migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     StoreName = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
@@ -70,7 +70,7 @@ namespace Shopping.Api.Product.Data.migrations
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Sort = table.Column<int>(type: "int", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -95,7 +95,7 @@ namespace Shopping.Api.Product.Data.migrations
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Sort = table.Column<int>(type: "int", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
@@ -128,7 +128,7 @@ namespace Shopping.Api.Product.Data.migrations
                     Number = table.Column<int>(type: "int", nullable: false),
                     Sort = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
@@ -163,7 +163,7 @@ namespace Shopping.Api.Product.Data.migrations
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Sort = table.Column<int>(type: "int", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)

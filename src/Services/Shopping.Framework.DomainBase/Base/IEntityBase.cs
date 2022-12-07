@@ -10,7 +10,7 @@ namespace Shopping.Framework.DomainBase.Base
     }
     public interface IEntityBase : IEntityIdBase
     {
-        DateTime CreatTime { get; set; }
+        DateTime CreateTime { get; set; }
         DateTime UpdateTime { get; set; }
         bool IsDeleted { get; set; }
     }
@@ -29,7 +29,7 @@ namespace Shopping.Framework.DomainBase.Base
         [Key]
         [MaxLength(36)]
         public string Id { get; set; } = SequentialGuid.Instance.Create(SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
-        public DateTime CreatTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.Now;
         public DateTime UpdateTime { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
     }

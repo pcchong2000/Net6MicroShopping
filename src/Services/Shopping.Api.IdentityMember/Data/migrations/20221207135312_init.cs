@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Shopping.Framework.EFCore.Members.migrations
+namespace Shopping.Api.IdentityMember.Data.migrations
 {
     public partial class init : Migration
     {
@@ -20,9 +20,10 @@ namespace Shopping.Framework.EFCore.Members.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NickName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImageUrl = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
+                    AvatarUrl = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    BirthdayTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -61,7 +62,7 @@ namespace Shopping.Framework.EFCore.Members.migrations
                     Scheme = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SourceType = table.Column<int>(type: "int", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },

@@ -45,7 +45,7 @@ namespace Shopping.Api.IdentityTenant.Applications.Querys
             resp.List = await _context.TenantStore.Where(a => a.TenantId == request.TenantId).Select(a => new StoreListItemResponse()
             {
                 Id = a.Id,
-                CreateTime = a.CreatTime,
+                CreateTime = a.CreateTime,
                 CreatorId = a.CreatorId,
                 CreatorName = a.CreatorName,
                 Description = a.Description,

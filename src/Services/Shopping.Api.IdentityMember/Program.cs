@@ -20,6 +20,8 @@ using Shopping.Framework.AccountApplication;
 using IdentityServer4;
 using Microsoft.AspNetCore.Http;
 using Shopping.Api.IdentityMember.Data;
+using MediatR;
+using System.Reflection;
 
 namespace Shopping.Api.IdentityMember
 {
@@ -48,6 +50,7 @@ namespace Shopping.Api.IdentityMember
 
             builder.Services.AddWebFreamework();
 
+            //add-migration init -Context MemberDbContext -OutputDir Data/migrations
             builder.Services.AddWebDbContext<MemberDbContext>(builder.Configuration["ConnectionString"]);
 
             builder.Services.AddWebDataSeed<DataSeed>();
@@ -68,6 +71,9 @@ namespace Shopping.Api.IdentityMember
                     policy.RequireAuthenticatedUser();
                 });
             });
+
+            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
 
             var app = builder.Build();
 

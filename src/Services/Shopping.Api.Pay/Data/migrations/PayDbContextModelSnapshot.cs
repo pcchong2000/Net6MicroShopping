@@ -16,7 +16,7 @@ namespace Shopping.Api.Pay.Data.migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Shopping.Api.Pay.Models.PayRecord", b =>
@@ -25,7 +25,7 @@ namespace Shopping.Api.Pay.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatorId")

@@ -59,10 +59,15 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
             return await _httpClient.GetAsync<AccountInfoResponseModel>(Appsettings.AccountMyInfo);
         }
 
-        public async Task<AccountInfoResponseModel> UpdateAvatarAsync(Stream file,string name)
+        public async Task<List<FileResponse>> UpdateFileAsync(Stream file,string name)
         {
-            return await _httpClient.PostFileAsync<AccountInfoResponseModel>(Appsettings.AccountUpdateAvatar, file, name);
+            return await _httpClient.PostFileAsync<List<FileResponse>>(Appsettings.OssUpLoad, file, name);
             
+        }
+
+        public async Task<bool> UpdateAvatarAsync(UpdateAvatarModel update)
+        {
+            return await _httpClient.PostAsync<UpdateAvatarModel,bool>(Appsettings.AccountUpdateAvatar, update);
         }
     }
 }

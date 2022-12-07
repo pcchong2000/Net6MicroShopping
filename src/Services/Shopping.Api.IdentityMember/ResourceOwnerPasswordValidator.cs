@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Shopping.Framework.DomainBase.Base;
 using static IdentityModel.OidcConstants;
-using Shopping.Framework.EFCore.Members;
 using Shopping.Framework.AccountApplication.AccountServices;
 using Shopping.Api.IdentityMember.Data;
 using Shopping.Api.IdentityMember.Models;

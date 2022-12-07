@@ -72,6 +72,7 @@ namespace Shopping.Api.IdentityTenant
 
             builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            //add-migration init -Context TenantDbContext -OutputDir Data/migrations
             builder.Services.AddWebDbContext<TenantDbContext>(builder.Configuration["ConnectionString"]);
             builder.Services.AddWebDataSeed<DataSeed>();
 

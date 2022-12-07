@@ -15,8 +15,8 @@ namespace Shopping.Framework.Web
             if (user != null)
             {
 
-                Id = user.Claims?.FirstOrDefault(a=>a.Type==ClaimTypes.NameIdentifier)?.Value;
-                Name = user.Claims?.FirstOrDefault(a => a.Type == ClaimTypes.Name)?.Value;
+                Id = user.Claims?.FirstOrDefault(a=>a.Type==ClaimTypes.NameIdentifier || a.Type == JwtClaimTypes.Subject)?.Value;
+                Name = user.Claims?.FirstOrDefault(a => a.Type == ClaimTypes.Name|| a.Type == JwtClaimTypes.Name)?.Value;
                 TenantId = user.Claims?.FirstOrDefault(a => a.Type == "tenantId")?.Value;
                 ClientId = user.Claims?.FirstOrDefault(a => a.Type == "client_id")?.Value;
             }

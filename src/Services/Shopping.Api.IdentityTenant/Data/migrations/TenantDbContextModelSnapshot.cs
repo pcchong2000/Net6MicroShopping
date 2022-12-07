@@ -7,7 +7,7 @@ using Shopping.Api.IdentityTenant.Data;
 
 #nullable disable
 
-namespace Shopping.Framework.EFCore.Tenants.migrations
+namespace Shopping.Api.IdentityTenant.Data.migrations
 {
     [DbContext(typeof(TenantDbContext))]
     partial class TenantDbContextModelSnapshot : ModelSnapshot
@@ -16,16 +16,16 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Shopping.Framework.Domain.Entities.Tenants.TenantAdmin", b =>
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantAdmin", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -60,7 +60,6 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("TenantId")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdateTime")
@@ -76,13 +75,13 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
                     b.ToTable("TenantAdmin");
                 });
 
-            modelBuilder.Entity("Shopping.Framework.Domain.Entities.Tenants.TenantInfo", b =>
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantInfo", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
@@ -104,7 +103,6 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantCode")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
@@ -116,22 +114,20 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
                     b.ToTable("TenantInfo");
                 });
 
-            modelBuilder.Entity("Shopping.Framework.Domain.Entities.Tenants.TenantStore", b =>
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantStore", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatorId")
-                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("CreatorName")
-                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
@@ -154,11 +150,9 @@ namespace Shopping.Framework.EFCore.Tenants.migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StoreCode")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("TenantId")
-                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 

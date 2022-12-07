@@ -11,7 +11,8 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         Task<LoginResponseModel> LoginAsync(IEnumerable<KeyValuePair<string, string>> request);
         Task SaveToken(LoginResponseModel loginResponse);
         Task<AccountInfoResponseModel> MyInfoAsync();
-        Task<AccountInfoResponseModel> UpdateAvatarAsync(Stream file,string name);
+        Task<List<FileResponse>> UpdateFileAsync(Stream file,string name);
+        Task<bool> UpdateAvatarAsync(UpdateAvatarModel update);
         Task TestAsync();
         Task ClearAsync();
         public static AccountInfo CurrentAccount { get; set; }

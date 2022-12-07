@@ -32,7 +32,7 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _accountService.MyInfoAsync();
             if (resp != null)
             {
-                avatarUrl = resp.AvatarUrl;
+                avatarUrl = Appsettings.ApiBaseAddress+resp.AvatarUrl;
                 name = resp.Name;
                 userName=resp.UserName;
                 id=resp.Id;
@@ -67,12 +67,17 @@ namespace Shopping.UI.MemberApp.ViewModels
                     this.SetProperty(ref isRunning, true, "IsRunning");
 
                     using Stream sourceStream = await photo.OpenReadAsync();
-                    var resp = await _accountService.UpdateAvatarAsync(sourceStream, photo.FileName);
-
-                    await Task.Delay(1000);
-                    this.SetProperty(ref avatarUrl, resp.AvatarUrl, "AvatarUrl");
-                    this.SetProperty(ref isRunning, false, "IsRunning");
-
+                    var respFiles = await _accountService.UpdateFileAsync(sourceStream, photo.FileName);
+                    if (respFiles.Count>0)
+                    {
+                        var resp = await _accountService.UpdateAvatarAsync(new UpdateAvatarModel
+                        {
+                            AvatarUrl = respFiles[0].PathUrl
+                        });
+                        await Task.Delay(1000);
+                        this.SetProperty(ref avatarUrl, Appsettings.ApiBaseAddress + respFiles[0].PathUrl, "AvatarUrl");
+                        this.SetProperty(ref isRunning, false, "IsRunning");
+                    }
                 }
             }
         }

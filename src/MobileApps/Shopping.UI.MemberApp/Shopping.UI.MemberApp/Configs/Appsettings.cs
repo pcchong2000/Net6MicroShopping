@@ -58,5 +58,11 @@ namespace Shopping.UI.MemberApp.Configs
         public static string AccountMyInfo = AccountApiBase + "/member/myinfo";
         public static string AccountUpdateAvatar = AccountApiBase + "/member/updateAvatar";
         #endregion
+
+        #region oss Api
+        public static string OssApiBase = ApiBaseAddress + "/api/oss";
+
+        public static string OssUpLoad = OssApiBase + "/file";
+        #endregion
     }
 }

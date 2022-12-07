@@ -50,7 +50,7 @@ namespace Shopping.Api.Order.Application.Members.Queries
                         {
                             Id = o.Id,
                             OrderAmount = o.OrderAmount,
-                            CreateTime = o.CreatTime,
+                            CreateTime = o.CreateTime,
                             OrderAddressId = o.OrderAddressId,
                             MemberId = o.MemberId,
                             MemberName = o.MemberName,

@@ -11,14 +11,14 @@ using Shopping.Api.Order.Data;
 namespace Shopping.Api.Order.Data.migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20220316154932_addColumn_modelvalue")]
-    partial class addColumn_modelvalue
+    [Migration("20221207135415_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Shopping.Api.Order.Models.MemberAddress", b =>
@@ -43,7 +43,7 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsDeleted")
@@ -84,7 +84,7 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatorId")
@@ -167,7 +167,7 @@ namespace Shopping.Api.Order.Data.migrations
                     b.Property<string>("CountyCode")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsDeleted")
@@ -214,7 +214,7 @@ namespace Shopping.Api.Order.Data.migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsDeleted")
@@ -275,7 +275,7 @@ namespace Shopping.Api.Order.Data.migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatorId")

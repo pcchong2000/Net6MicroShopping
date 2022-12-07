@@ -4,30 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shopping.Api.IdentityMember.Data;
+using Shopping.Api.IdentityTenant.Data;
 
 #nullable disable
 
-namespace Shopping.Framework.EFCore.Members.migrations
+namespace Shopping.Api.IdentityTenant.Data.migrations
 {
-    [DbContext(typeof(MemberDbContext))]
-    [Migration("20220312135444_init")]
+    [DbContext(typeof(TenantDbContext))]
+    [Migration("20221207135348_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Shopping.Framework.Domain.Entities.Members.MemberInfo", b =>
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantAdmin", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -61,6 +61,9 @@ namespace Shopping.Framework.EFCore.Members.migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("TenantId")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
@@ -71,41 +74,37 @@ namespace Shopping.Framework.EFCore.Members.migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberInfo");
+                    b.ToTable("TenantAdmin");
                 });
 
-            modelBuilder.Entity("Shopping.Framework.Domain.Entities.Members.ThirdPartyBind", b =>
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantInfo", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("MemberId")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("NickName")
+                    b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("OpenId")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Scheme")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<int>("SourceType")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UnionId")
+                    b.Property<string>("TenantCode")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
@@ -114,7 +113,57 @@ namespace Shopping.Framework.EFCore.Members.migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThirdPartyBind");
+                    b.ToTable("TenantInfo");
+                });
+
+            modelBuilder.Entity("Shopping.Api.IdentityTenant.Models.TenantStore", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatorId")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("CreatorName")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StoreCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TenantStore");
                 });
 #pragma warning restore 612, 618
         }

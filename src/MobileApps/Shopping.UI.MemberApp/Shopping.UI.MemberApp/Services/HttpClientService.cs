@@ -70,7 +70,8 @@ namespace Shopping.UI.MemberApp.Services
             if (resp.IsSuccessStatusCode)
             {
                 var respcontent = await resp.Content.ReadAsStringAsync();
-                return await resp.Content.ReadFromJsonAsync<TResponse>();
+                
+                return JsonSerializer.Deserialize<TResponse>(respcontent);
             }
             else
             {
