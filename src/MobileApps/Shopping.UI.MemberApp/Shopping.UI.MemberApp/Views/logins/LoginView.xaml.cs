@@ -7,6 +7,7 @@ using Shopping.UI.MemberApp.Services.AccountServices;
 using Shopping.UI.MemberApp.ViewModels;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using static PCLCrypto.WinRTCrypto;
 
@@ -73,23 +74,21 @@ public partial class LoginView : ContentPage
     }
     private string CreateCodeChallenge()
     {
-        _codeVerifier = RandomNumberGenerator.CreateUniqueId();
-        var sha256 = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha256);
-        var challengeBuffer = sha256.HashData(CryptographicBuffer.CreateFromByteArray(Encoding.UTF8.GetBytes(_codeVerifier)));
-        byte[] challengeBytes;
-        CryptographicBuffer.CopyToByteArray(challengeBuffer, out challengeBytes);
-        return Base64Url.Encode(challengeBytes);
+        var _codeVerifierBytes = RandomNumberGenerator.GetBytes(64);
+        _codeVerifier = Common.ByteArrayToString(_codeVerifierBytes);
+
+        using (var sha = SHA256.Create())
+        {
+            var bytes = Encoding.UTF8.GetBytes(_codeVerifier);
+            var hash = sha.ComputeHash(bytes);
+            var resp = Base64Url.Encode(hash);
+            return resp;
+        }
     }
 }
-internal static class RandomNumberGenerator
+internal static class Common
 {
-    public static string CreateUniqueId(int length = 64)
-    {
-        var bytes = PCLCrypto.WinRTCrypto.CryptographicBuffer.GenerateRandom(length);
-        return ByteArrayToString(bytes);
-    }
-
-    private static string ByteArrayToString(byte[] array)
+    public static string ByteArrayToString(byte[] array)
     {
         var hex = new StringBuilder(array.Length * 2);
         foreach (byte b in array)

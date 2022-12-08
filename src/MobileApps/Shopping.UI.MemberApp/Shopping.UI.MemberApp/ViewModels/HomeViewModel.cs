@@ -16,7 +16,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         {
             _productService = productService;
             dataList = new ObservableCollection<ProductHomeItemResponseModel>();
-            InitData();
+            //InitData();
         }
         async void InitData()
         {
