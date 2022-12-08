@@ -1,6 +1,5 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
-using PCLCrypto;
 using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services;
 using Shopping.UI.MemberApp.Services.AccountServices;
@@ -9,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using static PCLCrypto.WinRTCrypto;
 
 namespace Shopping.UI.MemberApp;
 
