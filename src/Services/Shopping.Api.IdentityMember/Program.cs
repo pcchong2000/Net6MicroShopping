@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Http;
 using Shopping.Api.IdentityMember.Data;
 using MediatR;
 using System.Reflection;
+using Shopping.Api.IdentityMember.IdentityServerConfig;
 
 namespace Shopping.Api.IdentityMember
 {

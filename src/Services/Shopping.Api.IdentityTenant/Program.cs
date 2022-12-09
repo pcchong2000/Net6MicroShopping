@@ -23,6 +23,7 @@ using IdentityServer4;
 using Microsoft.AspNetCore.Http;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
+using Shopping.Api.IdentityTenant.IdentityServerConfig;
 
 namespace Shopping.Api.IdentityTenant
 {

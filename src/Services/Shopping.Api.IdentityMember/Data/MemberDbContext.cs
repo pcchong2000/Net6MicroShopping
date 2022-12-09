@@ -10,5 +10,6 @@ namespace Shopping.Api.IdentityMember.Data
         }
         public DbSet<MemberInfo> MemberInfos { get; set; }
         public DbSet<ThirdPartyBind> ThirdPartyBinds { get; set; }
+        public DbSet<Address> Address { get; set; }
     }
 }

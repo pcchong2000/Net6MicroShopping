@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Shopping.Api.Product;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Grpc.Services;
 using Shopping.Framework.Web;

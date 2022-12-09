@@ -7,10 +7,10 @@ using Shopping.Framework.Web;
 using System.Diagnostics.Metrics;
 using System;
 using System.Threading.Tasks;
-using Shopping.Api.IdentityMember.Quickstart.Account;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Stores;
 using System.Linq;
+using Shopping.Api.IdentityMember.IdentityServerControllers.Account;
 
 namespace Shopping.Api.IdentityMember.MemberControllers
 {
