@@ -43,7 +43,7 @@ export default {
     oidcUserManager.getUser().then((user)=> {
         if (user) {
             console.log("Login User:",user);
-            this.$router.push("/index");
+            this.$router.push("/store");
         }else {
             console.log("需要登陆");
         }

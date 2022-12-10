@@ -12,7 +12,6 @@
                       x:Name="homeTabItem"
                      ContentTemplate="{DataTemplate local:HomeView}" />
         <ShellContent Title="分类"
-                     Shell.TabBarIsVisible="false"
                      Icon="tab_favorites.svg"
                      
                      ContentTemplate="{DataTemplate local:ProductCategoryView}" />

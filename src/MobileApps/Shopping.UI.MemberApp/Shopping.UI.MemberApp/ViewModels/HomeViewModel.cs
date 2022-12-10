@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.Runtime;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services.ProductServices;
@@ -16,7 +17,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         {
             _productService = productService;
             dataList = new ObservableCollection<ProductHomeItemResponseModel>();
-            //InitData();
+            InitData();
         }
         async void InitData()
         {
@@ -74,10 +75,18 @@ namespace Shopping.UI.MemberApp.ViewModels
         async Task Refresh()
         {
             //isRefreshing = true;
-            this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
-            
-            
-            
+            //this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
+            this.pageIndex = 1;
+            dataList.Clear();
+            var nextData = await GetDataAsync();
+            if (nextData != null)
+            {
+                foreach (var item in nextData)
+                {
+                    dataList.Add(item);
+                }
+            }
+
             isRefreshing = false;
 
             this.OnPropertyChanged("IsRefreshing");

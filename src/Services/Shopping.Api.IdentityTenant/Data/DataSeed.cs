@@ -42,6 +42,7 @@ namespace Shopping.Api.IdentityTenant.Data
                 };
                 var store = new TenantStore()
                 {
+                    Id= "4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
                     TenantId = tenant.Id,
                     StoreCode = "StoreCode",
                     Name = "初始商户门店",

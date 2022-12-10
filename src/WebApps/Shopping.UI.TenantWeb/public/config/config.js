@@ -4,7 +4,7 @@ var oidc_config = {
     client_id: "tenantjs",
     redirect_uri: "http://" + LOCALHOST_IP+":5202/#/logincallback",
     response_type: "code",
-    scope:"openid profile offline_access orderapi productapi memberapi",
+    scope:"openid profile offline_access orderapi productapi memberapi tenantapi",
     post_logout_redirect_uri: "http://" + LOCALHOST_IP +":5202/#/login",
 };
 

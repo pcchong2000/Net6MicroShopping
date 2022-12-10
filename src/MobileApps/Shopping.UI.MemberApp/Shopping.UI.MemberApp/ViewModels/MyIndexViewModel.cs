@@ -32,7 +32,7 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _accountService.MyInfoAsync();
             if (resp != null)
             {
-                avatarUrl = Appsettings.ApiBaseAddress+resp.AvatarUrl;
+                avatarUrl = resp.AvatarUrl;
                 name = resp.Name;
                 userName=resp.UserName;
                 id=resp.Id;
@@ -72,7 +72,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                     {
                         var resp = await _accountService.UpdateAvatarAsync(new UpdateAvatarModel
                         {
-                            AvatarUrl = respFiles[0].PathUrl
+                            AvatarUrl = Appsettings.ApiBaseAddress + respFiles[0].PathUrl
                         });
                         await Task.Delay(1000);
                         this.SetProperty(ref avatarUrl, Appsettings.ApiBaseAddress + respFiles[0].PathUrl, "AvatarUrl");

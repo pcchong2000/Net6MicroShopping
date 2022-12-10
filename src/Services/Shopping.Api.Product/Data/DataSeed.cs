@@ -14,7 +14,11 @@ namespace Shopping.Api.Product.Data
 
         public async Task Init()
         {
-            List<ProductCategory> productCategories = new List<ProductCategory>() {
+            if (await _context.ProductCategory.AnyAsync())
+            {
+                return;
+            }
+            List<ProductCategory> list = new List<ProductCategory>() {
                 new ProductCategory()
                 {
                     Code = "shuma",
@@ -109,22 +113,91 @@ namespace Shopping.Api.Product.Data
                 },
             };
 
-            var list = new List<ProductCategory>();
-            foreach (var item in productCategories)
+            var productCategories = new List<ProductCategory>();
+            foreach (var item in list)
             {
-                if (!await _context.ProductCategory.AnyAsync(a => a.Name == item.Name))
+                productCategories.Add(item);
+                foreach (var item1 in item.Categories)
                 {
-                    list.Add(item);
-                    foreach (var item1 in item.Categories)
-                    {
-                        item1.Code = item.Code + item1.Code;
-                        item1.ParentId = item.Id;
-                        list.Add(item1);
-                    }
+                    item1.Code = item.Code + item1.Code;
+                    item1.ParentId = item.Id;
+                    productCategories.Add(item1);
                 }
             }
 
-            await _context.ProductCategory.AddRangeAsync(list);
+            await _context.ProductCategory.AddRangeAsync(productCategories);
+
+            List<StoreProductCategory> storeCategories = new List<StoreProductCategory>() {
+                new StoreProductCategory(){
+                Name="手机",
+                Code="phone",
+                Sort=1,
+                Description="手机",
+                TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
+                StoreId="4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
+                CreatorId="",
+                },
+            };
+            List<Shopping.Api.Product.Models.Product> products = new List<Shopping.Api.Product.Models.Product>() {
+                new Shopping.Api.Product.Models.Product(){
+                    Name="phone 10",
+                    Code="phone10",
+                    Sort=1,
+                    Description="phone 10",
+                    TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
+                    StoreId="4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
+                    ProductCategoryId=productCategories[4].Id,
+                    StoreProductCategoryId=storeCategories[0].Id,
+                    Status= ProductStatus.UpShelf,
+                    Price=(decimal)199.00,
+                    StoreName="初始商户门店",
+                    CreatorId="",
+                },
+                new Shopping.Api.Product.Models.Product(){
+                    Name="phone 11",
+                    Code="phone11",
+                    Sort=1,
+                    Description="phone 11",
+                    TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
+                    StoreId="4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
+                    ProductCategoryId=productCategories[4].Id,
+                    StoreProductCategoryId=storeCategories[0].Id,
+                    Status= ProductStatus.UpShelf,
+                    Price=(decimal)199.00,
+                    StoreName="初始商户门店",
+                    CreatorId="",
+                },
+                new Shopping.Api.Product.Models.Product(){
+                    Name="phone 12",
+                    Code="phone12",
+                    Sort=1,
+                    Description="phone 12",
+                    TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
+                    StoreId="4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
+                    ProductCategoryId=productCategories[4].Id,
+                    StoreProductCategoryId=storeCategories[0].Id,
+                    Status= ProductStatus.UpShelf,
+                    Price=(decimal)199.00,
+                    StoreName="初始商户门店",
+                    CreatorId="",
+                },
+                new Shopping.Api.Product.Models.Product(){
+                    Name="phone 13",
+                    Code="phone13",
+                    Sort=1,
+                    Description="phone 13",
+                    TenantId="3a00a01f-8a3b-9d59-a59c-281e8bb589bf",
+                    StoreId="4a00a01f-8a3b-9d59-a59c-281e8bb589gf",
+                    ProductCategoryId=productCategories[4].Id,
+                    StoreProductCategoryId=storeCategories[0].Id,
+                    Status= ProductStatus.UpShelf,
+                    Price=(decimal)199.00,
+                    StoreName="初始商户门店",
+                    CreatorId="",
+                },
+            };
+            await _context.StoreProductCategory.AddRangeAsync(storeCategories);
+            await _context.Product.AddRangeAsync(products);
 
             await _context.SaveChangesAsync();
         }
