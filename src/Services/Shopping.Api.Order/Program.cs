@@ -13,7 +13,6 @@ using MediatR;
 using Shopping.Api.Order.Data;
 using Shopping.Framework.Web;
 using Shopping.Api.Order.Grpc.Services;
-using Shopping.Framework.Web.Product.Grpc.Proto;
 
 namespace Shopping.Api.Order
 {

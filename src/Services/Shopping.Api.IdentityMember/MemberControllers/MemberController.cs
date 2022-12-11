@@ -1,8 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shopping.Api.IdentityMember.Application.Members.Commands;
-using Shopping.Api.IdentityMember.Application.Members.Queries;
+using Shopping.Api.IdentityMember.Application.Members;
 using Shopping.Framework.Web;
 using System.Threading.Tasks;
 
@@ -25,12 +24,12 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             return "123";
         }
         [HttpGet("myinfo")]
-        public async Task<MyInfoQueryResponse> MyInfo()
+        public async Task<MemberMyInfoQueryResponse> MyInfo()
         {
-            return await _mediator.Send(new MyInfoQuery() { Id = _currentUserService.Id });
+            return await _mediator.Send(new MemberMyInfoQuery() { Id = _currentUserService.Id });
         }
         [HttpPost("updateAvatar")]
-        public async Task<bool> UpdateAvatar(UpdateAvatarCommand request)
+        public async Task<bool> UpdateAvatar(MemberUpdateAvatarCommand request)
         {
             request.Id = _currentUserService.Id;
             return await _mediator.Send(request);

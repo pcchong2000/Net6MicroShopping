@@ -23,6 +23,7 @@ using Shopping.Api.IdentityMember.Data;
 using MediatR;
 using System.Reflection;
 using Shopping.Api.IdentityMember.IdentityServerConfig;
+using Shopping.Framework.Common;
 
 namespace Shopping.Api.IdentityMember
 {
@@ -51,6 +52,7 @@ namespace Shopping.Api.IdentityMember
 
             builder.Services.AddWebFreamework();
 
+            
             //add-migration init -Context MemberDbContext -OutputDir Data/migrations
             builder.Services.AddWebDbContext<MemberDbContext>(builder.Configuration["ConnectionString"]);
 
@@ -75,6 +77,9 @@ namespace Shopping.Api.IdentityMember
 
             builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            builder.Services.AddCommonAutoMapper(typeof(AutoMapperExtensions).Assembly, typeof(Program).Assembly);
+
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -85,6 +90,11 @@ namespace Shopping.Api.IdentityMember
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+            }
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseCookiePolicy();
