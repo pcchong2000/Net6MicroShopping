@@ -4,6 +4,7 @@ using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services;
 using Shopping.UI.MemberApp.Services.AccountServices;
 using Shopping.UI.MemberApp.ViewModels;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -13,16 +14,40 @@ namespace Shopping.UI.MemberApp;
 
 public partial class LoginView : ContentPage
 {
+    public static LoginView Current;
     private readonly HttpClientService _httpClient;
     private readonly IAccountService _accountService;
     private string _codeVerifier;
     public LoginView(LoginViewModel vm, HttpClientService httpClientService, IAccountService accountService)
 	{
 		InitializeComponent();
-		BindingContext = vm;
+        Current = this;
+        BindingContext = vm;
         _httpClient= httpClientService;
         _accountService = accountService;
 
+        Init();
+    }
+    public async void Init()
+    {
+        webView.Navigating += WebViewNavigating;
+        //await App.InitAccessToken();
+        // 登录
+        if (IAccountService.CurrentAccount == null)
+        {
+            await LoginWebview();
+        }
+
+        // 刷新token和 cookie
+        if (IAccountService.CurrentAccount != null)
+        {
+            await RefreshToken();
+
+            await RefreshCookieWebview();
+        }
+    }
+    private async Task LoginWebview()
+    {
         var dic = new Dictionary<string, string>();
         dic.Add("client_id", Appsettings.ClientId);
         dic.Add("client_secret", Appsettings.ClientSecret);
@@ -37,27 +62,14 @@ public partial class LoginView : ContentPage
         string IdentityAuthorizeEndpoint = CreateAuthorizeEndpoint(dic);
 
         webView.Source = IdentityAuthorizeEndpoint;
-        webView.Navigating += async (e,b) => {
-            var unescapedUrl = System.Net.WebUtility.UrlDecode(b.Url);
-            if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
-            {
-                webView.HeightRequest = 0;
-                var authResponse = new AuthorizeResponse(unescapedUrl);
-                var resp = await GetTokenAsync(authResponse.Code);
-
-                await _accountService.SaveToken(resp);
-
-                await Shell.Current.GoToAsync("..");
-            }
-        };
-
+        
     }
-    public string CreateAuthorizeEndpoint(IDictionary<string, string> values)
+    private string CreateAuthorizeEndpoint(IDictionary<string, string> values)
     {
         var queryString = string.Join("&", values.Select(kvp => string.Format("{0}={1}", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value))).ToArray());
         return string.Format("{0}?{1}", Appsettings.IdentityAuthorizeEndpoint, queryString);
     }
-    public async Task<LoginResponseModel> GetTokenAsync(string code)
+    private async Task<LoginResponseModel> GetTokenAsync(string code)
     {
         Dictionary<string, string> data = new Dictionary<string, string>() {
                 {"grant_type","authorization_code" },
@@ -81,6 +93,38 @@ public partial class LoginView : ContentPage
             var hash = sha.ComputeHash(bytes);
             var resp = Base64Url.Encode(hash);
             return resp;
+        }
+    }
+    private async Task RefreshToken()
+    {
+        var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint,new Dictionary<string, string>() {
+            {"grant_type","refresh_token" },
+            {"client_id",Appsettings.ClientId },
+            {"client_secret",Appsettings.ClientSecret },
+            {"refresh_token",IAccountService.CurrentAccount.RefreshToken },
+        });
+        await _accountService.SaveToken(token);
+        
+    }
+    private async Task RefreshCookieWebview()
+    {
+        string RefreshCookie = Appsettings.RefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
+        //webView.Source = RefreshCookie;
+        
+    }
+    private async void WebViewNavigating(object? sender, WebNavigatingEventArgs e)
+    {
+        var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
+        if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
+        {
+            webView.HeightRequest = 0;
+            var authResponse = new AuthorizeResponse(unescapedUrl);
+            var resp = await GetTokenAsync(authResponse.Code);
+
+            await _accountService.SaveToken(resp);
+
+
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

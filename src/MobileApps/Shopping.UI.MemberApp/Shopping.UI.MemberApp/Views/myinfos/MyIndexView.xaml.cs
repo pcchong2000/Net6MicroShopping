@@ -11,18 +11,25 @@ public partial class MyIndexView : ContentPage
 	{
 		InitializeComponent();
         BindingContext = _vm = vm;
-        
+        if (IAccountService.CurrentAccount == null)
+        {
+            Shell.Current.GoToAsync(nameof(LoginView));
+        }
+        else
+        {
+            _vm.GetMyInfoCommand.Execute(null);
+        }
     }
     protected override async void OnAppearing()
     {
         if (IAccountService.CurrentAccount == null)
         {
-           await Shell.Current.GoToAsync(nameof(LoginView));
+            await Shell.Current.GoToAsync(nameof(LoginView));
         }
-        else 
+        else
         {
             _vm.GetMyInfoCommand.Execute(null);
         }
-        
+
     }
 }

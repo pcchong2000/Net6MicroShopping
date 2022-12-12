@@ -9,11 +9,12 @@ public partial class App : Application
 		InitializeComponent();
         var shell = MauiProgram.Services.GetService<AppShell>();
         MainPage = shell;
-        Init();
+        //InitAccessToken().GetAwaiter().GetResult();
     }
-    async void Init()
+    public static async Task InitAccessToken()
     {
-        string token = await SecureStorage.Default.GetAsync("Token");
+        string accessToken = await SecureStorage.Default.GetAsync("AccessToken");
+        string refreshToken = await SecureStorage.Default.GetAsync("RefreshToken");
         string expiredTimeStr = await SecureStorage.Default.GetAsync("ExpiredTime");
         if (expiredTimeStr != null && DateTime.TryParse(expiredTimeStr, out DateTime expiredTime))
         {
@@ -21,7 +22,8 @@ public partial class App : Application
             {
                 IAccountService.CurrentAccount = new AccountInfo()
                 {
-                    AccessToken = token,
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
                     ExpiredTime = expiredTime
                 };
             }

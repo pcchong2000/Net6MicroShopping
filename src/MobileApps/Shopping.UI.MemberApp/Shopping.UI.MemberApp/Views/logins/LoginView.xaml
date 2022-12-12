@@ -2,16 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Shopping.UI.MemberApp.LoginView"
-             Shell.NavBarIsVisible="false"
+             
              Shell.TabBarIsVisible="false"
              Title="LoginView">
     <VerticalStackLayout Padding="15">
-        <WebView x:Name="webView" MaximumHeightRequest="500" />
         <Image Source="jielun.png" Aspect="AspectFill" HeightRequest="80" WidthRequest="80"></Image>
-        <Entry Text="{Binding UserName}" Placeholder="Enter UserName"  />
+        <WebView x:Name="webView" MaximumHeightRequest="500" />
+        
+        <!--<Entry Text="{Binding UserName}" Placeholder="Enter UserName"  />
         <Entry Text="{Binding Password}" Placeholder="Enter Password"  />
         <Button Text="Login" Command="{Binding LoginCommand}"  />
-        <Button Text="WebAuthenticator Login" Command="{Binding LocalhostAccountCommand}"  />
+        <Button Text="WebAuthenticator Login" Command="{Binding LocalhostAccountCommand}"  />-->
         
     </VerticalStackLayout>
 </ContentPage>

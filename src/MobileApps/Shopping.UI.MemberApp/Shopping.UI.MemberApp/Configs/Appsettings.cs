@@ -26,6 +26,7 @@ namespace Shopping.UI.MemberApp.Configs
         public static string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
         public static string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
         public static string TestUrl = IdentityAddress + "/auth/test";
+        public static string RefreshCookie = IdentityAddress + "/api/member/auth/refresh_cookie";
         #endregion
 
 

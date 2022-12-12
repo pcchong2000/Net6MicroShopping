@@ -11,40 +11,58 @@ using Microsoft.AspNetCore.Http;
 using IdentityServer4.Stores;
 using System.Linq;
 using Shopping.Api.IdentityMember.IdentityServerControllers.Account;
+using IdentityServer4.Validation;
+using IdentityServer4.Hosting.LocalApiAuthentication;
+using Microsoft.Extensions.Options;
+using IdentityModel;
+using System.Security.Claims;
 
 namespace Shopping.Api.IdentityMember.MemberControllers
 {
     public class AuthController : ApiController
     {
         private readonly ILogger<MemberController> _logger;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IClientStore _clientStore;
-        public AuthController(ILogger<MemberController> logger, ICurrentUserService currentUserService, IClientStore clientStore)
+        private readonly ITokenValidator _tokenValidator;
+        private readonly LocalApiAuthenticationOptions _options;
+        public AuthController(ILogger<MemberController> logger,  ITokenValidator tokenValidator, IOptionsMonitor<LocalApiAuthenticationOptions> options)
         {
             _logger = logger;
-            _currentUserService = currentUserService;
-            _clientStore = clientStore;
+            _tokenValidator= tokenValidator;
+            _options = options.CurrentValue;
         }
-        [HttpGet("refreshcookie")]
-        public async Task<IActionResult> RefreshCookie()
+        /// <summary>
+        /// AddAuthentication().AddLocalApi 无法添加token 为 query 参数的请求
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <returns></returns>
+        [HttpGet("refresh_cookie")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshCookie(string access_token)
         {
-            string clientId = "membermaui";
-            if (_currentUserService.ClientId == clientId)
+            var validate = await _tokenValidator.ValidateAccessTokenAsync(access_token, _options.ExpectedScope);
+            if (validate.IsError)
             {
-                var client = await _clientStore.FindClientByIdAsync(clientId);
+                return BadRequest();
+            }
+            
+            string clientId = "membermaui";
+            if (validate.Client.ClientId == clientId)
+            {
+                var id = validate.Claims.FirstOrDefault(a => a.Type == ClaimTypes.NameIdentifier || a.Type == JwtClaimTypes.Subject).Value;
+                var name = validate.Claims.FirstOrDefault(a => a.Type == ClaimTypes.Name || a.Type == JwtClaimTypes.Name).Value;
                 AuthenticationProperties props = new AuthenticationProperties
                 {
                     IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
                 };
                 // issue authentication cookie with subject ID and username
-                var isuser = new IdentityServerUser(_currentUserService.Id)
+                var isuser = new IdentityServerUser(id)
                 {
-                    DisplayName = _currentUserService.Name
+                    DisplayName = name
                 };
 
                 await HttpContext.SignInAsync(isuser, props);
-                string redirectUri = client.RedirectUris.FirstOrDefault();
+                string redirectUri = validate.Client.RedirectUris.FirstOrDefault();
                 if (!string.IsNullOrWhiteSpace(redirectUri))
                 {
                     return Redirect(redirectUri);
