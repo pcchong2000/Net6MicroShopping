@@ -126,6 +126,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
                         {
                             IsPersistent = true,
                             ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                            
                         };
                     };
 

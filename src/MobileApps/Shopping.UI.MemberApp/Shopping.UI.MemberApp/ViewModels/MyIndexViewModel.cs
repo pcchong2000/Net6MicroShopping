@@ -46,6 +46,8 @@ namespace Shopping.UI.MemberApp.ViewModels
         async Task Clear()
         {
             await _accountService.ClearAsync();
+            var _loginView = LoginView.Current == null ? MauiProgram.Services.GetService<LoginView>() : LoginView.Current;
+            _loginView.Logout();
             var shell = (AppShell)Shell.Current;
             shell.GotoHome();
             //await Shell.Current.GoToAsync(nameof(LoginPage));

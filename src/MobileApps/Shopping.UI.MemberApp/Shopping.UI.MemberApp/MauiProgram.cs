@@ -4,6 +4,8 @@ using Shopping.UI.MemberApp.Services.ProductServices;
 using Shopping.UI.MemberApp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Shopping.UI.MemberApp.Services.OrderServices;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace Shopping.UI.MemberApp;
 
@@ -20,7 +22,19 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            })
+            .ConfigureLifecycleEvents(events => {
+#if ANDROID
+                events.AddAndroid(android =>
+                {
+                   var result = android.OnApplicationCreate(AppActionEventArgs => {
+                        
+                    });
+                });
+#endif
+
+            })
+            ;
 
 
         var services = builder.Services;
@@ -34,7 +48,7 @@ public static class MauiProgram
 
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<LoginViewModel>();
-        services.AddSingleton<MyIndexViewModel>();
+        services.AddTransient<MyIndexViewModel>();
         services.AddSingleton<ProductCategoryViewModel>();
 
         services.AddSingleton<AppShell>();
@@ -44,6 +58,7 @@ public static class MauiProgram
         
 
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
+        Routing.RegisterRoute(nameof(MyIndexView), typeof(MyIndexView));
         Routing.RegisterRoute(nameof(SubmmitOrderView), typeof(SubmmitOrderView));
         Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
         Routing.RegisterRoute(nameof(ProductDetailView), typeof(ProductDetailView));

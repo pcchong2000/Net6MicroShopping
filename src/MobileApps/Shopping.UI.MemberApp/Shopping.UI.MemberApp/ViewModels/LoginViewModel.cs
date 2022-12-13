@@ -55,6 +55,12 @@ namespace Shopping.UI.MemberApp.ViewModels
             //IdentityServerConstants.DefaultCookieAuthenticationScheme
             await OnAuthenticate("oidc");
         }
+        [RelayCommand]
+        void BackHome()
+        {
+            var shell = (AppShell)Shell.Current;
+            shell.GotoHome();
+        }
         async Task OnAuthenticate(string scheme)
         {
             try

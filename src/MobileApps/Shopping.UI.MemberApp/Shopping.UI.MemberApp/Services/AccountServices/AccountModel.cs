@@ -41,6 +41,8 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
         public DateTime ExpiredTime { get; set; }
+        public bool IsExpired { get; set; }
+        public bool IsLogin { get; set; }
     }
 
     public class LoginResponseModel

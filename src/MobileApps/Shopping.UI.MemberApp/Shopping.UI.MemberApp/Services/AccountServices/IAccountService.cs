@@ -15,6 +15,6 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         Task<bool> UpdateAvatarAsync(UpdateAvatarModel update);
         Task TestAsync();
         Task ClearAsync();
-        public static AccountInfo CurrentAccount { get; set; }
+        public static AccountInfo CurrentAccount { get; set; } = new AccountInfo();
     }
 }

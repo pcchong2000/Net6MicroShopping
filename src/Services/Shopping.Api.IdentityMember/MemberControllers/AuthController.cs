@@ -53,7 +53,7 @@ namespace Shopping.Api.IdentityMember.MemberControllers
                 AuthenticationProperties props = new AuthenticationProperties
                 {
                     IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration),
                 };
                 // issue authentication cookie with subject ID and username
                 var isuser = new IdentityServerUser(id)

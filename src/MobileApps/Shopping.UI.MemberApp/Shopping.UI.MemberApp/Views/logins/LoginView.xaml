@@ -5,8 +5,11 @@
              
              Shell.TabBarIsVisible="false"
              Title="LoginView">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackHomeCommand}"  />
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout Padding="15">
-        <Image Source="jielun.png" Aspect="AspectFill" HeightRequest="80" WidthRequest="80"></Image>
+        <!--<Image Source="jielun.png" Aspect="AspectFill" HeightRequest="80" WidthRequest="80"></Image>-->
         <WebView x:Name="webView" MaximumHeightRequest="500" />
         
         <!--<Entry Text="{Binding UserName}" Placeholder="Enter UserName"  />
