@@ -1,5 +1,4 @@
-﻿using Android.Runtime;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services.ProductServices;

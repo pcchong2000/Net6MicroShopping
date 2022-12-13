@@ -4,6 +4,7 @@ using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services.AccountServices;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.Metadata;
 
 namespace Shopping.UI.MemberApp.ViewModels
 {
@@ -82,6 +83,13 @@ namespace Shopping.UI.MemberApp.ViewModels
                     }
                 }
             }
+        }
+
+        [RelayCommand]
+        async Task OrderList(string orderStatus)
+        {
+           int _orderStatus=int.Parse(orderStatus);
+           await Shell.Current.GoToAsync($"{nameof(OrderListView)}?status={_orderStatus}");
         }
     }
 }

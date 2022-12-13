@@ -50,11 +50,15 @@ public static class MauiProgram
         services.AddSingleton<LoginViewModel>();
         services.AddTransient<MyIndexViewModel>();
         services.AddSingleton<ProductCategoryViewModel>();
+        services.AddSingleton<OrderListViewModel>();
+        
 
         services.AddSingleton<AppShell>();
         services.AddSingleton<HomeView>();
         services.AddSingleton<LoginView>();
         services.AddSingleton<MyIndexView>();
+        services.AddSingleton<OrderListView>();
+        services.AddSingleton<OrderDetailView>();
         
 
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
@@ -63,6 +67,9 @@ public static class MauiProgram
         Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
         Routing.RegisterRoute(nameof(ProductDetailView), typeof(ProductDetailView));
         Routing.RegisterRoute(nameof(ProductListView), typeof(ProductListView));
+        Routing.RegisterRoute(nameof(OrderListView), typeof(OrderListView));
+        Routing.RegisterRoute(nameof(OrderDetailView), typeof(OrderDetailView));
+
         var app = builder.Build();
         Services = app.Services;
         return app;

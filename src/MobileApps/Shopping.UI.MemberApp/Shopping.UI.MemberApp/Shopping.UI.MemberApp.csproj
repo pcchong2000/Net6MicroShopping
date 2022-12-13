@@ -61,6 +61,12 @@
 	  <Compile Update="Views\myinfos\MyIndexView.xaml.cs">
 	    <DependentUpon>MyIndexView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\orders\OrderDetailView.xaml.cs">
+	    <DependentUpon>OrderDetailView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\orders\OrderListView.xaml.cs">
+	    <DependentUpon>OrderListView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\products\ProductDetailView.xaml.cs">
 	    <DependentUpon>ProductDetailView.xaml</DependentUpon>
 	  </Compile>
@@ -78,6 +84,12 @@
 	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
+	  <MauiXaml Update="Views\orders\OrderDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\orders\OrderListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\products\ProductDetailView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

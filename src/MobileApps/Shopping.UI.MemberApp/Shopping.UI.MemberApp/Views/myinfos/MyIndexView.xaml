@@ -29,19 +29,66 @@
                 
             </VerticalStackLayout>
         </HorizontalStackLayout>
+        <!--<Label Text="我的订单" VerticalOptions="Center"  HorizontalOptions="Start" />
         <Grid  Margin="0,20" ColumnSpacing="30" ColumnDefinitions="*, *, *, *, *">
             <BoxView  Grid.Column="0"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
             <BoxView  Grid.Column="1"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
             <BoxView  Grid.Column="2"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
             <BoxView  Grid.Column="3"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
             <BoxView  Grid.Column="4"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-        </Grid>
-        <Label Text="我的交易" VerticalOptions="Center"  HorizontalOptions="Start" />
-        <Grid  Margin="0,20"  ColumnSpacing="30" ColumnDefinitions="*, *, *, *">
-            <BoxView  Grid.Column="0"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="60" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="1"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="60" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="2"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="60" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="3"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="60" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
+        </Grid>-->
+        <Label Text="我的订单" VerticalOptions="Center"  HorizontalOptions="Start" />
+        <Grid  Margin="0,20"  ColumnSpacing="30" ColumnDefinitions="*, *, *, *, *">
+            <Border   Grid.Column="0"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="1" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout >
+                    <Image Source="setting.svg"  Aspect="AspectFit"></Image>
+                    <Label Text="待付款" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </VerticalStackLayout>
+
+            </Border>
+            <Border  Grid.Column="1"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="2" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Image Source="setting.svg"  Aspect="AspectFit"></Image>
+                    <Label Text="待发货" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </VerticalStackLayout>
+
+            </Border>
+            <Border  Grid.Column="2"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="3" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Image Source="setting.svg"  Aspect="AspectFit"></Image>
+                    <Label Text="待收货" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </VerticalStackLayout>
+
+            </Border>
+            <Border  Grid.Column="3"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="4" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Image Source="setting.svg"  Aspect="AspectFit"></Image>
+                    <Label Text="带评价" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </VerticalStackLayout>
+
+            </Border>
+            <Border  Grid.Column="4"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="5" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout>
+                    <Image Source="setting.svg"  Aspect="AspectFit"></Image>
+                    <Label Text="售后" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </VerticalStackLayout>
+
+            </Border>
         </Grid>
         <BoxView  Color="CornflowerBlue" CornerRadius="10" HeightRequest="160" VerticalOptions="Center" HorizontalOptions="Fill" />
         <Button Text="退出登录" WidthRequest="200" Margin="0,30" BackgroundColor="#686868" Command="{Binding ClearCommand}"  />

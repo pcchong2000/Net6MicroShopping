@@ -32,12 +32,13 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         }
         public async Task SaveToken(LoginResponseModel resp)
         {
-            IAccountService.CurrentAccount = new AccountInfo()
+            var info = new AccountInfo()
             {
                 AccessToken = resp.access_token,
                 RefreshToken=resp.refresh_token,
-                ExpiredTime = DateTime.Now.AddMinutes(resp.expires_in),
+                ExpiredTime = DateTime.Now.AddSeconds(resp.expires_in),
             };
+            IAccountService.CurrentAccount = info;
             await SecureStorage.Default.SetAsync("AccessToken", IAccountService.CurrentAccount.AccessToken);
             await SecureStorage.Default.SetAsync("RefreshToken", IAccountService.CurrentAccount.RefreshToken);
             await SecureStorage.Default.SetAsync("ExpiredTime", IAccountService.CurrentAccount.ExpiredTime.ToString("yyyy-MM-dd HH:mm:ss"));
