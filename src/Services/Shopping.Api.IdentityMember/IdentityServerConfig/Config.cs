@@ -63,6 +63,8 @@ namespace Shopping.Api.IdentityMember.IdentityServerConfig
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
                         AllowOfflineAccess=true,
+                        //AccessTokenLifetime=120,
+                        //AbsoluteRefreshTokenLifetime=300,
                         //RequireConsent=true, 要求确认同意
                         RedirectUris =           { MemberMauiCallbackUrl },
 

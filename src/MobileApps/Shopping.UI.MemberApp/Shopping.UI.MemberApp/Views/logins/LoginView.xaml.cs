@@ -19,7 +19,7 @@ public partial class LoginView : ContentPage
     private readonly IAccountService _accountService;
     private string _codeVerifier;
     private string _launcherUrl;
-    //private WebView webView;
+
     public LoginView(LoginViewModel vm, HttpClientService httpClientService, IAccountService accountService)
 	{
 		InitializeComponent();
@@ -27,30 +27,38 @@ public partial class LoginView : ContentPage
         BindingContext = vm;
         _httpClient= httpClientService;
         _accountService = accountService;
-        //webView = new WebView();
-        Init();
+
     }
-    public async void Init()
+    private async Task Init()
     {
         
         App.InitAccessToken();
+        var token = IAccountService.CurrentAccount.AccessToken;
+        var isLogin = IAccountService.CurrentAccount.IsLogin;
         // 登录
-        if (!IAccountService.CurrentAccount.IsLogin)
+        if (!isLogin)
         {
-            await LoginWebview();
+            LoginWebview();
         }
         else  // 刷新token和 cookie
         {
+            bool isCookie = false;
             if(IAccountService.CurrentAccount.IsExpired)
             {
-                
-                await RefreshToken();
+                isCookie = await RefreshToken();
             }
-            await RefreshCookieWebview();
+            if (isCookie)
+            {
+                RefreshCookieWebview();
+            }
+            else
+            {
+                LoginWebview();
+            }
         }
     }
 
-    private async Task LoginWebview()
+    private void LoginWebview()
     {
         //var dic = new Dictionary<string, string>();
         //dic.Add("client_id", Appsettings.ClientId);
@@ -100,7 +108,7 @@ public partial class LoginView : ContentPage
             return resp;
         }
     }
-    private async Task RefreshToken()
+    private async Task<bool> RefreshToken()
     {
         var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint,new Dictionary<string, string>() {
             {"grant_type","refresh_token" },
@@ -108,10 +116,17 @@ public partial class LoginView : ContentPage
             {"client_secret",Appsettings.ClientSecret },
             {"refresh_token",IAccountService.CurrentAccount.RefreshToken },
         });
-        await _accountService.SaveToken(token);
-        
+        if (token == null)
+        {
+            return false;
+        }
+        else
+        {
+            await _accountService.SaveToken(token);
+            return true;
+        } 
     }
-    private async Task RefreshCookieWebview()
+    private void RefreshCookieWebview()
     {
         webView.Navigating -= WebViewRefreshCookieNavigating;
         webView.Navigating -= WebViewLoginNavigating;
@@ -142,8 +157,8 @@ public partial class LoginView : ContentPage
         if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
         {
             webView.HeightRequest = 0;
-            
-            await Shell.Current.GoToAsync("..");
+
+            await Shell.Current.GoToAsync(nameof(MyIndexView));
         }
     }
     private async void WebViewGetCodeNavigating(object sender, WebNavigatingEventArgs e)
@@ -201,6 +216,11 @@ public partial class LoginView : ContentPage
 
         //webView=new WebView();
         //webView.IsEnabled = false;
+    }
+    protected override async void OnAppearing()
+    {
+        await Init();
+
     }
 }
 internal static class Common

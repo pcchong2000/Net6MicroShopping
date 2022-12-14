@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,8 +42,22 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
         public DateTime ExpiredTime { get; set; }
-        public bool IsExpired { get; set; }
-        public bool IsLogin { get; set; }
+        public bool IsExpired
+        {
+            get
+            {
+                var isssss = this.ExpiredTime < DateTime.Now;
+                return isssss;
+            }
+        }
+        public bool IsLogin
+        {
+            get
+            {
+                var isLogin = !string.IsNullOrWhiteSpace(this.AccessToken);
+                return isLogin;
+            }
+        }
     }
 
     public class LoginResponseModel

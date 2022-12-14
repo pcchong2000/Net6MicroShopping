@@ -17,36 +17,18 @@ public partial class App : Application
         string refreshToken = SecureStorage.Default.GetAsync("RefreshToken").GetAwaiter().GetResult();
         string expiredTimeStr = SecureStorage.Default.GetAsync("ExpiredTime").GetAwaiter().GetResult();
 
-        IAccountService.CurrentAccount = new AccountInfo();
+        if (IAccountService.CurrentAccount==null)
+        {
+            IAccountService.CurrentAccount = new AccountInfo();
+        }
+        
         IAccountService.CurrentAccount.RefreshToken = refreshToken;
         IAccountService.CurrentAccount.AccessToken = accessToken;
-        if (!string.IsNullOrWhiteSpace(accessToken))
-        {
-            IAccountService.CurrentAccount.IsLogin = true;
-        }
-        else
-        {
-            IAccountService.CurrentAccount.IsLogin = false;
-        }
+        
         if (expiredTimeStr != null && DateTime.TryParse(expiredTimeStr, out DateTime expiredTime))
         {
-            if (expiredTime > DateTime.Now)
-            {
-                if (IAccountService.CurrentAccount == null)
-                {
-                    IAccountService.CurrentAccount = new AccountInfo();
-                }
-                
-                IAccountService.CurrentAccount.IsExpired = false;
-            }
-            else
-            {
-                IAccountService.CurrentAccount.IsExpired = true;
-            }
+            IAccountService.CurrentAccount.ExpiredTime = expiredTime;
         }
-        else
-        {
-            IAccountService.CurrentAccount.IsExpired = true;
-        }
+
     }
 }

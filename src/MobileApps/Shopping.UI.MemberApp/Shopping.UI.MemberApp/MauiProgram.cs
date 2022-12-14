@@ -6,13 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopping.UI.MemberApp.Services.OrderServices;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Extensions.Logging;
 
 namespace Shopping.UI.MemberApp;
 
 public static class MauiProgram
 {
     public static IServiceProvider Services;
-
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -72,6 +72,7 @@ public static class MauiProgram
 
         var app = builder.Build();
         Services = app.Services;
+       
         return app;
 
     }

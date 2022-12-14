@@ -12,7 +12,7 @@ public partial class MyIndexView : ContentPage
 		
         BindingContext = _vm = vm;
         App.InitAccessToken();
-        if (IAccountService.CurrentAccount == null|| IAccountService.CurrentAccount.IsExpired)
+        if (IAccountService.CurrentAccount.IsExpired)
         {
             Shell.Current.GoToAsync(nameof(LoginView));
         }
@@ -26,11 +26,12 @@ public partial class MyIndexView : ContentPage
     {
         App.InitAccessToken();
 
-        if (IAccountService.CurrentAccount == null || IAccountService.CurrentAccount.IsExpired)
+        string a = IAccountService.CurrentAccount.AccessToken;
+        string r = IAccountService.CurrentAccount.RefreshToken;
+        var time = IAccountService.CurrentAccount.ExpiredTime;
+
+        if (IAccountService.CurrentAccount.IsExpired)
         {
-            string a = IAccountService.CurrentAccount.AccessToken;
-            string r = IAccountService.CurrentAccount.RefreshToken;
-            
             await Shell.Current.GoToAsync(nameof(LoginView));
         }
         else
