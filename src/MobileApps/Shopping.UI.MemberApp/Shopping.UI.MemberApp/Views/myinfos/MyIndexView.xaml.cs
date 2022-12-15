@@ -14,7 +14,7 @@ public partial class MyIndexView : ContentPage
         App.InitAccessToken();
         if (IAccountService.CurrentAccount.IsExpired)
         {
-            Shell.Current.GoToAsync(nameof(LoginView));
+            Shell.Current.GoToAsync(nameof(LoginView) + "?action=login");
         }
         else
         {
@@ -32,7 +32,7 @@ public partial class MyIndexView : ContentPage
 
         if (IAccountService.CurrentAccount.IsExpired)
         {
-            await Shell.Current.GoToAsync(nameof(LoginView));
+            await Shell.Current.GoToAsync(nameof(LoginView) + "?action=login");
         }
         else
         {

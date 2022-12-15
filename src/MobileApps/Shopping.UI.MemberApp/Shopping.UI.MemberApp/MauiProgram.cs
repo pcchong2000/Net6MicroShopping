@@ -55,7 +55,7 @@ public static class MauiProgram
 
         services.AddSingleton<AppShell>();
         services.AddSingleton<HomeView>();
-        services.AddSingleton<LoginView>();
+        services.AddTransient<LoginView>();
         services.AddSingleton<MyIndexView>();
         services.AddSingleton<OrderListView>();
         services.AddSingleton<OrderDetailView>();

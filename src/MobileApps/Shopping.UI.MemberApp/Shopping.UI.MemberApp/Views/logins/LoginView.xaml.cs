@@ -12,9 +12,11 @@ using System.Text;
 
 namespace Shopping.UI.MemberApp;
 
+[QueryProperty(nameof(Action), "action")]
 public partial class LoginView : ContentPage
 {
-    public static LoginView Current;
+    public string Action { get; set; }
+    
     private readonly HttpClientService _httpClient;
     private readonly IAccountService _accountService;
     private string _codeVerifier;
@@ -23,8 +25,8 @@ public partial class LoginView : ContentPage
     public LoginView(LoginViewModel vm, HttpClientService httpClientService, IAccountService accountService)
 	{
 		InitializeComponent();
-        Current = this;
-        BindingContext = vm;
+        
+        //BindingContext = vm;
         _httpClient= httpClientService;
         _accountService = accountService;
 
@@ -35,46 +37,40 @@ public partial class LoginView : ContentPage
         App.InitAccessToken();
         var token = IAccountService.CurrentAccount.AccessToken;
         var isLogin = IAccountService.CurrentAccount.IsLogin;
-        // 登录
-        if (!isLogin)
+        if (Action == "logout")
         {
-            LoginWebview();
+            Logout();
         }
-        else  // 刷新token和 cookie
+        else 
         {
-            bool isCookie = false;
-            if(IAccountService.CurrentAccount.IsExpired)
-            {
-                isCookie = await RefreshToken();
-            }
-            if (isCookie)
-            {
-                RefreshCookieWebview();
-            }
-            else
+            // 登录
+            if (!isLogin)
             {
                 LoginWebview();
             }
+            else  // 刷新token和 cookie
+            {
+                bool isCookie = false;
+                if (IAccountService.CurrentAccount.IsExpired)
+                {
+                    isCookie = await RefreshToken();
+                }
+                if (isCookie)
+                {
+                    RefreshCookieWebview();
+                }
+                else
+                {
+                    LoginWebview();
+                }
+            }
         }
+        
+        
     }
 
     private void LoginWebview()
     {
-        //var dic = new Dictionary<string, string>();
-        //dic.Add("client_id", Appsettings.ClientId);
-        //dic.Add("client_secret", Appsettings.ClientSecret);
-        //dic.Add("response_type", "code");
-        //dic.Add("scope", "openid profile orderapi memberapi productapi offline_access");
-        //dic.Add("redirect_uri", Appsettings.ClientCallback);
-        //dic.Add("nonce", Guid.NewGuid().ToString("N"));
-        //dic.Add("state", Guid.NewGuid().ToString("N"));
-        //dic.Add("code_challenge", CreateCodeChallenge());
-        //dic.Add("code_challenge_method", "S256");
-
-        //string IdentityAuthorizeEndpoint = CreateAuthorizeEndpoint(dic);
-
-        //webView.Source = IdentityAuthorizeEndpoint;
-
         GetCode(Appsettings.ClientId, Appsettings.ClientSecret, "openid profile orderapi memberapi productapi offline_access",null);
     }
     private string CreateAuthorizeEndpoint(IDictionary<string, string> values)
@@ -131,9 +127,10 @@ public partial class LoginView : ContentPage
         webView.Navigating -= WebViewRefreshCookieNavigating;
         webView.Navigating -= WebViewLoginNavigating;
         webView.Navigating -= WebViewGetCodeNavigating;
+        webView.Navigating -= WebViewLogoutNavigating;
         webView.Navigating += WebViewRefreshCookieNavigating;
 
-        string RefreshCookie = Appsettings.RefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
+        string RefreshCookie = Appsettings.IdentityRefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
         webView.Source = RefreshCookie;
     }
     private async void WebViewLoginNavigating(object sender, WebNavigatingEventArgs e)
@@ -147,8 +144,7 @@ public partial class LoginView : ContentPage
 
             await _accountService.SaveToken(resp);
 
-
-            await Shell.Current.GoToAsync(nameof(MyIndexView));
+            await Shell.Current.GoToAsync("..");
         }
     }
     private async void WebViewRefreshCookieNavigating(object sender, WebNavigatingEventArgs e)
@@ -177,6 +173,18 @@ public partial class LoginView : ContentPage
             await Shell.Current.GoToAsync("..");
         }
     }
+    private void WebViewLogoutNavigating(object sender, WebNavigatingEventArgs e)
+    {
+        var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
+        if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
+        {
+            Action = "";
+            var shell = (AppShell)Shell.Current;
+            shell.GotoHome();
+            
+            //await Shell.Current.GoToAsync(nameof(HomeView));
+        }
+    }
     public void GetCode(string clientId,string clientSecret,string scope,string returnUrl)
     {
         var dic = new Dictionary<string, string>();
@@ -196,6 +204,7 @@ public partial class LoginView : ContentPage
             webView.Navigating -= WebViewRefreshCookieNavigating;
             webView.Navigating -= WebViewLoginNavigating;
             webView.Navigating -= WebViewGetCodeNavigating;
+            webView.Navigating -= WebViewLogoutNavigating;
             webView.Navigating += WebViewLoginNavigating;
         }
         else
@@ -204,23 +213,29 @@ public partial class LoginView : ContentPage
             webView.Navigating -= WebViewRefreshCookieNavigating;
             webView.Navigating -= WebViewLoginNavigating;
             webView.Navigating -= WebViewGetCodeNavigating;
+            webView.Navigating -= WebViewLogoutNavigating;
             webView.Navigating += WebViewGetCodeNavigating;
         }
         
         webView.Source = IdentityAuthorizeEndpoint;
+        //webView.Reload();
     }
     public void Logout()
     {
-        var sss = webView.GetVisualElementWindow();
-        
+        //webView.Cookie.Clear();
 
-        //webView=new WebView();
-        //webView.IsEnabled = false;
+        webView.Navigating -= WebViewRefreshCookieNavigating;
+        webView.Navigating -= WebViewLoginNavigating;
+        webView.Navigating -= WebViewGetCodeNavigating;
+        webView.Navigating -= WebViewLogoutNavigating;
+        webView.Navigating += WebViewLogoutNavigating;
+
+        string RefreshCookie = Appsettings.IdentityLogout + "?returnuri=" + Appsettings.ClientCallback;
+        webView.Source = RefreshCookie;
     }
     protected override async void OnAppearing()
     {
         await Init();
-
     }
 }
 internal static class Common

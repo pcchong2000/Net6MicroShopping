@@ -47,6 +47,15 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Commons\**" />
+	  <Compile Remove="Commons\**" />
+	  <EmbeddedResource Remove="Commons\**" />
+	  <MauiCss Remove="Commons\**" />
+	  <MauiXaml Remove="Commons\**" />
+	  <None Remove="Commons\**" />
+	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="IdentityModel" Version="6.0.0" />
@@ -99,8 +108,5 @@
 	  <MauiXaml Update="Views\shopcarts\SubmmitOrderView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Commons\CookieHandler\" />
 	</ItemGroup>
 </Project>
