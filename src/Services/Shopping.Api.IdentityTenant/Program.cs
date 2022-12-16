@@ -38,7 +38,7 @@ namespace Shopping.Api.IdentityTenant
             });
 
             builder.Services.AddIdentityServer(options => {
-                //docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
+                //LocalApi时，docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
                 options.IssuerUri = builder.Configuration["IssuerUri"];
             })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
@@ -90,7 +90,7 @@ namespace Shopping.Api.IdentityTenant
                 });
             });
 
-
+            builder.Services.AddSwaggerGen();
 
 
             var app = builder.Build();
@@ -104,6 +104,11 @@ namespace Shopping.Api.IdentityTenant
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             app.UseCookiePolicy();
 
             app.UseStaticFiles();
@@ -114,9 +119,6 @@ namespace Shopping.Api.IdentityTenant
 
             app.UseIdentityServer();
 
-            //eShopDapr的解决方案，UseIdentityServer在Routing 之前
-            //app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
-            
             app.UseAuthorization();
 
             app.MapControllerRoute(

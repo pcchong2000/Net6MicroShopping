@@ -18,18 +18,13 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             _currentUserService = currentUserService;
             _mediator = mediator;
         }
-        [HttpGet("test")]
-        public string Get()
-        {
-            return "123";
-        }
         [HttpGet("myinfo")]
         public async Task<MemberMyInfoQueryResponse> MyInfo()
         {
             return await _mediator.Send(new MemberMyInfoQuery() { Id = _currentUserService.Id });
         }
-        [HttpPost("updateAvatar")]
-        public async Task<bool> UpdateAvatar(MemberUpdateAvatarCommand request)
+        [HttpPost("update")]
+        public async Task<bool> UpdateAvatar(MemberUpdateCommand request)
         {
             request.Id = _currentUserService.Id;
             return await _mediator.Send(request);
