@@ -4,7 +4,7 @@ using Shopping.Api.Product.Data;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Queries
+namespace Shopping.Api.Product.TenantApplications.Queries
 {
     public class StoreProductCategoryTenantPageQuery : IRequest<ResponsePageBase<StoreProductCategoryTenantPageQueryItemResponse>>
     {

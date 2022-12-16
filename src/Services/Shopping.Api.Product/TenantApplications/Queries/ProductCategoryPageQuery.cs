@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
 using Shopping.Framework.DomainBase.Base;
 
-namespace Shopping.Api.Product.Applications.Queries
+namespace Shopping.Api.Product.TenantApplications.Queries
 {
     public class ProductCategoryPageQuery : RequestPageBase, IRequest<ResponsePageBase<ProductCategoryPageQueryItemResponse>>
     {

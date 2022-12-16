@@ -4,7 +4,8 @@ using Dapr.Client.Autogen.Grpc.v1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MediatR;
-using Shopping.Api.Product.Applications.Queries;
+using Shopping.Api.Product.MemberApplications.Queries;
+using Shopping.Api.Product.TenantApplications.Queries;
 using Shopping.Framework.Web.Product.Grpc.Proto;
 
 namespace Shopping.Api.Product.Grpc.Services

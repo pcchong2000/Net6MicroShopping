@@ -24,7 +24,7 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             return await _mediator.Send(new MemberMyInfoQuery() { Id = _currentUserService.Id });
         }
         [HttpPost("update")]
-        public async Task<bool> UpdateAvatar(MemberUpdateCommand request)
+        public async Task<bool> Update(MemberUpdateCommand request)
         {
             request.Id = _currentUserService.Id;
             return await _mediator.Send(request);

@@ -5,7 +5,7 @@ using Shopping.Api.Product.Models;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Commands
+namespace Shopping.Api.Product.TenantApplications.Commands
 {
     public class ProductEditCommand : IRequest<ProductAddResponse>
     {
@@ -125,16 +125,16 @@ namespace Shopping.Api.Product.Applications.Commands
             }
             else
             {
-                var product = await _context.Product.Where(a=>a.Id==request.Id && a.StoreId==request.StoreId && a.TenantId==_currentUser.TenantId).FirstOrDefaultAsync();
-                if (product!=null)
+                var product = await _context.Product.Where(a => a.Id == request.Id && a.StoreId == request.StoreId && a.TenantId == _currentUser.TenantId).FirstOrDefaultAsync();
+                if (product != null)
                 {
                     product.Name = request.Name;
                     product.Description = request.Description;
                     product.ImageUrl = request.ImageUrl;
-                    product.Price= request.Price;
-                    product.Sort= request.Sort;
-                    product.ProductCategoryId= request.ProductCategoryId;
-                    product.StoreProductCategoryId= request.StoreProductCategoryId;
+                    product.Price = request.Price;
+                    product.Sort = request.Sort;
+                    product.ProductCategoryId = request.ProductCategoryId;
+                    product.StoreProductCategoryId = request.StoreProductCategoryId;
 
                     //清空原有
                     var _categorys = await _context.StoreProductModelCategory.Where(a => a.ProductId == product.Id).ToListAsync();
@@ -183,7 +183,7 @@ namespace Shopping.Api.Product.Applications.Commands
                     await _context.SaveChangesAsync();
                 }
             }
-            
+
             return resp;
 
 

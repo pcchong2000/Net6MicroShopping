@@ -12,7 +12,7 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         Task SaveToken(LoginResponseModel loginResponse);
         Task<AccountInfoResponseModel> MyInfoAsync();
         Task<List<FileResponse>> UpdateFileAsync(Stream file,string name);
-        Task<bool> UpdateAvatarAsync(UpdateAvatarModel update);
+        Task<bool> AccountUpdateAsync(AccountUpdateModel update);
         Task TestAsync();
         Task ClearAsync();
         public static AccountInfo CurrentAccount { get; set; } = new AccountInfo();

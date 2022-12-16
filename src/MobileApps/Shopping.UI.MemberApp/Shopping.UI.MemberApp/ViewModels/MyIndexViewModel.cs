@@ -73,7 +73,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                     var respFiles = await _accountService.UpdateFileAsync(sourceStream, photo.FileName);
                     if (respFiles.Count>0)
                     {
-                        var resp = await _accountService.UpdateAvatarAsync(new UpdateAvatarModel
+                        var resp = await _accountService.AccountUpdateAsync(new AccountUpdateModel
                         {
                             AvatarUrl = Appsettings.ApiBaseAddress + respFiles[0].PathUrl
                         });

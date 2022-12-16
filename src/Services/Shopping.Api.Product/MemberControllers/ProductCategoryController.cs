@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shopping.Api.Product.Applications.Queries;
+using Shopping.Api.Product.MemberApplications.Queries;
 using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Product.MemberControllers
@@ -21,7 +21,7 @@ namespace Shopping.Api.Product.MemberControllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ResponsePageBase<ProductCategoryPageQueryItemResponse>> Get([FromQuery] ProductCategoryPageQuery query)
+        public async Task<List<ProductCategoryListQueryItemResponse>> Get([FromQuery] ProductCategoryListQuery query)
         {
             return await _mediator.Send(query);
         }

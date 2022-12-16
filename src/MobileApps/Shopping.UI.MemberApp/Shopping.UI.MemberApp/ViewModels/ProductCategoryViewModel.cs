@@ -4,7 +4,6 @@ using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services.ProductServices;
 using Shopping.UI.MemberApp.Services.ProductServices.ProductModels;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace Shopping.UI.MemberApp.ViewModels
 {
@@ -15,11 +14,11 @@ namespace Shopping.UI.MemberApp.ViewModels
         {
             _productService = productService;
             dataList = new ObservableCollection<ProductCategoryResponseModel>();
-            InitData();
+            //InitData();
         }
         [ObservableProperty]
         public ObservableCollection<ProductCategoryResponseModel> dataList;
-        async void InitData()
+        public async Task InitData()
         {
             await GetDataAsync();
         }
@@ -28,11 +27,43 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _productService.GetProductCategoryAsync();
             if (resp != null)
             {
-                foreach (var item in resp)
+                var parentList= resp.Where(a=>a.ParentId==null).ToList();
+                
+                for (int i = 0; i < parentList.Count; i++)
                 {
+                    var item = parentList[i];
+                    if (i == 0)
+                    {
+                        item.CheckColor = Color.Parse("#fff");
+                    }
+                    else 
+                    {
+                        item.CheckColor = Color.Parse("#eee");
+                    }
+                    item.Childrens = resp.Where(a => a.ParentId == item.Id).ToList();
+
                     dataList.Add(item);
                 }
+
             }
+        }
+        [RelayCommand]
+        async Task ItemParnetClick(ProductCategoryResponseModel item)
+        {
+            foreach (var child in dataList)
+            {
+                child.CheckColor = Color.Parse("#eee");
+
+            }
+            item.CheckColor = Color.Parse("#fff");
+
+            this.OnPropertyChanged("DataList");
+            
+        }
+        [RelayCommand]
+        async Task ItemClick(ProductCategoryResponseModel item)
+        {
+
         }
     }
 }

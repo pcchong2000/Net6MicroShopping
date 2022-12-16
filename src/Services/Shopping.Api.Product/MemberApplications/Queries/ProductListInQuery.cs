@@ -5,7 +5,7 @@ using Shopping.Api.Product.Models;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Queries
+namespace Shopping.Api.Product.MemberApplications.Queries
 {
     public class ProductListInQuery : IRequest<ProductListInQueryResponse>
     {
@@ -72,15 +72,15 @@ namespace Shopping.Api.Product.Applications.Queries
                             StoreId = p.StoreId,
                             StoreName = p.StoreName,
                             ProductModels = (from pm in _context.StoreProductModel
-                                            where pm.ProductId == p.Id
-                                            select new StoreProductModelDto
-                                            {
-                                                Id = pm.Id,
-                                                Number = pm.Number,
-                                                Price = pm.Price,
-                                                ProductId = pm.ProductId,
-                                                Value = pm.Value,
-                                            }).ToList()
+                                             where pm.ProductId == p.Id
+                                             select new StoreProductModelDto
+                                             {
+                                                 Id = pm.Id,
+                                                 Number = pm.Number,
+                                                 Price = pm.Price,
+                                                 ProductId = pm.ProductId,
+                                                 Value = pm.Value,
+                                             }).ToList()
                         };
 
             resp.Products = await query.ToListAsync();

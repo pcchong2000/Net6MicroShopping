@@ -25,9 +25,9 @@ namespace Shopping.UI.MemberApp.Configs
         public static string IdentityAuthorizeEndpoint = IdentityAddress + "/connect/authorize";
         public static string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
         public static string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
-        public static string TestUrl = IdentityAddress + "/auth/test";
-        public static string IdentityRefreshCookie = IdentityAddress + "/api/member/auth/refresh_cookie";
-        public static string IdentityLogout = IdentityAddress + "/api/member/auth/logout";
+
+        
+
         #endregion
 
 
@@ -56,9 +56,11 @@ namespace Shopping.UI.MemberApp.Configs
 
         #region account Api
         public static string AccountApiBase = ApiBaseAddress + "/api/member";
-
         public static string AccountMyInfo = AccountApiBase + "/member/myinfo";
-        public static string AccountUpdateAvatar = AccountApiBase + "/member/updateAvatar";
+        public static string AccountUpdate = AccountApiBase + "/member/update";
+
+        public static string IdentityRefreshCookie = AccountApiBase + "/auth/refresh_cookie";
+        public static string IdentityLogout = AccountApiBase + "/auth/logout";
         #endregion
 
         #region oss Api

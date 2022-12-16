@@ -45,7 +45,7 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         }
         public async Task TestAsync()
         {
-            var resp = await _httpClient.GetAsync<LoginResponseModel>(Appsettings.TestUrl);
+            
         }
 
         public Task ClearAsync()
@@ -66,9 +66,9 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
             
         }
 
-        public async Task<bool> UpdateAvatarAsync(UpdateAvatarModel update)
+        public async Task<bool> AccountUpdateAsync(AccountUpdateModel update)
         {
-            return await _httpClient.PostAsync<UpdateAvatarModel,bool>(Appsettings.AccountUpdateAvatar, update);
+            return await _httpClient.PostAsync<AccountUpdateModel, bool>(Appsettings.AccountUpdate, update);
         }
     }
 }

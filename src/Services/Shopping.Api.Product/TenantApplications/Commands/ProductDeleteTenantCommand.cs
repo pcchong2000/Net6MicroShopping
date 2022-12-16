@@ -4,7 +4,7 @@ using Shopping.Api.Product.Data;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Commands
+namespace Shopping.Api.Product.TenantApplications.Commands
 {
     public class ProductDeleteTenantCommand : IRequest<ProductDeleteTenantResponse>
     {

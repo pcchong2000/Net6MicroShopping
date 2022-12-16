@@ -81,8 +81,12 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         public DateTime CreateTime { get; set; }
     }
 
-    public class UpdateAvatarModel { 
+    public class AccountUpdateModel
+    {
+        public string NickName { get; set; }
+        public string Name { get; set; }
         public string AvatarUrl { get; set; }
+        public DateTime? BirthdayTime { get; set; }
     }
     public class FileResponse
     {

@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Api.Product.Applications.Commands;
 using Shopping.Api.Product.Data;
 using Shopping.Api.Product.Models;
 using Shopping.Framework.DomainBase.Base;
 
-namespace Shopping.Api.Product.Applications.Queries
+namespace Shopping.Api.Product.MemberApplications.Queries
 {
     public class ProductDetailQuery : IRequest<ProductDetailQueryResponse>
     {
@@ -25,8 +24,6 @@ namespace Shopping.Api.Product.Applications.Queries
         public ProductStatus Status { get; set; }
         public string? StoreId { get; set; }
         public string? StoreName { get; set; }
-        public List<ProductAddModelCategory>? StoreProductModelCategoryList { get; set; }
-        public List<ProductAddModel>? StoreProductModelList { get; set; }
     }
     public class ProductDetailQueryHandler : IRequestHandler<ProductDetailQuery, ProductDetailQueryResponse>
     {
@@ -56,34 +53,6 @@ namespace Shopping.Api.Product.Applications.Queries
                         };
 
             var resp = await query.FirstOrDefaultAsync();
-
-            if (resp != null)
-            {
-                resp.StoreProductModelCategoryList = await (from pmc in _context.StoreProductModelCategory
-                                                            where pmc.ProductId == request.ProductId
-                                                            select new ProductAddModelCategory()
-                                                            {
-                                                                Id= pmc.Id,
-                                                                Code = pmc.Code,
-                                                                Name = pmc.Name,
-                                                                Sort = pmc.Sort,
-                                                                Description = pmc.Description,
-                                                                Items = pmc.Items,
-                                                            }).ToListAsync();
-                resp.StoreProductModelList = await (from pm in _context.StoreProductModel
-                                                    where pm.ProductId == request.ProductId
-                                                    select new ProductAddModel()
-                                                    {
-                                                        Id=pm.Id,
-                                                        Number = pm.Number,
-                                                        Price = pm.Price,
-                                                        Value = pm.Value,
-                                                        Sort = pm.Sort,
-                                                        Description = pm.Description,
-                                                    }).ToListAsync();
-            }
-
-
             return resp!;
         }
     }

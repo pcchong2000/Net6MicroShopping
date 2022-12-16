@@ -35,15 +35,15 @@ namespace Shopping.Api.IdentityMember.Application.Members
             if (member != null)
             {
                 
-                if (string.IsNullOrWhiteSpace(request.AvatarUrl))
+                if (!string.IsNullOrWhiteSpace(request.AvatarUrl))
                 {
                     member.AvatarUrl = request.AvatarUrl;
                 }
-                if (string.IsNullOrWhiteSpace(request.NickName))
+                if (!string.IsNullOrWhiteSpace(request.NickName))
                 {
                     member.NickName = request.NickName;
                 }
-                if (string.IsNullOrWhiteSpace(request.Name))
+                if (!string.IsNullOrWhiteSpace(request.Name))
                 {
                     member.Name = request.Name;
                 }

@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Api.Product.Data;
+using Shopping.Api.Product.TenantApplications.Commands;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Commands
+namespace Shopping.Api.Product.MemberApplications.Commands
 {
 
     public class ProductInUpdateReserveCommand : IRequest
@@ -37,12 +38,12 @@ namespace Shopping.Api.Product.Applications.Commands
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                
+
                 var modelIds = request.ProductModels.Select(a => a.ProductModelId).ToList();
                 var productModels = await _context.StoreProductModel.Where(a => modelIds.Contains(a.Id)).ToListAsync();
                 foreach (var item in request.ProductModels)
                 {
-                    var productModel = productModels.FirstOrDefault(a=>a.ProductId==item.ProductId && a.Id==item.ProductModelId);
+                    var productModel = productModels.FirstOrDefault(a => a.ProductId == item.ProductId && a.Id == item.ProductModelId);
                     if (productModel != null)
                     {
                         if (productModel.Number > item.Number)
@@ -69,7 +70,7 @@ namespace Shopping.Api.Product.Applications.Commands
                 _logger.LogError(_currentUser.Name + ex.ToString());
                 throw;
             }
-            
+
         }
     }
 }

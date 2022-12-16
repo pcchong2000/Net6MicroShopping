@@ -5,7 +5,7 @@ using Shopping.Api.Product.Models;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Commands
+namespace Shopping.Api.Product.TenantApplications.Commands
 {
     public class StoreProductCategoryEditCommand : IRequest<string>
     {
@@ -29,7 +29,7 @@ namespace Shopping.Api.Product.Applications.Commands
 
         public async Task<string> Handle(StoreProductCategoryEditCommand request, CancellationToken cancellationToken)
         {
-            
+
             if (request.Id == null)
             {
                 StoreProductCategory storeProductCategory = new StoreProductCategory()
@@ -52,7 +52,7 @@ namespace Shopping.Api.Product.Applications.Commands
             else
             {
                 var storeProductCategory = await _context.StoreProductCategory.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
-                if (storeProductCategory!=null)
+                if (storeProductCategory != null)
                 {
                     storeProductCategory.Name = request.Name;
                     storeProductCategory.Code = request.Code;
@@ -62,7 +62,7 @@ namespace Shopping.Api.Product.Applications.Commands
 
 
                     await _context.SaveChangesAsync();
-                    
+
                 }
             }
             return request.Id;

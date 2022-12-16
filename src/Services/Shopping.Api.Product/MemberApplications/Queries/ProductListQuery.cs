@@ -5,18 +5,18 @@ using Shopping.Api.Product.Models;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 
-namespace Shopping.Api.Product.Applications.Queries
+namespace Shopping.Api.Product.MemberApplications.Queries
 {
-    public class ProductListTenantQuery : RequestPageBase, IRequest<ProductListTenantResponse>
+    public class ProductListQuery : RequestPageBase, IRequest<ProductListResponse>
     {
         public string? TenantId { get; set; }
         public string? StoreId { get; set; }
     }
-    public class ProductListTenantResponse : ResponsePageBase<ProductListTenantItemResponse>
+    public class ProductListResponse : ResponsePageBase<ProductListItemResponse>
     {
 
     }
-    public class ProductListTenantItemResponse
+    public class ProductListItemResponse
     {
         public string? Id { get; set; }
         public string? TenantId { get; set; }
@@ -37,25 +37,24 @@ namespace Shopping.Api.Product.Applications.Queries
         public DateTime CreateTime { get; set; }
         public ProductStatus Status { get; set; }
     }
-    public class ProductListTenantQueryHandler : IRequestHandler<ProductListTenantQuery, ProductListTenantResponse>
+    public class ProductListQueryHandler : IRequestHandler<ProductListQuery, ProductListResponse>
     {
         private readonly ProductDbContext _context;
-        public ProductListTenantQueryHandler(ProductDbContext context)
+        public ProductListQueryHandler(ProductDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ProductListTenantResponse> Handle(ProductListTenantQuery request, CancellationToken cancellationToken)
+        public async Task<ProductListResponse> Handle(ProductListQuery request, CancellationToken cancellationToken)
         {
-            ProductListTenantResponse resp = new ProductListTenantResponse();
+            ProductListResponse resp = new ProductListResponse();
 
             var query = from p in _context.Product
                         join pc in _context.ProductCategory on p.ProductCategoryId equals pc.Id into pc1
                         from pct in pc1.DefaultIfEmpty()
                         join spc in _context.StoreProductCategory on p.StoreProductCategoryId equals spc.Id into spc1
                         from spct in spc1.DefaultIfEmpty()
-                        where !p.IsDeleted
-                        select new ProductListTenantItemResponse()
+                        select new ProductListItemResponse()
                         {
                             Id = p.Id,
                             CreateTime = p.CreateTime,

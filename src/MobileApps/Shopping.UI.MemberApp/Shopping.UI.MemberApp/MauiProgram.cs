@@ -52,14 +52,13 @@ public static class MauiProgram
         services.AddSingleton<ProductCategoryViewModel>();
         services.AddSingleton<OrderListViewModel>();
         
-
         services.AddSingleton<AppShell>();
         services.AddSingleton<HomeView>();
         services.AddTransient<LoginView>();
         services.AddSingleton<MyIndexView>();
         services.AddSingleton<OrderListView>();
         services.AddSingleton<OrderDetailView>();
-        
+        services.AddSingleton<ProductCategoryView>();
 
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
         Routing.RegisterRoute(nameof(MyIndexView), typeof(MyIndexView));

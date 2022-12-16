@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shopping.Api.Product.Applications.Queries;
+using Shopping.Api.Product.TenantApplications.Queries;
 using Shopping.Framework.DomainBase.Base;
 
 namespace Shopping.Api.Product.TenantControllers
