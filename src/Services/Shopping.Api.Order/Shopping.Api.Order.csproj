@@ -26,11 +26,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Grpc.Tools" Version="2.50.0" PrivateAssets="All" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\Tenants\Commands\" />
-
-  </ItemGroup>
   <ItemGroup>
     <Protobuf Include="..\Shopping.Framework.Web\Protos\*.proto" GrpcServices="Client" Link="Grpc\Protos\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>

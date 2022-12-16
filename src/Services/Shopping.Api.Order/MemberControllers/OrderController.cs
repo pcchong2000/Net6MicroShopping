@@ -1,3 +1,4 @@
+using Dapr;
 using Dapr.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +48,8 @@ namespace Shopping.Api.Order.MemberControllers
 
             return await _mediator.Send(addOrder);
         }
+
+
     }
 
 }

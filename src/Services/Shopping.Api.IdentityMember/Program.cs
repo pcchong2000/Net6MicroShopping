@@ -35,7 +35,7 @@ namespace Shopping.Api.IdentityMember
 
             builder.Services.AddControllersWithViews(options => {
                 options.Filters.Add<ResponseFilter>();
-            });
+            }).AddDapr();
 
             builder.Services.AddIdentityServer(options => {
                 //LocalApi时，docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
@@ -109,9 +109,13 @@ namespace Shopping.Api.IdentityMember
 
             app.UseAuthorization();
 
+            app.UseCloudEvents();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapSubscribeHandler();
 
             app.Run();
         }
