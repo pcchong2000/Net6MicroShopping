@@ -8,65 +8,65 @@ namespace Shopping.UI.MemberApp.Configs
 {
     public static class Appsettings
     {
-        public static string TenantId = "3a00a01f-8a3b-9d59-a59c-281e8bb589bf";
-        public static string IPAddress = "192.168.1.100";
-        //public static string BaseAddress =    DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.1.238:5251" : "http://192.168.1.238:5251";
+        public const string TenantId = "3a00a01f-8a3b-9d59-a59c-281e8bb589bf";
+        public const string IPAddress = "192.168.1.100";
+        //public const string BaseAddress =    DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.1.238:5251" : "http://192.168.1.238:5251";
 
 
         #region 登录接口
-        public static string IdentityAddress = $"http://{IPAddress}:5101";
+        public const string IdentityAddress = $"http://{IPAddress}:5101";
 
-        public static string ClientPasswordId = "membermauipassword";
-        public static string ClientId = "membermaui";
-        public static string ClientSecret = "secret";
-        public static string ClientCallback = IdentityAddress+"/membermauicallback";
+        public const string ClientPasswordId = "membermauipassword";
+        public const string ClientId = "membermaui";
+        public const string ClientSecret = "secret";
+        public const string ClientCallback = IdentityAddress+"/membermauicallback";
 
         
-        public static string IdentityAuthorizeEndpoint = IdentityAddress + "/connect/authorize";
-        public static string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
-        public static string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
+        public const string IdentityAuthorizeEndpoint = IdentityAddress + "/connect/authorize";
+        public const string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
+        public const string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
 
         
 
         #endregion
 
 
-        public static string ApiBaseAddress = $"http://{IPAddress}:5200";
+        public const string ApiBaseAddress = $"http://{IPAddress}:5200";
 
 
         #region product Api
-        public static string ProductApiBase = ApiBaseAddress + "/api/product";
+        public const string ProductApiBase = ApiBaseAddress + "/api/product";
 
         
-        public static string ProductCategoryList = ProductApiBase + "/ProductCategory";
-        public static string ProductList = ProductApiBase + "/Product";
-        public static string ProductDetail = ProductApiBase + "/Product/detail";
-        public static string ProductHome = ProductApiBase + "/Product/Home";
+        public const string ProductCategoryList = ProductApiBase + "/ProductCategory";
+        public const string ProductList = ProductApiBase + "/Product";
+        public const string ProductDetail = ProductApiBase + "/Product/detail";
+        public const string ProductHome = ProductApiBase + "/Product/Home";
         #endregion
 
 
         #region order Api
-        public static string OrderApiBase = ApiBaseAddress + "/api/order";
+        public const string OrderApiBase = ApiBaseAddress + "/api/order";
 
-        public static string OrderSubmmit = OrderApiBase + "/order";
-        public static string OrderList = OrderApiBase + "/order";
-        public static string OrderDetail = OrderApiBase + "/order/detail";
+        public const string OrderSubmmit = OrderApiBase + "/order";
+        public const string OrderList = OrderApiBase + "/order";
+        public const string OrderDetail = OrderApiBase + "/order/detail";
         #endregion
 
 
         #region account Api
-        public static string AccountApiBase = ApiBaseAddress + "/api/member";
-        public static string AccountMyInfo = AccountApiBase + "/member/myinfo";
-        public static string AccountUpdate = AccountApiBase + "/member/update";
+        public const string AccountApiBase = ApiBaseAddress + "/api/member";
+        public const string AccountMyInfo = AccountApiBase + "/member/myinfo";
+        public const string AccountUpdate = AccountApiBase + "/member/update";
 
-        public static string IdentityRefreshCookie = AccountApiBase + "/auth/refresh_cookie";
-        public static string IdentityLogout = AccountApiBase + "/auth/logout";
+        public const string IdentityRefreshCookie = AccountApiBase + "/auth/refresh_cookie";
+        public const string IdentityLogout = AccountApiBase + "/auth/logout";
         #endregion
 
         #region oss Api
-        public static string OssApiBase = ApiBaseAddress + "/api/oss";
+        public const string OssApiBase = ApiBaseAddress + "/api/oss";
 
-        public static string OssUpLoad = OssApiBase + "/file";
+        public const string OssUpLoad = OssApiBase + "/file";
         #endregion
     }
 }

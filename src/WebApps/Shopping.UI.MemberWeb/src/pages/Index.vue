@@ -19,7 +19,7 @@ import productService from '../services/productService'
 const productCategorys=ref([]);
 
 productService.getProductCategoryList({}).then(resp=>{
-productCategorys.value=resp.data.list;
+productCategorys.value=resp.data;
 //console.log(productCategorys)
 });
 
