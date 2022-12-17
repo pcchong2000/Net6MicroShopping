@@ -26,8 +26,9 @@ namespace Shopping.UI.MemberApp.Configs
         public const string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
         public const string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
 
-        
 
+        public const string IdentityRefreshCookie = IdentityAddress + "/api/member/auth/refresh_cookie";
+        public const string IdentityLogout = IdentityAddress + "/api/member/auth/logout";
         #endregion
 
 
@@ -59,8 +60,7 @@ namespace Shopping.UI.MemberApp.Configs
         public const string AccountMyInfo = AccountApiBase + "/member/myinfo";
         public const string AccountUpdate = AccountApiBase + "/member/update";
 
-        public const string IdentityRefreshCookie = AccountApiBase + "/auth/refresh_cookie";
-        public const string IdentityLogout = AccountApiBase + "/auth/logout";
+        
         #endregion
 
         #region oss Api
