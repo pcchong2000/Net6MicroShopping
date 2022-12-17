@@ -91,5 +91,11 @@ namespace Shopping.UI.MemberApp.ViewModels
            int _orderStatus=int.Parse(orderStatus);
            await Shell.Current.GoToAsync($"{nameof(OrderListView)}?status={_orderStatus}");
         }
+        [RelayCommand]
+        public async void QRCodeScanner()
+        {
+            await Shell.Current.GoToAsync($"{nameof(CameraBarcodeReaderView)}");
+        }
+
     }
 }

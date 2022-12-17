@@ -27,21 +27,23 @@ $(function () {
         $(".qrLogin").removeClass('active');
         $(".qrcontent").hide();
     });
-    setTimeout(() => {
+    
+    setInterval(() => {
         if ($(".qrLogin").hasClass("active")) {
             let qrvalue = $("#qrcodeValue").val();
             $.ajax({
                 url: "/Account/QRCodeCheck?qrcode=" + qrvalue,
                 type: "get",
-                dataType: "application/json",
+                dataType: "json",
                 success: function (resp) {
                     console.log("success", resp);
                     if (resp.status) {
-
+                        $("#qrcodeStatus").val("1");
+                        $("#submit").click();
                     }
                 },
-                error: function (err) {
-                    console.log("error", err);
+                error: function (err,m) {
+                    console.log("error", err,m);
                 }
             });
         }

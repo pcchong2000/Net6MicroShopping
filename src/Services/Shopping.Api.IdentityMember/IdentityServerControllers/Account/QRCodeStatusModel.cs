@@ -3,6 +3,7 @@
     public class QRCodeStatusModel
     {
         public int Status { get; set; }
-        public string Id { get; set; }
+        public string ClientId { get; set; }
+        public string MemberId { get; set; }
     }
 }

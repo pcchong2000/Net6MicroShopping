@@ -13,17 +13,21 @@ using IdentityServer4.Stores;
 using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Shopping.Api.IdentityMember.Data;
 using Shopping.Api.IdentityMember.IdentityServerConfig;
 using Shopping.Api.IdentityMember.Models;
 using Shopping.Framework.AccountApplication.AccountServices;
+using Shopping.Framework.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
 {
@@ -42,13 +46,17 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly DaprClient _daprClient;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             IAccountManage<MemberInfo, MemberDbContext> accountManage,
-            DaprClient daprClient)
+            DaprClient daprClient, 
+            ICurrentUserService currentUserService,
+            IWebHostEnvironment webHostEnvironment)
         {
             _interaction = interaction;
             _clientStore = clientStore;
@@ -56,6 +64,8 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
             _events = events;
             _accountManage = accountManage;
             _daprClient = daprClient;
+            _currentUserService = currentUserService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -115,8 +125,27 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
 
             if (ModelState.IsValid)
             {
-                var member = await _accountManage.GetAccountByUserName(model.Username);
-                if (_accountManage.CheckPassword(member, model.Password))
+                MemberInfo member=null;
+                if (model.QRCodeStatus=="1")
+                {
+                    var status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_" + model.QRCode);
+                    if (status!=null && status.Status==1)
+                    {
+                        member = await _accountManage.GetAccountById(status.MemberId);
+
+                    }
+                }
+                if (member == null)
+                {
+                    member = await _accountManage.GetAccountByUserName(model.Username);
+                    if (!_accountManage.CheckPassword(member, model.Password))
+                    {
+                        member = null;
+                    }
+                }
+                
+                
+                if (member != null)
                 {
 
                     await _events.RaiseAsync(new UserLoginSuccessEvent(member.UserName, member.Id, member.UserName, clientId: context?.Client.ClientId));
@@ -182,9 +211,55 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         [HttpGet]
         public async Task<IActionResult> QRCodeCheck(string qrcode)
         {
-
             var  status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_"+ qrcode);
             return Json(new { status = status.Status });
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> QRCodeConfirm(string qrcode)
+        {
+            var status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_" + qrcode);
+            QRCodeConfirmViewModel vm;
+            if (status == null)
+            {
+                vm = new QRCodeConfirmViewModel()
+                {
+                    QRCode = "",
+                    Status = -1,
+                };
+            }
+            else
+            {
+                vm = new QRCodeConfirmViewModel()
+                {
+                    QRCode = qrcode,
+                    Status = status.Status,
+                    Message = ""
+                };
+            }
+            
+            if (status.Status!=0)
+            {
+                vm.Message = "¶þÎ¬ÂëÒÑÊ§Ð§";
+            }
+            return View(vm);
+        }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> QRCodeConfirm(QRCodeConfirmViewModel request)
+        {
+            var id = _currentUserService.Id;
+            var status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_" + request.QRCode);
+            if (status !=null && status.Status==0)
+            {
+                status.MemberId = id;
+                status.Status = 1;
+                await _daprClient.SaveStateAsync("statestore", "qrcode_" + request.QRCode, status);
+                var client = await _clientStore.FindClientByIdAsync(status.ClientId);
+                return Redirect("/account/qrcodeConfirmCallBack");
+            }
+            return BadRequest();
         }
 
         /// <summary>
@@ -339,11 +414,12 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
             string QRCodePrefix= string.Empty;
             if (!IsLocalApp)
             {
-                QRCode = Guid.NewGuid().ToString();
+                QRCode = _webHostEnvironment.IsDevelopment()? "50f8f0be-05ac-41c9-b0b2-a86e7e844010" : Guid.NewGuid().ToString();
                 QRCodePrefix = "http://192.168.1.100:5101/qrcode?qrcode=";
                 // cache
                 await _daprClient.SaveStateAsync("statestore", "qrcode_"+ QRCode, new QRCodeStatusModel() {
                     Status=0,
+                    ClientId= context?.Client.ClientId
                 }, null,new Dictionary<string, string>() { {"time",DateTime.Now.AddMinutes(2).ToString("yyyy-MM-dd HH:mm:dd") } });
 
             }

@@ -88,32 +88,5 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             return Redirect(returnuri);
             
         }
-        [HttpGet("qrcodeLoginCheck")]
-        public async Task<bool> qrcodeLoginCheck(string qrcode)
-        {
-           var status = await _daprClient.GetStateAsync<int>("statestore", "qrcode_" + qrcode);
-            if (status == 0)
-            {
-                //await _daprClient.SaveStateAsync("statestore", "qrcode_" + qrcode,1);
-                return status == 0;
-            }
-            return false;
-        }
-        [HttpGet("qrcodeLogin")]
-        public async Task<bool> qrcodeLogin(string qrcode)
-        {
-            var id = _currentUserService.Id;
-            var status = await _daprClient.GetStateAsync<int>("statestore", "qrcode_" + qrcode);
-            if (status == 0)
-            {
-                await _daprClient.SaveStateAsync("statestore", "qrcode_" + qrcode, new QRCodeStatusModel()
-                {
-                    Status = 0,
-                    Id= id
-                });
-                return status == 0;
-            }
-            return false;
-        }
     }
 }

@@ -32,6 +32,7 @@
                         <div class="card qrcontent">
                             <div class="card-body">
                                 <input type="hidden" asp-for="QRCode" id="qrcodeValue" />
+                                <input type="hidden" asp-for="QRCodeStatus" id="qrcodeStatus" />
                                 <input type="hidden" asp-for="QRCodePrefix" id="qrcodeValuePrefix" />
                                 <div id="qrcode"></div>
                             </div>
@@ -62,7 +63,7 @@
                                         </div>
                                     </div>
                                 }
-                                <button class="btn btn-primary" name="button" value="login">µÇÂ¼</button>
+                                <button class="btn btn-primary" id="submit" name="button" value="login">µÇÂ¼</button>
                                 <button class="btn btn-secondary" name="button" value="cancel">È¡Ïû</button>
                        
                         </div>

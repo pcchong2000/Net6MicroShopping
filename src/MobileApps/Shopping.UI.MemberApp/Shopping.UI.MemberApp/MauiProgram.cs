@@ -7,6 +7,8 @@ using Shopping.UI.MemberApp.Services.OrderServices;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Extensions.Logging;
+using ZXing.Net.Maui;
+using ZXing.Net.Maui.Controls;
 
 namespace Shopping.UI.MemberApp;
 
@@ -18,6 +20,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -59,6 +62,8 @@ public static class MauiProgram
         services.AddSingleton<OrderListView>();
         services.AddSingleton<OrderDetailView>();
         services.AddSingleton<ProductCategoryView>();
+        services.AddTransient<CameraBarcodeReaderView>();
+        
 
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
         Routing.RegisterRoute(nameof(MyIndexView), typeof(MyIndexView));
@@ -68,6 +73,7 @@ public static class MauiProgram
         Routing.RegisterRoute(nameof(ProductListView), typeof(ProductListView));
         Routing.RegisterRoute(nameof(OrderListView), typeof(OrderListView));
         Routing.RegisterRoute(nameof(OrderDetailView), typeof(OrderDetailView));
+        Routing.RegisterRoute(nameof(CameraBarcodeReaderView), typeof(CameraBarcodeReaderView));
 
         var app = builder.Build();
         Services = app.Services;

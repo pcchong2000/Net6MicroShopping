@@ -1,0 +1,15 @@
+﻿@using Shopping.Api.IdentityMember.IdentityServerControllers.Account
+@model QRCodeConfirmViewModel
+
+<div class="logout-page">
+    <div class="lead">
+        <p>你正在扫码登录 @Model.ClientName</p>
+    </div>
+
+    <form asp-action="QRCodeConfirm">
+        <input type="hidden" name="QRCode" value="@Model.QRCode" />
+        <div class="form-group">
+            <button class="btn btn-primary">是的</button>
+        </div>
+    </form>
+</div>

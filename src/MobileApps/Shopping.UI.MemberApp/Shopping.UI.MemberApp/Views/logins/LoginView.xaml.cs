@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
+using Shopping.UI.MemberApp.Commons;
 using Shopping.UI.MemberApp.Configs;
 using Shopping.UI.MemberApp.Services;
 using Shopping.UI.MemberApp.Services.AccountServices;
@@ -13,10 +14,11 @@ using System.Text;
 namespace Shopping.UI.MemberApp;
 
 [QueryProperty(nameof(Action), "action")]
+[QueryProperty(nameof(QRCodeLink), "qrcode")]
 public partial class LoginView : ContentPage
 {
     public string Action { get; set; }
-    
+    public string QRCodeLink { get; set; }
     private readonly HttpClientService _httpClient;
     private readonly IAccountService _accountService;
     private string _codeVerifier;
@@ -50,7 +52,7 @@ public partial class LoginView : ContentPage
             }
             else  // 刷新token和 cookie
             {
-                bool isCookie = false;
+                bool isCookie = true;
                 if (IAccountService.CurrentAccount.IsExpired)
                 {
                     isCookie = await RefreshToken();
@@ -58,6 +60,10 @@ public partial class LoginView : ContentPage
                 if (isCookie)
                 {
                     RefreshCookieWebview();
+                    if (Action== "qrcodelogin")
+                    {
+                        QRCodeLoginWebview();
+                    }
                 }
                 else
                 {
@@ -128,9 +134,24 @@ public partial class LoginView : ContentPage
         webView.Navigating -= WebViewLoginNavigating;
         webView.Navigating -= WebViewGetCodeNavigating;
         webView.Navigating -= WebViewLogoutNavigating;
+        webView.Navigating -= WebViewQRCodeloginNavigating;
         webView.Navigating += WebViewRefreshCookieNavigating;
 
         string RefreshCookie = Appsettings.IdentityRefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
+        webView.Source = RefreshCookie;
+    }
+    private void QRCodeLoginWebview()
+    {
+        webView.Navigating -= WebViewRefreshCookieNavigating;
+        webView.Navigating -= WebViewLoginNavigating;
+        webView.Navigating -= WebViewGetCodeNavigating;
+        webView.Navigating -= WebViewLogoutNavigating;
+        webView.Navigating -= WebViewQRCodeloginNavigating;
+        webView.Navigating += WebViewQRCodeloginNavigating;
+
+        //var unescapedUrl = System.Net.WebUtility.UrlEncode(QRCodeLink);
+        var qrcode = UrlHelper.UrlGetParam(QRCodeLink, "qrcode");
+        string RefreshCookie = Appsettings.IdentityQRCodeLoginConfirm + "?qrcode=" + qrcode;
         webView.Source = RefreshCookie;
     }
     private async void WebViewLoginNavigating(object sender, WebNavigatingEventArgs e)
@@ -151,6 +172,16 @@ public partial class LoginView : ContentPage
     {
         var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
         if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
+        {
+            webView.HeightRequest = 0;
+
+            await Shell.Current.GoToAsync(nameof(MyIndexView));
+        }
+    }
+    private async void WebViewQRCodeloginNavigating(object sender, WebNavigatingEventArgs e)
+    {
+        var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
+        if (unescapedUrl.StartsWith(Appsettings.IdentityQRCodeLoginConfirmCallBack))
         {
             webView.HeightRequest = 0;
 
@@ -199,21 +230,18 @@ public partial class LoginView : ContentPage
         dic.Add("code_challenge_method", "S256");
 
         string IdentityAuthorizeEndpoint = CreateAuthorizeEndpoint(dic);
+        webView.Navigating -= WebViewRefreshCookieNavigating;
+        webView.Navigating -= WebViewLoginNavigating;
+        webView.Navigating -= WebViewGetCodeNavigating;
+        webView.Navigating -= WebViewLogoutNavigating;
+        webView.Navigating -= WebViewQRCodeloginNavigating;
         if (string.IsNullOrWhiteSpace(returnUrl))
         {
-            webView.Navigating -= WebViewRefreshCookieNavigating;
-            webView.Navigating -= WebViewLoginNavigating;
-            webView.Navigating -= WebViewGetCodeNavigating;
-            webView.Navigating -= WebViewLogoutNavigating;
             webView.Navigating += WebViewLoginNavigating;
         }
         else
         {
             this._launcherUrl = returnUrl;
-            webView.Navigating -= WebViewRefreshCookieNavigating;
-            webView.Navigating -= WebViewLoginNavigating;
-            webView.Navigating -= WebViewGetCodeNavigating;
-            webView.Navigating -= WebViewLogoutNavigating;
             webView.Navigating += WebViewGetCodeNavigating;
         }
         
@@ -228,6 +256,7 @@ public partial class LoginView : ContentPage
         webView.Navigating -= WebViewLoginNavigating;
         webView.Navigating -= WebViewGetCodeNavigating;
         webView.Navigating -= WebViewLogoutNavigating;
+        webView.Navigating -= WebViewQRCodeloginNavigating;
         webView.Navigating += WebViewLogoutNavigating;
 
         string RefreshCookie = Appsettings.IdentityLogout + "?returnuri=" + Appsettings.ClientCallback;
