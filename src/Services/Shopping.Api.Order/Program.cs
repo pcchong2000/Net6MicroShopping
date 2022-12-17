@@ -13,6 +13,7 @@ using MediatR;
 using Shopping.Api.Order.Data;
 using Shopping.Framework.Web;
 using Shopping.Api.Order.Grpc.Services;
+using Shopping.Framework.Common;
 
 namespace Shopping.Api.Order
 {
@@ -27,31 +28,31 @@ namespace Shopping.Api.Order
                 options.Filters.Add<ResponseFilter>();
             }).AddDapr();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-
 
             //add-migration init -Context OrderDbContext -OutputDir Data/migrations
 
             // 添加EFCore
-            builder.Services.AddWebDbContext<OrderDbContext>(builder.Configuration["ConnectionString"]);
+            builder.Services.AddWebDbContext<OrderDbContext>(builder.Configuration["ConnectionString"]!);
             // 添加认证
             builder.Services.AddAuthentication(JwtBearerIdentity.MemberScheme)
                 .AddTenantJwtBearer(builder.Configuration)
                 .AddMemberJwtBearer(builder.Configuration);
             // 添加授权
-            builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]);
-            // 添加跨域
-            builder.Services.AddWebCors();
-
-            builder.Services.AddWebFreamework();
-            
-
+            builder.Services.AddWebAuthorization(builder.Configuration["ApiName"]!);
 
             builder.Services.AddScoped<IProductService, ProductService>();
+
+            builder.Services.AddWebFreamework();
+
+            builder.Services.AddWebCors();
+
+            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            builder.Services.AddCommonAutoMapper(typeof(AutoMapperExtensions).Assembly, typeof(Program).Assembly);
+
+            builder.Services.AddSwaggerAuth();
+
+            
 
             var app = builder.Build();
 

@@ -3,8 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shopping.Api.IdentityTenant.Applications.Commands;
-using Shopping.Api.IdentityTenant.Applications.Querys;
+using Shopping.Api.IdentityTenant.TenantApplications.TenantStores;
 using Shopping.Framework.Web;
 using System.Threading.Tasks;
 

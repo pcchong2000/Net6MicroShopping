@@ -117,8 +117,10 @@ services:
       - MemberMauiCallbackUrl=http://${LOCALHOST_IP}:5101/membermauicallback
       - TenantIdentityCallbackUrl=http://${LOCALHOST_IP}:5102/signin-oidc
       - IssuerUri=http://${LOCALHOST_IP}:5101
+      - ApiName=memberapi
     ports:
       - "5101:80"
+
   shopping.api.identitymember.dapr:
     container_name: shopping_identitymember_dapr
     command: [ "./daprd",
@@ -136,10 +138,13 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
       - TenantWebCallbackUrl=http://${LOCALHOST_IP}:5202/#/logincallback
+      - TenantWebLogoutUrl=http://${LOCALHOST_IP}:5202/#/
       - MemberIdentityServerUrl=http://${LOCALHOST_IP}:5101
       - IssuerUri=http://${LOCALHOST_IP}:5102
+      - ApiName=tenantapi
     ports:
       - "5102:80"
+
   shopping.api.identitytenant.dapr:
     container_name: shopping_identitytenant_dapr
     command: [ "./daprd",
@@ -155,10 +160,6 @@ services:
     container_name: shopping_nginxgateway
     ports:
       - "5200:80"
-
-
-
-
 
   shopping.api.oss:
     container_name: shopping_oss

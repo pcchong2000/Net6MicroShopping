@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 using Shopping.Api.IdentityTenant.IdentityServerConfig;
+using Shopping.Framework.Common;
 
 namespace Shopping.Api.IdentityTenant
 {
@@ -37,18 +38,23 @@ namespace Shopping.Api.IdentityTenant
                 options.Filters.Add<ResponseFilter>();
             }).AddDapr();
 
+            //add-migration init -Context TenantDbContext -OutputDir Data/migrations
+            builder.Services.AddWebDbContext<TenantDbContext>(builder.Configuration["ConnectionString"]);
+            builder.Services.AddWebDataSeed<DataSeed>();
+
+
             builder.Services.AddIdentityServer(options => {
                 //LocalApi时，docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
                 options.IssuerUri = builder.Configuration["IssuerUri"];
             })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients(builder.Configuration))
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-                .AddProfileService<ProfileService>()
-                .AddDeveloperSigningCredential();
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiScopes(Config.ApiScopes)
+            .AddInMemoryClients(Config.Clients(builder.Configuration))
+            .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+            .AddProfileService<ProfileService>()
+            .AddDeveloperSigningCredential();
 
-            builder.Services.AddOidcStateDataFormatterCache(JwtBearerIdentity.MemberScheme);
+            //builder.Services.AddOidcStateDataFormatterCache(JwtBearerIdentity.MemberScheme);
 
             builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.TenantScheme, options => {
                 options.ExpectedScope = "tenantapi";
@@ -64,22 +70,7 @@ namespace Shopping.Api.IdentityTenant
                 options.RequireHttpsMetadata = false;
                 options.SaveTokens = true;
                 options.Scope.Add("orderapi");
-
             });
-
-            builder.Services.AddAccountApplication();
-
-            builder.Services.AddWebFreamework();
-
-            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-
-            //add-migration init -Context TenantDbContext -OutputDir Data/migrations
-            builder.Services.AddWebDbContext<TenantDbContext>(builder.Configuration["ConnectionString"]);
-            builder.Services.AddWebDataSeed<DataSeed>();
-
-            builder.Services.AddWebCors();
-
-            builder.Services.AddSameSiteCookiePolicy();
 
             builder.Services.AddAuthorization(options =>
             {
@@ -90,8 +81,20 @@ namespace Shopping.Api.IdentityTenant
                 });
             });
 
-            builder.Services.AddSwaggerGen();
 
+
+            builder.Services.AddSameSiteCookiePolicy();
+            builder.Services.AddAccountApplication();
+
+            builder.Services.AddWebFreamework();
+
+            builder.Services.AddWebCors();
+
+            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            builder.Services.AddCommonAutoMapper(typeof(AutoMapperExtensions).Assembly, typeof(Program).Assembly);
+
+            builder.Services.AddSwaggerAuth();
 
             var app = builder.Build();
 

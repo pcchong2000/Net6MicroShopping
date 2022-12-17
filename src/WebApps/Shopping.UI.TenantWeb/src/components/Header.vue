@@ -7,6 +7,7 @@
 
 <script >
 //import  staffService  from '../services/staffService'
+import oidcUserManager from '../common/oidc'
 export default {
   name: 'Header',
   data:()=>{
@@ -26,7 +27,8 @@ export default {
   methods:{
     loginout(){
       localStorage.clear();
-      this.$router.push("/");
+      oidcUserManager.signoutRedirect();
+      //this.$router.push("/");
     }
   }
 }

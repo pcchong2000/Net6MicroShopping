@@ -11,6 +11,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerConfig
 {
     public static class Config
     {
+        public static string LocalAPPClientId = "membermaui";
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
             {
@@ -57,7 +58,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerConfig
                     },
                 new Client
                     {
-                        ClientId = "membermaui",
+                        ClientId = LocalAPPClientId,
                         ClientSecrets={ new Secret("secret".Sha256()) },
                         ClientName = "maui Client",
                         AllowedGrantTypes = GrantTypes.Code,

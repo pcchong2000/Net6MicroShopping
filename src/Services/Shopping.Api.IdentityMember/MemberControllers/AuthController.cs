@@ -16,6 +16,7 @@ using IdentityServer4.Hosting.LocalApiAuthentication;
 using Microsoft.Extensions.Options;
 using IdentityModel;
 using System.Security.Claims;
+using Dapr.Client;
 
 namespace Shopping.Api.IdentityMember.MemberControllers
 {
@@ -24,11 +25,15 @@ namespace Shopping.Api.IdentityMember.MemberControllers
         private readonly ILogger<MemberController> _logger;
         private readonly ITokenValidator _tokenValidator;
         private readonly LocalApiAuthenticationOptions _options;
-        public AuthController(ILogger<MemberController> logger,  ITokenValidator tokenValidator, IOptionsMonitor<LocalApiAuthenticationOptions> options)
+        private readonly DaprClient _daprClient;
+        private readonly ICurrentUserService _currentUserService;
+        public AuthController(ILogger<MemberController> logger,  ITokenValidator tokenValidator, IOptionsMonitor<LocalApiAuthenticationOptions> options, DaprClient daprClient, ICurrentUserService currentUserService)
         {
             _logger = logger;
-            _tokenValidator= tokenValidator;
+            _tokenValidator = tokenValidator;
             _options = options.CurrentValue;
+            _daprClient = daprClient;
+            _currentUserService = currentUserService;
         }
         /// <summary>
         /// AddAuthentication().AddLocalApi 无法添加token 为 query 参数的请求
@@ -83,6 +88,32 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             return Redirect(returnuri);
             
         }
-
+        [HttpGet("qrcodeLoginCheck")]
+        public async Task<bool> qrcodeLoginCheck(string qrcode)
+        {
+           var status = await _daprClient.GetStateAsync<int>("statestore", "qrcode_" + qrcode);
+            if (status == 0)
+            {
+                //await _daprClient.SaveStateAsync("statestore", "qrcode_" + qrcode,1);
+                return status == 0;
+            }
+            return false;
+        }
+        [HttpGet("qrcodeLogin")]
+        public async Task<bool> qrcodeLogin(string qrcode)
+        {
+            var id = _currentUserService.Id;
+            var status = await _daprClient.GetStateAsync<int>("statestore", "qrcode_" + qrcode);
+            if (status == 0)
+            {
+                await _daprClient.SaveStateAsync("statestore", "qrcode_" + qrcode, new QRCodeStatusModel()
+                {
+                    Status = 0,
+                    Id= id
+                });
+                return status == 0;
+            }
+            return false;
+        }
     }
 }

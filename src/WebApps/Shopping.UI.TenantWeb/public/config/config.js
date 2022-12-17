@@ -5,7 +5,7 @@ var oidc_config = {
     redirect_uri: "http://" + LOCALHOST_IP+":5202/#/logincallback",
     response_type: "code",
     scope:"openid profile offline_access orderapi productapi memberapi tenantapi",
-    post_logout_redirect_uri: "http://" + LOCALHOST_IP +":5202/#/login",
+    post_logout_redirect_uri: "http://" + LOCALHOST_IP +":5202/#/",
 };
 
 window.oidc_config=oidc_config;

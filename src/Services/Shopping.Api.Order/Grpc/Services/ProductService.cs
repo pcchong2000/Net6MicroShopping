@@ -1,6 +1,6 @@
 ﻿using Dapr.Client;
 using Grpc.Net.Client;
-using Shopping.Api.Order.Application.Members.Commands;
+using Shopping.Api.Order.MemberApplications.Orders;
 using Shopping.Framework.Web;
 using Shopping.Framework.Web.Product.Grpc.Proto;
 

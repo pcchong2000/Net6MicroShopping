@@ -14,9 +14,8 @@ export default {
       localStorage.setItem("expires_at",userInfo.expires_at);
       localStorage.setItem("scope",userInfo.scope);
       localStorage.setItem("token_type",userInfo.token_type);
-      setInterval(a=>{
-        this.$router.push("/");
-      },1000);
+      this.$store.commit('loginChange');
+      this.$router.push("/");
       
     }).catch(function (e) {
         console.error(e);

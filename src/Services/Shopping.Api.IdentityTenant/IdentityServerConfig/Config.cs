@@ -32,6 +32,7 @@ namespace Shopping.Api.IdentityTenant.IdentityServerConfig
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
             string TenantWebCallbackUrl = Configuration["TenantWebCallbackUrl"];
+            string TenantWebLogoutUrl = Configuration["TenantWebLogoutUrl"];
             return new List<Client>
             {
                  new Client
@@ -43,7 +44,7 @@ namespace Shopping.Api.IdentityTenant.IdentityServerConfig
                         RequireConsent=true, //要求确认同意
                         AllowOfflineAccess=true,
                         RedirectUris =           { TenantWebCallbackUrl},
-
+                        PostLogoutRedirectUris = { TenantWebLogoutUrl},
                         AllowedScopes = new List<string>
                         {
                             IdentityServerConstants.StandardScopes.OpenId,

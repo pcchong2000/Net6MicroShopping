@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Google.Api;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +28,6 @@ namespace Shopping.Framework.Web
     {
         public static IServiceCollection AddWebFreamework(this IServiceCollection services)
         {
-            //services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
-            //services.AddScoped(typeof(IAccountManage<,>), typeof(DefaultAccountManage<,>));
-
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
@@ -226,6 +225,32 @@ namespace Shopping.Framework.Web
                 options.Listen(IPAddress.Any, Convert.ToInt32(configuration["GrpcPort"]), listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http2;
+                });
+            });
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerAuth(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearerAuth" }
+                        },
+                        new string[] {}
+                    }
                 });
             });
             return services;

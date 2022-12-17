@@ -3,8 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shopping.Api.Product.MemberApplications.Commands;
-using Shopping.Api.Product.MemberApplications.Queries;
+using Shopping.Api.Product.MemberApplications.Products;
 using Shopping.Framework.DomainBase.Base;
 using Shopping.Framework.Web;
 

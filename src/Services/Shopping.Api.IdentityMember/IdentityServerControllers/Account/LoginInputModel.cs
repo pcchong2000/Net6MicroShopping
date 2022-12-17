@@ -14,5 +14,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         public string Password { get; set; }
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
+        public string QRCode { get; set; }
+        public string QRCodePrefix { get; set; }
     }
 }

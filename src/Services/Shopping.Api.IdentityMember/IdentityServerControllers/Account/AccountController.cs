@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Dapr.Client;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.Api.IdentityMember.Data;
+using Shopping.Api.IdentityMember.IdentityServerConfig;
 using Shopping.Api.IdentityMember.Models;
 using Shopping.Framework.AccountApplication.AccountServices;
 using System;
@@ -39,19 +41,21 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
-
+        private readonly DaprClient _daprClient;
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IAccountManage<MemberInfo, MemberDbContext> accountManage)
+            IAccountManage<MemberInfo, MemberDbContext> accountManage,
+            DaprClient daprClient)
         {
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
             _accountManage = accountManage;
+            _daprClient = daprClient;
         }
 
         /// <summary>
@@ -175,7 +179,13 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
+        [HttpGet]
+        public async Task<IActionResult> QRCodeCheck(string qrcode)
+        {
 
+            var  status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_"+ qrcode);
+            return Json(new { status = status.Status });
+        }
 
         /// <summary>
         /// Show logout page
@@ -324,13 +334,28 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
                     }
                 }
             }
+            var IsLocalApp = context.Client.ClientId == Config.LocalAPPClientId;
+            string QRCode = string.Empty;
+            string QRCodePrefix= string.Empty;
+            if (!IsLocalApp)
+            {
+                QRCode = Guid.NewGuid().ToString();
+                QRCodePrefix = "http://192.168.1.100:5101/qrcode?qrcode=";
+                // cache
+                await _daprClient.SaveStateAsync("statestore", "qrcode_"+ QRCode, new QRCodeStatusModel() {
+                    Status=0,
+                }, null,new Dictionary<string, string>() { {"time",DateTime.Now.AddMinutes(2).ToString("yyyy-MM-dd HH:mm:dd") } });
 
+            }
             return new LoginViewModel
             {
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
                 Username = context?.LoginHint,
+                IsLocalApp= IsLocalApp,
+                QRCode= QRCode,
+                QRCodePrefix= QRCodePrefix,
                 ExternalProviders = providers.ToArray()
             };
         }

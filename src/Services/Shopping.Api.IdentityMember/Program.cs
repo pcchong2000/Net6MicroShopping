@@ -37,33 +37,23 @@ namespace Shopping.Api.IdentityMember
                 options.Filters.Add<ResponseFilter>();
             }).AddDapr();
 
+            //add-migration init -Context MemberDbContext -OutputDir Data/migrations
+            builder.Services.AddWebDbContext<MemberDbContext>(builder.Configuration["ConnectionString"]);
+            builder.Services.AddWebDataSeed<DataSeed>();
+
             builder.Services.AddIdentityServer(options => {
                 //LocalApi时，docker 中nginx 使用 http://shopping.api.identitymember 访问获取的地址与JWT携带不一致
                 options.IssuerUri = builder.Configuration["IssuerUri"];
             })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients(builder.Configuration))
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-                .AddProfileService<ProfileService>()
-                .AddDeveloperSigningCredential();
-
-            builder.Services.AddAccountApplication();
-
-            builder.Services.AddWebFreamework();
-
-            
-            //add-migration init -Context MemberDbContext -OutputDir Data/migrations
-            builder.Services.AddWebDbContext<MemberDbContext>(builder.Configuration["ConnectionString"]);
-
-            builder.Services.AddWebDataSeed<DataSeed>();
-
-            builder.Services.AddWebCors();
-
-            builder.Services.AddSameSiteCookiePolicy();
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiScopes(Config.ApiScopes)
+            .AddInMemoryClients(Config.Clients(builder.Configuration))
+            .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+            .AddProfileService<ProfileService>()
+            .AddDeveloperSigningCredential();
 
             builder.Services.AddAuthentication().AddLocalApi(JwtBearerIdentity.MemberScheme, options => {
-                options.ExpectedScope = "memberapi";
+                options.ExpectedScope = builder.Configuration["ApiName"];
             }).AddTenantJwtBearer(builder.Configuration);
 
             builder.Services.AddAuthorization(options =>
@@ -75,11 +65,18 @@ namespace Shopping.Api.IdentityMember
                 });
             });
 
+            builder.Services.AddSameSiteCookiePolicy();
+            builder.Services.AddAccountApplication();
+
+            builder.Services.AddWebFreamework();
+
+            builder.Services.AddWebCors();
+
             builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
             builder.Services.AddCommonAutoMapper(typeof(AutoMapperExtensions).Assembly, typeof(Program).Assembly);
 
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerAuth();
 
             var app = builder.Build();
 

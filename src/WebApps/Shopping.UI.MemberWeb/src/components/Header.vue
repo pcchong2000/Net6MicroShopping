@@ -10,7 +10,7 @@ export default {
   name: 'Header',
   data() {
     return {
-      isLogin:false
+      
     };
   },
   created(){
@@ -18,6 +18,11 @@ export default {
   },
   mounted(){
     this.checkLogin();
+  },
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    }
   },
   methods:{
     login(){
@@ -30,9 +35,10 @@ export default {
     checkLogin(){
       oidcUserManager.getUser().then((user)=> {
         if (user) {
-          this.isLogin=true;
+          //this.isLogin=true;
+          this.$store.commit('loginChange')
           console.log("User:",user);
-          this.$router.push("/");
+          //this.$router.push("/");
         }else{
           console.log("User:",user);
         }

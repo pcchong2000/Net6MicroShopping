@@ -3,9 +3,7 @@ using Dapr.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shopping.Api.Order.Application.Members.Commands;
-using Shopping.Api.Order.Application.Members.Queries;
-using Shopping.Api.Order.Application.Tenants.Queries;
+using Shopping.Api.Order.MemberApplications.Orders;
 using Shopping.Framework.Web;
 
 namespace Shopping.Api.Order.MemberControllers

@@ -1,9 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shopping.Api.IdentityTenant.Applications.Commands;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Shopping.Api.IdentityTenant.TenantApplications.TenantAdmins;
 
 namespace Shopping.Api.IdentityTenant.TenantControllers
 {

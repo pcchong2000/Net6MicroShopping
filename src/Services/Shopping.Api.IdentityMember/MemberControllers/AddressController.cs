@@ -2,8 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shopping.Api.IdentityMember.Application.Addresses;
-using Shopping.Api.IdentityMember.Application.Members;
+using Shopping.Api.IdentityMember.MemberApplications.Addresses;
 using Shopping.Framework.Web;
 using System.Threading.Tasks;
 
