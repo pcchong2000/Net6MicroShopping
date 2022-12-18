@@ -21,13 +21,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         async void InitData()
         {
             var productList = await GetDataAsync();
-            if (productList != null)
-            {
-                foreach (var item in productList)
-                {
-                    dataList.Add(item);
-                }
-            }
+            AddDatalist(productList);
         }
         async Task<List<ProductHomeItemResponseModel>> GetDataAsync()
         {
@@ -37,6 +31,7 @@ namespace Shopping.UI.MemberApp.ViewModels
 
         [ObservableProperty]
         public ObservableCollection<ProductHomeItemResponseModel> dataList;
+
         [ObservableProperty]
         public int pageIndex = 1;
         [ObservableProperty]
@@ -52,13 +47,18 @@ namespace Shopping.UI.MemberApp.ViewModels
         {
             this.pageIndex++;
 
-            var nextData =await GetDataAsync();
-            if (nextData != null)
+            var productList = await GetDataAsync();
+            AddDatalist(productList);
+        }
+        void AddDatalist(List<ProductHomeItemResponseModel> data)
+        {
+            if (data != null)
             {
-                foreach (var item in nextData)
+                for (int i = 0; i < data.Count; i++)
                 {
+                    var item = data[i];
                     dataList.Add(item);
-                }
+                } 
             }
         }
         [RelayCommand]
@@ -77,14 +77,9 @@ namespace Shopping.UI.MemberApp.ViewModels
             //this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
             this.pageIndex = 1;
             dataList.Clear();
-            var nextData = await GetDataAsync();
-            if (nextData != null)
-            {
-                foreach (var item in nextData)
-                {
-                    dataList.Add(item);
-                }
-            }
+
+            var productList = await GetDataAsync();
+            AddDatalist(productList);
 
             isRefreshing = false;
 

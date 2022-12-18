@@ -37,10 +37,12 @@ namespace Shopping.UI.MemberApp.ViewModels
                 avatarUrl = resp.AvatarUrl;
                 name = resp.Name;
                 userName=resp.UserName;
+                nickName = resp.NickName;
                 birthdayTime = resp.BirthdayTime;
                 this.OnPropertyChanged("AvatarUrl");
                 this.OnPropertyChanged("Name");
                 this.OnPropertyChanged("UserName");
+                this.OnPropertyChanged("NickName");
                 this.OnPropertyChanged("Id");
             }
         }

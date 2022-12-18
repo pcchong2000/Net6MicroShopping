@@ -20,7 +20,7 @@
                 
             </HorizontalStackLayout>
         </Border>
-        <Border  Padding="10,0,0,0" StrokeThickness="0" HeightRequest="50"  StrokeShape="RoundRectangle 10" >
+        <Border Margin="0,20,0,0" Padding="10,0,0,0" StrokeThickness="0" HeightRequest="50"  StrokeShape="RoundRectangle 10" >
             <HorizontalStackLayout>
                 <Label Text="用户名:" VerticalOptions="Center" WidthRequest="60" ></Label>
                 <Label Text="{Binding UserName}" VerticalOptions="Center" WidthRequest="120" ></Label>

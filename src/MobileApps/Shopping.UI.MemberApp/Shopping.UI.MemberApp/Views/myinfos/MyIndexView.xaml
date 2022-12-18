@@ -23,10 +23,10 @@
                 <Image Source="{Binding AvatarUrl}" Aspect="AspectFill"></Image>
             </Border>
             <VerticalStackLayout  Grid.Column="1"  Margin="20,0" VerticalOptions="Center" WidthRequest="180">
-                <Label Text="{Binding Name}" FontSize="28" VerticalOptions="Center"  HorizontalOptions="Start" />
+                <Label Text="{Binding NickName}" FontSize="28" VerticalOptions="Center"  HorizontalOptions="Start" />
                 <Label Text="{Binding UserName}" VerticalOptions="Center"  HorizontalOptions="Start" />
             </VerticalStackLayout>
-            <Label  Grid.Column="2" Text=">" FontSize="30" VerticalOptions="Center"></Label>
+            <Label  Grid.Column="2" Text=">" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"></Label>
         </Grid>
         <Label Text="我的订单" VerticalOptions="Center"  HorizontalOptions="Start" />
         <Grid  Margin="0,20"  ColumnSpacing="30" ColumnDefinitions="*, *, *, *, *">

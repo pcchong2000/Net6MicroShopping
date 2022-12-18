@@ -24,6 +24,9 @@ namespace Shopping.UI.MemberApp.ViewModels
         [ObservableProperty]
         public string name;
         [ObservableProperty]
+        public string nickName;
+        
+        [ObservableProperty]
         public string avatarUrl;
         [ObservableProperty]
         public bool isRunning = false;
@@ -36,10 +39,12 @@ namespace Shopping.UI.MemberApp.ViewModels
                 avatarUrl = resp.AvatarUrl;
                 name = resp.Name;
                 userName=resp.UserName;
-                id=resp.Id;
+                nickName= resp.NickName;
+                id =resp.Id;
                 this.OnPropertyChanged("AvatarUrl");
                 this.OnPropertyChanged("Name");
                 this.OnPropertyChanged("UserName");
+                this.OnPropertyChanged("NickName");
                 this.OnPropertyChanged("Id");
             }
         }
