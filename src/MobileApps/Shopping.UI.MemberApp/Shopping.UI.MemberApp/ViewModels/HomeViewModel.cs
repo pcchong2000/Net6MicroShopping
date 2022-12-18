@@ -62,7 +62,7 @@ namespace Shopping.UI.MemberApp.ViewModels
             }
         }
         [RelayCommand]
-        async Task ItemClick(ProductListItemResponseModel blog)
+        async Task ItemClick(ProductHomeItemResponseModel blog)
         {
             await Shell.Current.GoToAsync($"{nameof(ProductDetailView)}?Id={blog.Id}");
         }

@@ -15,33 +15,24 @@
             </Image>
         </Border>
         <ActivityIndicator IsVisible="{Binding IsRunning}" IsRunning="{Binding IsRunning}" />
-        <HorizontalStackLayout Padding="0,0" Margin="0,0,0,10" HeightRequest="100">
-            <Border StrokeThickness="1"  HeightRequest="80" WidthRequest="80" HorizontalOptions="Center"  StrokeShape="RoundRectangle 40" >
-                <Image Source="{Binding AvatarUrl}" Aspect="AspectFill">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=CheckFileCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
+        <Grid  Margin="0,20" ColumnDefinitions="80, *, 50">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoUpdateInfoCommand}" />
+            </Grid.GestureRecognizers>
+            <Border Grid.Column="0" StrokeThickness="1"  HeightRequest="80" WidthRequest="80" HorizontalOptions="Center"  StrokeShape="RoundRectangle 40" >
+                <Image Source="{Binding AvatarUrl}" Aspect="AspectFill"></Image>
             </Border>
-            <VerticalStackLayout  Margin="20,0" VerticalOptions="Center">
+            <VerticalStackLayout  Grid.Column="1"  Margin="20,0" VerticalOptions="Center" WidthRequest="180">
                 <Label Text="{Binding Name}" FontSize="28" VerticalOptions="Center"  HorizontalOptions="Start" />
                 <Label Text="{Binding UserName}" VerticalOptions="Center"  HorizontalOptions="Start" />
-                
             </VerticalStackLayout>
-        </HorizontalStackLayout>
-        <!--<Label Text="我的订单" VerticalOptions="Center"  HorizontalOptions="Start" />
-        <Grid  Margin="0,20" ColumnSpacing="30" ColumnDefinitions="*, *, *, *, *">
-            <BoxView  Grid.Column="0"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="1"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="2"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="3"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-            <BoxView  Grid.Column="4"  Color="CornflowerBlue" CornerRadius="10"  WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
-        </Grid>-->
+            <Label  Grid.Column="2" Text=">" FontSize="30" VerticalOptions="Center"></Label>
+        </Grid>
         <Label Text="我的订单" VerticalOptions="Center"  HorizontalOptions="Start" />
         <Grid  Margin="0,20"  ColumnSpacing="30" ColumnDefinitions="*, *, *, *, *">
             <Border   Grid.Column="0"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10">
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="1" />
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoOrderListCommand}" CommandParameter="1" />
                 </Border.GestureRecognizers>
                 <VerticalStackLayout >
                     <Image Source="setting.svg"  Aspect="AspectFit"></Image>
@@ -51,7 +42,7 @@
             </Border>
             <Border  Grid.Column="1"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="2" />
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoOrderListCommand}" CommandParameter="2" />
                 </Border.GestureRecognizers>
                 <VerticalStackLayout>
                     <Image Source="setting.svg"  Aspect="AspectFit"></Image>
@@ -61,7 +52,7 @@
             </Border>
             <Border  Grid.Column="2"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="3" />
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoOrderListCommand}" CommandParameter="3" />
                 </Border.GestureRecognizers>
                 <VerticalStackLayout>
                     <Image Source="setting.svg"  Aspect="AspectFit"></Image>
@@ -71,7 +62,7 @@
             </Border>
             <Border  Grid.Column="3"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="4" />
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoOrderListCommand}" CommandParameter="4" />
                 </Border.GestureRecognizers>
                 <VerticalStackLayout>
                     <Image Source="setting.svg"  Aspect="AspectFit"></Image>
@@ -81,7 +72,7 @@
             </Border>
             <Border  Grid.Column="4"  Stroke="#C49B33" Padding="0,10" WidthRequest="60" StrokeThickness="1" HorizontalOptions="Fill"  StrokeShape="RoundRectangle 10,10,10,10" >
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=OrderListCommand}" CommandParameter="5" />
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyIndexViewModel}}, Path=GotoOrderListCommand}" CommandParameter="5" />
                 </Border.GestureRecognizers>
                 <VerticalStackLayout>
                     <Image Source="setting.svg"  Aspect="AspectFit"></Image>
@@ -92,6 +83,5 @@
         </Grid>
         <BoxView  Color="CornflowerBlue" CornerRadius="10" HeightRequest="160" VerticalOptions="Center" HorizontalOptions="Fill" />
         <Button Text="退出登录" WidthRequest="200" Margin="0,30" BackgroundColor="#686868" Command="{Binding ClearCommand}"  />
-        <!--<Button Text="测试" Command="{Binding TestCommand}"  />-->
     </VerticalStackLayout>
 </ContentPage>

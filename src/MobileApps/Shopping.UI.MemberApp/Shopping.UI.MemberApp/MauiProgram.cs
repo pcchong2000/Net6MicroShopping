@@ -54,7 +54,8 @@ public static class MauiProgram
         services.AddTransient<MyIndexViewModel>();
         services.AddSingleton<ProductCategoryViewModel>();
         services.AddSingleton<OrderListViewModel>();
-        
+        services.AddSingleton<UpdateInfoViewModel>();
+
         services.AddSingleton<AppShell>();
         services.AddSingleton<HomeView>();
         services.AddTransient<LoginView>();
@@ -62,8 +63,13 @@ public static class MauiProgram
         services.AddSingleton<OrderListView>();
         services.AddSingleton<OrderDetailView>();
         services.AddSingleton<ProductCategoryView>();
+        services.AddSingleton<ProductListView>();
+        services.AddSingleton<ProductDetailView>();
         services.AddTransient<CameraBarcodeReaderView>();
+        services.AddTransient<UpdateInfoView>();
         
+
+
 
         Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
         Routing.RegisterRoute(nameof(MyIndexView), typeof(MyIndexView));
@@ -74,6 +80,8 @@ public static class MauiProgram
         Routing.RegisterRoute(nameof(OrderListView), typeof(OrderListView));
         Routing.RegisterRoute(nameof(OrderDetailView), typeof(OrderDetailView));
         Routing.RegisterRoute(nameof(CameraBarcodeReaderView), typeof(CameraBarcodeReaderView));
+        Routing.RegisterRoute(nameof(UpdateInfoView), typeof(UpdateInfoView));
+
 
         var app = builder.Build();
         Services = app.Services;

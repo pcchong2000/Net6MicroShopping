@@ -9,26 +9,12 @@ public partial class MyIndexView : ContentPage
     private MyIndexViewModel _vm;
     public MyIndexView( MyIndexViewModel vm)
 	{
-		
-        BindingContext = _vm = vm;
-        App.InitAccessToken();
-        if (IAccountService.CurrentAccount.IsExpired)
-        {
-            Shell.Current.GoToAsync(nameof(LoginView) + "?action=login");
-        }
-        else
-        {
-            _vm.GetMyInfoCommand.Execute(null);
-        }
         InitializeComponent();
+        BindingContext = _vm = vm;
     }
     protected override async void OnAppearing()
     {
         App.InitAccessToken();
-
-        string a = IAccountService.CurrentAccount.AccessToken;
-        string r = IAccountService.CurrentAccount.RefreshToken;
-        var time = IAccountService.CurrentAccount.ExpiredTime;
 
         if (IAccountService.CurrentAccount.IsExpired)
         {

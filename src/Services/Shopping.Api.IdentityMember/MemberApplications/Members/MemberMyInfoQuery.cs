@@ -22,6 +22,7 @@ namespace Shopping.Api.IdentityMember.MemberApplications.Members
         public string PhoneNumber { get; set; }
         public string AvatarUrl { get; set; } = null!;
         public DateTime CreateTime { get; set; }
+        public DateTime? BirthdayTime { get; set; }
     }
     public class MemberMyInfoQueryHandler : IRequestHandler<MemberMyInfoQuery, MemberMyInfoQueryResponse>
     {
@@ -41,6 +42,7 @@ namespace Shopping.Api.IdentityMember.MemberApplications.Members
                 Email = a.Email,
                 PhoneNumber = a.PhoneNumber,
                 AvatarUrl = a.AvatarUrl,
+                BirthdayTime = a.BirthdayTime
             }).FirstOrDefaultAsync();
         }
     }

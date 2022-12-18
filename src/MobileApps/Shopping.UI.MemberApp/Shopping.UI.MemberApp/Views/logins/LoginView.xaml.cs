@@ -33,20 +33,17 @@ public partial class LoginView : ContentPage
         _accountService = accountService;
 
     }
-    private async Task Init()
+    protected override async void OnAppearing()
     {
-        
         App.InitAccessToken();
-        var token = IAccountService.CurrentAccount.AccessToken;
-        var isLogin = IAccountService.CurrentAccount.IsLogin;
         if (Action == "logout")
         {
-            Logout();
+            LogoutWebview();
         }
-        else 
+        else
         {
             // 登录
-            if (!isLogin)
+            if (!IAccountService.CurrentAccount.IsLogin)
             {
                 LoginWebview();
             }
@@ -60,7 +57,7 @@ public partial class LoginView : ContentPage
                 if (isCookie)
                 {
                     RefreshCookieWebview();
-                    if (Action== "qrcodelogin")
+                    if (Action == "qrcodelogin")
                     {
                         QRCodeLoginWebview();
                     }
@@ -71,89 +68,63 @@ public partial class LoginView : ContentPage
                 }
             }
         }
-        
-        
     }
 
+    #region 触发事件
     private void LoginWebview()
     {
-        GetCode(Appsettings.ClientId, Appsettings.ClientSecret, "openid profile orderapi memberapi productapi offline_access",null);
+        GetCode(Appsettings.ClientId, Appsettings.ClientSecret, "openid profile orderapi memberapi productapi offline_access", null);
     }
-    private string CreateAuthorizeEndpoint(IDictionary<string, string> values)
+    public void GetCode(string clientId, string clientSecret, string scope, string returnUrl)
     {
-        var queryString = string.Join("&", values.Select(kvp => string.Format("{0}={1}", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value))).ToArray());
-        return string.Format("{0}?{1}", Appsettings.IdentityAuthorizeEndpoint, queryString);
-    }
-    private async Task<LoginResponseModel> GetTokenAsync(string code)
-    {
-        Dictionary<string, string> data = new Dictionary<string, string>() {
-                {"grant_type","authorization_code" },
-                {"client_id",Appsettings.ClientId },
-                {"client_secret",Appsettings.ClientSecret },
-                {"code",code },
-                {"redirect_uri",Appsettings.ClientCallback },
-                {"code_verifier",_codeVerifier },
-            };
-        var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint, data);
-        return token;
-    }
-    private string CreateCodeChallenge()
-    {
-        var _codeVerifierBytes = RandomNumberGenerator.GetBytes(64);
-        _codeVerifier = Common.ByteArrayToString(_codeVerifierBytes);
+        var dic = new Dictionary<string, string>();
+        dic.Add("client_id", clientId);
+        dic.Add("client_secret", clientSecret);
+        dic.Add("response_type", "code");
+        dic.Add("scope", scope);
+        dic.Add("redirect_uri", Appsettings.ClientCallback);
+        dic.Add("nonce", Guid.NewGuid().ToString("N"));
+        dic.Add("state", Guid.NewGuid().ToString("N"));
+        dic.Add("code_challenge", CreateCodeChallenge());
+        dic.Add("code_challenge_method", "S256");
 
-        using (var sha = SHA256.Create())
+        var queryString = string.Join("&", dic.Select(kvp => string.Format("{0}={1}", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value))).ToArray());
+        string IdentityAuthorizeEndpoint = string.Format("{0}?{1}", Appsettings.IdentityAuthorizeEndpoint, queryString);
+
+        if (string.IsNullOrWhiteSpace(returnUrl))
         {
-            var bytes = Encoding.UTF8.GetBytes(_codeVerifier);
-            var hash = sha.ComputeHash(bytes);
-            var resp = Base64Url.Encode(hash);
-            return resp;
-        }
-    }
-    private async Task<bool> RefreshToken()
-    {
-        var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint,new Dictionary<string, string>() {
-            {"grant_type","refresh_token" },
-            {"client_id",Appsettings.ClientId },
-            {"client_secret",Appsettings.ClientSecret },
-            {"refresh_token",IAccountService.CurrentAccount.RefreshToken },
-        });
-        if (token == null)
-        {
-            return false;
+            WebViewNavigating(IdentityAuthorizeEndpoint, WebViewLoginNavigating);
         }
         else
         {
-            await _accountService.SaveToken(token);
-            return true;
-        } 
+            this._launcherUrl = returnUrl;
+            WebViewNavigating(IdentityAuthorizeEndpoint, WebViewGetCodeNavigating);
+        }
     }
     private void RefreshCookieWebview()
     {
-        webView.Navigating -= WebViewRefreshCookieNavigating;
-        webView.Navigating -= WebViewLoginNavigating;
-        webView.Navigating -= WebViewGetCodeNavigating;
-        webView.Navigating -= WebViewLogoutNavigating;
-        webView.Navigating -= WebViewQRCodeloginNavigating;
-        webView.Navigating += WebViewRefreshCookieNavigating;
+        string source = Appsettings.IdentityRefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
 
-        string RefreshCookie = Appsettings.IdentityRefreshCookie + "?access_token=" + IAccountService.CurrentAccount.AccessToken;
-        webView.Source = RefreshCookie;
+        WebViewNavigating(source, WebViewRefreshCookieNavigating);
     }
     private void QRCodeLoginWebview()
     {
-        webView.Navigating -= WebViewRefreshCookieNavigating;
-        webView.Navigating -= WebViewLoginNavigating;
-        webView.Navigating -= WebViewGetCodeNavigating;
-        webView.Navigating -= WebViewLogoutNavigating;
-        webView.Navigating -= WebViewQRCodeloginNavigating;
-        webView.Navigating += WebViewQRCodeloginNavigating;
-
         //var unescapedUrl = System.Net.WebUtility.UrlEncode(QRCodeLink);
         var qrcode = UrlHelper.UrlGetParam(QRCodeLink, "qrcode");
-        string RefreshCookie = Appsettings.IdentityQRCodeLoginConfirm + "?qrcode=" + qrcode;
-        webView.Source = RefreshCookie;
+        string source = Appsettings.IdentityQRCodeLoginConfirm + "?qrcode=" + qrcode;
+
+        WebViewNavigating(source, WebViewQRCodeloginNavigating);
     }
+    public void LogoutWebview()
+    {
+        //webView.Cookie.Clear();
+
+        string source = Appsettings.IdentityLogout + "?returnuri=" + Appsettings.ClientCallback;
+        WebViewNavigating(source, WebViewLogoutNavigating);
+    }
+    #endregion
+
+    #region WebViewNavigating
     private async void WebViewLoginNavigating(object sender, WebNavigatingEventArgs e)
     {
         var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
@@ -216,66 +187,64 @@ public partial class LoginView : ContentPage
             //await Shell.Current.GoToAsync(nameof(HomeView));
         }
     }
-    public void GetCode(string clientId,string clientSecret,string scope,string returnUrl)
+    public void WebViewNavigating(string source, EventHandler<WebNavigatingEventArgs> weBViewEvent)
     {
-        var dic = new Dictionary<string, string>();
-        dic.Add("client_id", clientId);
-        dic.Add("client_secret", clientSecret);
-        dic.Add("response_type", "code");
-        dic.Add("scope", scope);
-        dic.Add("redirect_uri", Appsettings.ClientCallback);
-        dic.Add("nonce", Guid.NewGuid().ToString("N"));
-        dic.Add("state", Guid.NewGuid().ToString("N"));
-        dic.Add("code_challenge", CreateCodeChallenge());
-        dic.Add("code_challenge_method", "S256");
-
-        string IdentityAuthorizeEndpoint = CreateAuthorizeEndpoint(dic);
         webView.Navigating -= WebViewRefreshCookieNavigating;
         webView.Navigating -= WebViewLoginNavigating;
         webView.Navigating -= WebViewGetCodeNavigating;
         webView.Navigating -= WebViewLogoutNavigating;
         webView.Navigating -= WebViewQRCodeloginNavigating;
-        if (string.IsNullOrWhiteSpace(returnUrl))
+
+        webView.Navigating += weBViewEvent;
+        webView.Source = source;
+    }
+    #endregion
+
+    #region api http 
+    private async Task<bool> RefreshToken()
+    {
+        var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint, new Dictionary<string, string>() {
+            {"grant_type","refresh_token" },
+            {"client_id",Appsettings.ClientId },
+            {"client_secret",Appsettings.ClientSecret },
+            {"refresh_token",IAccountService.CurrentAccount.RefreshToken },
+        });
+        if (token == null)
         {
-            webView.Navigating += WebViewLoginNavigating;
+            return false;
         }
         else
         {
-            this._launcherUrl = returnUrl;
-            webView.Navigating += WebViewGetCodeNavigating;
+            await _accountService.SaveToken(token);
+            return true;
         }
-        
-        webView.Source = IdentityAuthorizeEndpoint;
-        //webView.Reload();
     }
-    public void Logout()
+    private async Task<LoginResponseModel> GetTokenAsync(string code)
     {
-        //webView.Cookie.Clear();
+        Dictionary<string, string> data = new Dictionary<string, string>() {
+                {"grant_type","authorization_code" },
+                {"client_id",Appsettings.ClientId },
+                {"client_secret",Appsettings.ClientSecret },
+                {"code",code },
+                {"redirect_uri",Appsettings.ClientCallback },
+                {"code_verifier",_codeVerifier },
+            };
+        var token = await _httpClient.PostFormUrlEncodedAsync<LoginResponseModel>(Appsettings.IdentityTokenEndpoint, data);
+        return token;
+    }
+    #endregion
 
-        webView.Navigating -= WebViewRefreshCookieNavigating;
-        webView.Navigating -= WebViewLoginNavigating;
-        webView.Navigating -= WebViewGetCodeNavigating;
-        webView.Navigating -= WebViewLogoutNavigating;
-        webView.Navigating -= WebViewQRCodeloginNavigating;
-        webView.Navigating += WebViewLogoutNavigating;
+    private string CreateCodeChallenge()
+    {
+        var _codeVerifierBytes = RandomNumberGenerator.GetBytes(64);
+        _codeVerifier = CommonHelper.ByteArrayToString(_codeVerifierBytes);
 
-        string RefreshCookie = Appsettings.IdentityLogout + "?returnuri=" + Appsettings.ClientCallback;
-        webView.Source = RefreshCookie;
-    }
-    protected override async void OnAppearing()
-    {
-        await Init();
-    }
-}
-internal static class Common
-{
-    public static string ByteArrayToString(byte[] array)
-    {
-        var hex = new StringBuilder(array.Length * 2);
-        foreach (byte b in array)
+        using (var sha = SHA256.Create())
         {
-            hex.AppendFormat("{0:x2}", b);
+            var bytes = Encoding.UTF8.GetBytes(_codeVerifier);
+            var hash = sha.ComputeHash(bytes);
+            var resp = Base64Url.Encode(hash);
+            return resp;
         }
-        return hex.ToString();
     }
 }

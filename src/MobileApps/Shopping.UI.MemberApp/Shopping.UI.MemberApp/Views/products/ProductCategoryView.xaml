@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Shopping.UI.MemberApp.ProductCategoryView"
              xmlns:viewmodel="clr-namespace:Shopping.UI.MemberApp.ViewModels"
+             Shell.NavBarIsVisible="false"
+             Shell.TabBarIsVisible="true"
              Title="ProductCategoryView">
     <Grid ColumnDefinitions="80, *">
         <Border   Grid.Column="0" BackgroundColor="#eee" StrokeThickness="0"  StrokeShape="RoundRectangle 5,5,5,5">

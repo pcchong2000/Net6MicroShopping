@@ -14,15 +14,13 @@ namespace Shopping.UI.MemberApp.ViewModels
         {
             _productService = productService;
             dataList = new ObservableCollection<ProductCategoryResponseModel>();
-            //InitData();
+            data=new List<ProductCategoryResponseModel> ();
+            GetDataAsync();
         }
         [ObservableProperty]
         public ObservableCollection<ProductCategoryResponseModel> dataList;
-        public async Task InitData()
-        {
-            await GetDataAsync();
-        }
-        async Task GetDataAsync()
+        private List<ProductCategoryResponseModel> data;
+        async void GetDataAsync()
         {
             var resp = await _productService.GetProductCategoryAsync();
             if (resp != null)
@@ -41,27 +39,29 @@ namespace Shopping.UI.MemberApp.ViewModels
                         item.CheckColor = Color.Parse("#eee");
                     }
                     item.Childrens = resp.Where(a => a.ParentId == item.Id).ToList();
-
+                    data.Add(item);
                     dataList.Add(item);
                 }
 
             }
         }
         [RelayCommand]
-        async Task ItemParnetClick(ProductCategoryResponseModel item)
+        void ItemParnetClick(ProductCategoryResponseModel item)
         {
-            foreach (var child in dataList)
+            dataList.Clear();
+            foreach (var child in data)
             {
                 child.CheckColor = Color.Parse("#eee");
-
+                if (child.Id==item.Id)
+                {
+                    child.CheckColor = Color.Parse("#fff");
+                }
+                dataList.Add(child);
             }
-            item.CheckColor = Color.Parse("#fff");
-
-            this.OnPropertyChanged("DataList");
             
         }
         [RelayCommand]
-        async Task ItemClick(ProductCategoryResponseModel item)
+        void ItemClick(ProductCategoryResponseModel item)
         {
 
         }

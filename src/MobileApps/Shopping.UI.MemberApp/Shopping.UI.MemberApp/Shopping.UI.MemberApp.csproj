@@ -62,6 +62,9 @@
 	  <Compile Update="Views\myinfos\CameraBarcodeReaderView.xaml.cs">
 	    <DependentUpon>CameraBarcodeReaderView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\myinfos\UpdateInfoView.xaml.cs">
+	    <DependentUpon>UpdateInfoView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\myinfos\MyIndexView.xaml.cs">
 	    <DependentUpon>MyIndexView.xaml</DependentUpon>
 	  </Compile>
@@ -89,6 +92,9 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiXaml Update="Views\myinfos\CameraBarcodeReaderView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\myinfos\UpdateInfoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\orders\OrderDetailView.xaml">

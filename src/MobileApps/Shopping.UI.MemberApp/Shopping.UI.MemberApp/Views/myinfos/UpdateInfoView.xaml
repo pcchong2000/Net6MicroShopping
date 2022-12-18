@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Shopping.UI.MemberApp.UpdateInfoView"
+             xmlns:viewmodel="clr-namespace:Shopping.UI.MemberApp.ViewModels"
+             Title="修改个人信息">
+    <VerticalStackLayout  Padding="10,0">
+        <ActivityIndicator IsVisible="{Binding IsRunning}" IsRunning="{Binding IsRunning}" />
+
+        <Border Margin="0,20,0,0" Padding="10,0,0,0" StrokeThickness="0"  StrokeShape="RoundRectangle 10" >
+            <HorizontalStackLayout>
+                <Label Text="头像:" VerticalOptions="Center" WidthRequest="60" ></Label>
+                <Border  StrokeThickness="0"  WidthRequest="100" HeightRequest="100" StrokeShape="RoundRectangle 60" >
+                    <Image Source="{Binding AvatarUrl}" Aspect="AspectFill" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UpdateInfoViewModel}}, Path=CheckFileCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+                
+            </HorizontalStackLayout>
+        </Border>
+        <Border  Padding="10,0,0,0" StrokeThickness="0" HeightRequest="50"  StrokeShape="RoundRectangle 10" >
+            <HorizontalStackLayout>
+                <Label Text="用户名:" VerticalOptions="Center" WidthRequest="60" ></Label>
+                <Label Text="{Binding UserName}" VerticalOptions="Center" WidthRequest="120" ></Label>
+            </HorizontalStackLayout>
+        </Border>
+        <Border  Padding="10,0,0,0" StrokeThickness="0"  HeightRequest="50"   StrokeShape="RoundRectangle 10">
+            <HorizontalStackLayout>
+                <Label Text="姓名:" VerticalOptions="Center" WidthRequest="60"  ></Label>
+                <Entry Text="{Binding Name}" VerticalOptions="Center"  WidthRequest="200"  ></Entry>
+            </HorizontalStackLayout>
+            
+        </Border>
+        <Border  Padding="10,0,0,0" StrokeThickness="0"  HeightRequest="50"   StrokeShape="RoundRectangle 10" >
+            <HorizontalStackLayout>
+                <Label Text="昵称:" VerticalOptions="Center" WidthRequest="60"  ></Label>
+                <Entry  Text="{Binding NickName}" VerticalOptions="Center" WidthRequest="200"  ></Entry>
+            </HorizontalStackLayout>
+            
+        </Border>
+        <Border  Padding="10,0,0,0" StrokeThickness="0" HeightRequest="50"    StrokeShape="RoundRectangle 10" >
+            <HorizontalStackLayout>
+                <Label Text="出生日期:" VerticalOptions="Center" WidthRequest="60"  ></Label>
+                <DatePicker Date="{Binding BirthdayTime}" VerticalOptions="Center" WidthRequest="200"  />
+            </HorizontalStackLayout>
+            
+        </Border>
+        <Button Text="保存" WidthRequest="200" Margin="0,30" BackgroundColor="#686868" Command="{Binding SaveCommand}"  />
+    </VerticalStackLayout>
+</ContentPage>

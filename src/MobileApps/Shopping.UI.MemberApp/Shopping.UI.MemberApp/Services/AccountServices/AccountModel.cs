@@ -74,6 +74,7 @@ namespace Shopping.UI.MemberApp.Services.AccountServices
         public string Id { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string UserName { get; set; } = null!;
+        public string NickName { get; set; } = null!;
         public DateTime? BirthdayTime { get; set; }
         public string? PhoneNumber { get; set; } = null!;
         public string? Email { get; set; } = null!;

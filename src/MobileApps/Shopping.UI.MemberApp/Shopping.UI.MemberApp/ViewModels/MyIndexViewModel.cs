@@ -60,33 +60,13 @@ namespace Shopping.UI.MemberApp.ViewModels
             
         }
         [RelayCommand]
-        async Task CheckFile()
+        async Task GotoUpdateInfo()
         {
-            if (MediaPicker.Default.IsCaptureSupported)
-            {
-                var photo = await MediaPicker.Default.PickPhotoAsync();
-                if (photo != null)
-                {
-                    this.SetProperty(ref isRunning, true, "IsRunning");
-
-                    using Stream sourceStream = await photo.OpenReadAsync();
-                    var respFiles = await _accountService.UpdateFileAsync(sourceStream, photo.FileName);
-                    if (respFiles.Count>0)
-                    {
-                        var resp = await _accountService.AccountUpdateAsync(new AccountUpdateModel
-                        {
-                            AvatarUrl = Appsettings.ApiBaseAddress + respFiles[0].PathUrl
-                        });
-                        await Task.Delay(1000);
-                        this.SetProperty(ref avatarUrl, Appsettings.ApiBaseAddress + respFiles[0].PathUrl, "AvatarUrl");
-                        this.SetProperty(ref isRunning, false, "IsRunning");
-                    }
-                }
-            }
+            await Shell.Current.GoToAsync($"{nameof(UpdateInfoView)}");
         }
 
         [RelayCommand]
-        async Task OrderList(string orderStatus)
+        async Task GotoOrderList(string orderStatus)
         {
            int _orderStatus=int.Parse(orderStatus);
            await Shell.Current.GoToAsync($"{nameof(OrderListView)}?status={_orderStatus}");
