@@ -3,6 +3,7 @@
 
 
 using Dapr.Client;
+using Google.Api;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
@@ -212,7 +213,24 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         public async Task<IActionResult> QRCodeCheck(string qrcode)
         {
             var  status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_"+ qrcode);
+            if (status==null)
+            {
+                return Json(new { status = -1,Message="二维码无效" });
+            }
             return Json(new { status = status.Status });
+        }
+        [HttpPost]
+        public async Task<IActionResult> QRCodeReset([FromBody] LoginInputModel model)
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
+            string QRCode=Guid.NewGuid().ToString();
+            await _daprClient.SaveStateAsync("statestore", "qrcode_" + QRCode, new QRCodeStatusModel()
+            {
+                Status = 0,
+                ClientId = context?.Client.ClientId
+            }, null, new Dictionary<string, string>() { { "ttlInSeconds", "60" } });
+            
+            return Json(new { QRCode = QRCode });
         }
         [HttpGet]
         [Authorize]
@@ -225,6 +243,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
                 vm = new QRCodeConfirmViewModel()
                 {
                     QRCode = "",
+                    Message= "二维码已失效",
                     Status = -1,
                 };
             }
@@ -238,7 +257,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
                 };
             }
             
-            if (status.Status!=0)
+            if (vm.Status!=0)
             {
                 vm.Message = "二维码已失效";
             }
@@ -251,11 +270,15 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
         {
             var id = _currentUserService.Id;
             var status = await _daprClient.GetStateAsync<QRCodeStatusModel>("statestore", "qrcode_" + request.QRCode);
-            if (status !=null && status.Status==0)
+            if (status == null)
+            {
+                return BadRequest(new { Message="二维码已失效" });
+            }
+            if (status.Status==0)
             {
                 status.MemberId = id;
                 status.Status = 1;
-                await _daprClient.SaveStateAsync("statestore", "qrcode_" + request.QRCode, status);
+                await _daprClient.SaveStateAsync("statestore", "qrcode_" + request.QRCode, status,null, new Dictionary<string, string>() { { "ttlInSeconds", "60" } });
                 var client = await _clientStore.FindClientByIdAsync(status.ClientId);
                 return Redirect("/account/qrcodeConfirmCallBack");
             }
@@ -420,7 +443,7 @@ namespace Shopping.Api.IdentityMember.IdentityServerControllers.Account
                 await _daprClient.SaveStateAsync("statestore", "qrcode_"+ QRCode, new QRCodeStatusModel() {
                     Status=0,
                     ClientId= context?.Client.ClientId
-                }, null,new Dictionary<string, string>() { {"time",DateTime.Now.AddMinutes(2).ToString("yyyy-MM-dd HH:mm:dd") } });
+                }, null,new Dictionary<string, string>() { { "ttlInSeconds", "60" } });
 
             }
             return new LoginViewModel
