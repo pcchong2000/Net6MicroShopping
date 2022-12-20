@@ -25,10 +25,10 @@ namespace Shopping.UI.MemberApp.Configs
         public const string IdentityAuthorizeEndpoint = IdentityAddress + "/connect/authorize";
         public const string IdentityTokenEndpoint = IdentityAddress + "/connect/token";
         public const string IdentityAuthUrl = IdentityAddress + "/account/auth?scheme=";
-
+        public const string IdentityLogout = IdentityAddress + "/connect/endsession";
+        public const string IdentityLogoutCallBack = IdentityAddress + "/Account/Logout";
 
         public const string IdentityRefreshCookie = IdentityAddress + "/api/member/auth/refresh_cookie";
-        public const string IdentityLogout = IdentityAddress + "/api/member/auth/logout";
         public const string IdentityQRCodeLogin = IdentityAddress + "/qrcode";
         public const string IdentityQRCodeLoginConfirm = IdentityAddress + "/account/qrcodeConfirm";
         public const string IdentityQRCodeLoginConfirmCallBack = IdentityAddress + "/account/qrcodeConfirmCallBack";

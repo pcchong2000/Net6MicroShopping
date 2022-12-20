@@ -75,18 +75,5 @@ namespace Shopping.Api.IdentityMember.MemberControllers
             }
             return BadRequest();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="access_token"></param>
-        /// <returns></returns>
-        [HttpGet("logout")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Logout(string returnuri)
-        {
-            await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
-            return Redirect(returnuri);
-            
-        }
     }
 }

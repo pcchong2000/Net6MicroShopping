@@ -119,7 +119,7 @@ public partial class LoginView : ContentPage
     {
         //webView.Cookie.Clear();
 
-        string source = Appsettings.IdentityLogout + "?returnuri=" + Appsettings.ClientCallback;
+        string source = Appsettings.IdentityLogout;
         WebViewNavigating(source, WebViewLogoutNavigating);
     }
     #endregion
@@ -178,7 +178,7 @@ public partial class LoginView : ContentPage
     private void WebViewLogoutNavigating(object sender, WebNavigatingEventArgs e)
     {
         var unescapedUrl = System.Net.WebUtility.UrlDecode(e.Url);
-        if (unescapedUrl.StartsWith(Appsettings.ClientCallback))
+        if (unescapedUrl.Equals(Appsettings.IdentityLogoutCallBack))
         {
             Action = "";
             var shell = (AppShell)Shell.Current;
