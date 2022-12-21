@@ -40,6 +40,10 @@ public partial class LoginView : ContentPage
         {
             LogoutWebview();
         }
+        else if (Action == "qrcodelogin")
+        {
+            QRCodeLoginWebview();
+        }
         else
         {
             // 登录
@@ -57,10 +61,7 @@ public partial class LoginView : ContentPage
                 if (isCookie)
                 {
                     RefreshCookieWebview();
-                    if (Action == "qrcodelogin")
-                    {
-                        QRCodeLoginWebview();
-                    }
+                    
                 }
                 else
                 {
