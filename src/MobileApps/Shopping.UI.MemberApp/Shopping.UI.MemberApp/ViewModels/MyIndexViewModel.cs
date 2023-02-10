@@ -36,16 +36,11 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _accountService.MyInfoAsync();
             if (resp != null)
             {
-                avatarUrl = resp.AvatarUrl;
-                name = resp.Name;
-                userName=resp.UserName;
-                nickName= resp.NickName;
-                id =resp.Id;
-                this.OnPropertyChanged("AvatarUrl");
-                this.OnPropertyChanged("Name");
-                this.OnPropertyChanged("UserName");
-                this.OnPropertyChanged("NickName");
-                this.OnPropertyChanged("Id");
+                AvatarUrl = resp.AvatarUrl;
+                Name = resp.Name;
+                UserName=resp.UserName;
+                NickName= resp.NickName;
+                Id =resp.Id;
             }
         }
         [RelayCommand]

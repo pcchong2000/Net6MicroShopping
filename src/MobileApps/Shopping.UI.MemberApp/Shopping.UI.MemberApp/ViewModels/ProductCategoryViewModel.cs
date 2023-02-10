@@ -40,7 +40,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                     }
                     item.Childrens = resp.Where(a => a.ParentId == item.Id).ToList();
                     data.Add(item);
-                    dataList.Add(item);
+                    DataList.Add(item);
                 }
 
             }
@@ -48,7 +48,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         [RelayCommand]
         void ItemParnetClick(ProductCategoryResponseModel item)
         {
-            dataList.Clear();
+            DataList.Clear();
             foreach (var child in data)
             {
                 child.CheckColor = Color.Parse("#eee");
@@ -56,7 +56,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                 {
                     child.CheckColor = Color.Parse("#fff");
                 }
-                dataList.Add(child);
+                DataList.Add(child);
             }
             
         }

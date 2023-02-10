@@ -30,8 +30,8 @@ namespace Shopping.UI.MemberApp.ViewModels
             //    client_id= Appsettings.ClientId
             //};
             Dictionary<string, string> data = new Dictionary<string, string>() {
-                {"userName",userName },
-                {"password",password },
+                {"userName",UserName },
+                {"password",Password },
                 {"grant_type","password" },
                 {"client_id",Appsettings.ClientPasswordId },
             };

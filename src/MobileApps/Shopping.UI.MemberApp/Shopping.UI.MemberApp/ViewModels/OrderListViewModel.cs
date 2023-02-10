@@ -41,9 +41,9 @@ namespace Shopping.UI.MemberApp.ViewModels
         }
         async Task GetDataAsync()
         {
-            for (int i = (pageSize*(pageIndex-1)); i < (pageSize * pageIndex); i++)
+            for (int i = (PageSize*(PageIndex-1)); i < (PageSize * PageIndex); i++)
             {
-                dataList.Add(new OrderListItemResponseModel() { 
+                DataList.Add(new OrderListItemResponseModel() { 
                     Title ="订单"+ i.ToString(),
                     Id = i.ToString(),
 
@@ -58,13 +58,11 @@ namespace Shopping.UI.MemberApp.ViewModels
         async Task Refresh()
         {
             //this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
-            this.pageIndex = 1;
-            dataList.Clear();
+            this.PageIndex = 1;
+            DataList.Clear();
             await GetDataAsync();
 
-            isRefreshing = false;
-
-            this.OnPropertyChanged("IsRefreshing");
+            IsRefreshing = false;
         }
         /// <summary>
         /// 下一页
@@ -73,7 +71,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         [RelayCommand]
         async Task NextPageData()
         {
-            this.pageIndex++;
+            this.PageIndex++;
             await GetDataAsync();
         }
         [RelayCommand]

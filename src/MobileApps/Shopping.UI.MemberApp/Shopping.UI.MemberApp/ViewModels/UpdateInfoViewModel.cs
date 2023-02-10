@@ -34,16 +34,11 @@ namespace Shopping.UI.MemberApp.ViewModels
             var resp = await _accountService.MyInfoAsync();
             if (resp != null)
             {
-                avatarUrl = resp.AvatarUrl;
-                name = resp.Name;
-                userName=resp.UserName;
-                nickName = resp.NickName;
-                birthdayTime = resp.BirthdayTime;
-                this.OnPropertyChanged("AvatarUrl");
-                this.OnPropertyChanged("Name");
-                this.OnPropertyChanged("UserName");
-                this.OnPropertyChanged("NickName");
-                this.OnPropertyChanged("Id");
+                AvatarUrl = resp.AvatarUrl;
+                Name = resp.Name;
+                UserName=resp.UserName;
+                NickName = resp.NickName;
+                BirthdayTime = resp.BirthdayTime;
             }
         }
 
@@ -55,15 +50,13 @@ namespace Shopping.UI.MemberApp.ViewModels
                 var photo = await MediaPicker.Default.PickPhotoAsync();
                 if (photo != null)
                 {
-                    this.SetProperty(ref isRunning, true, "IsRunning");
-
+                    this.IsRunning = true;
                     using Stream sourceStream = await photo.OpenReadAsync();
                     var respFiles = await _accountService.UpdateFileAsync(sourceStream, photo.FileName);
                     if (respFiles.Count>0)
                     {
-                        
-                        this.SetProperty(ref avatarUrl, Appsettings.ApiBaseAddress + respFiles[0].PathUrl, "AvatarUrl");
-                        this.SetProperty(ref isRunning, false, "IsRunning");
+                        this.IsRunning = false;
+                        this.AvatarUrl= Appsettings.ApiBaseAddress + respFiles[0].PathUrl;
                     }
                 }
             }
@@ -72,7 +65,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         [RelayCommand]
         async Task Save()
         {
-            this.SetProperty(ref isRunning, true, "IsRunning");
+            this.IsRunning = true;
             var resp = await _accountService.AccountUpdateAsync(new AccountUpdateModel
             {
                 AvatarUrl = avatarUrl,
@@ -82,7 +75,7 @@ namespace Shopping.UI.MemberApp.ViewModels
             });
             if (resp)
             {
-                this.SetProperty(ref isRunning, false, "IsRunning");
+                this.IsRunning = false;
                 await Shell.Current.GoToAsync(nameof(MyIndexView));
                 
             }

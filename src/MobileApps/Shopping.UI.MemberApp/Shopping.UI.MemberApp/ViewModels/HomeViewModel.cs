@@ -45,7 +45,7 @@ namespace Shopping.UI.MemberApp.ViewModels
         [RelayCommand]
         async Task NextPageData()
         {
-            this.pageIndex++;
+            this.PageIndex++;
 
             var productList = await GetDataAsync();
             AddDatalist(productList);
@@ -57,7 +57,7 @@ namespace Shopping.UI.MemberApp.ViewModels
                 for (int i = 0; i < data.Count; i++)
                 {
                     var item = data[i];
-                    dataList.Add(item);
+                    DataList.Add(item);
                 } 
             }
         }
@@ -74,16 +74,14 @@ namespace Shopping.UI.MemberApp.ViewModels
         async Task Refresh()
         {
             //isRefreshing = true;
-            //this.pageIndex=Random.Shared.Next(1,10);//随机一个分页数
-            this.pageIndex = 1;
-            dataList.Clear();
+            //this.PageIndex=Random.Shared.Next(1,10);//随机一个分页数
+            this.PageIndex = 1;
+            this.DataList.Clear();
 
             var productList = await GetDataAsync();
             AddDatalist(productList);
 
-            isRefreshing = false;
-
-            this.OnPropertyChanged("IsRefreshing");
+            IsRefreshing = false;
         }
     }
 }
