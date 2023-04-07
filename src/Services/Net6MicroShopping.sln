@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configurat
 		dapr\configuration\eshop-config.yaml = dapr\configuration\eshop-config.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oss", "oss", "{3F6E9CD6-2419-45A7-A997-F22ADC607EEE}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orders", "orders", "{2C4AFB86-235F-4B4D-B906-1706FFACA41F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "products", "products", "{80C1F598-5A61-4767-8C13-B5C81C300549}"
@@ -37,33 +39,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginxgateway", "nginxgatewa
 		gateways\nginxgateway\Dockerfile = gateways\nginxgateway\Dockerfile
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Common", "Shopping.Framework.Common\Shopping.Framework.Common.csproj", "{150B6C9A-810F-4430-92D0-09B8BD67146C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Common", "frameworks\Shopping.Framework.Common\Shopping.Framework.Common.csproj", "{150B6C9A-810F-4430-92D0-09B8BD67146C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Web", "Shopping.Framework.Web\Shopping.Framework.Web.csproj", "{E412F93B-B47A-49C4-8DDB-DF776CE52A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Web", "frameworks\Shopping.Framework.Web\Shopping.Framework.Web.csproj", "{E412F93B-B47A-49C4-8DDB-DF776CE52A6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.IdentityMember", "Shopping.Api.IdentityMember\Shopping.Api.IdentityMember.csproj", "{BE736258-6558-4458-A332-BCBBE94BA107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Domain", "frameworks\Shopping.Framework.Domain\Shopping.Framework.Domain.csproj", "{685E0785-7A1E-4741-905D-E06CB52F1713}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.IdentityTenant", "Shopping.Api.IdentityTenant\Shopping.Api.IdentityTenant.csproj", "{68538B65-7E08-4CBB-B3E8-6D36FAC1A3AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.Application", "frameworks\Shopping.Framework.Application\Shopping.Framework.Application.csproj", "{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Order", "Shopping.Api.Order\Shopping.Api.Order.csproj", "{199069D3-C60E-487F-92B4-A123F62A2770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Identity.AccountApplication", "frameworks\Shopping.Identity.AccountApplication\Shopping.Identity.AccountApplication.csproj", "{4A8F8BE8-831B-417F-A2BB-5852D734C126}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Pay", "Shopping.Api.Pay\Shopping.Api.Pay.csproj", "{55289A50-8893-4170-AAA4-6E36D92DE82C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.IdentityMember", "microservices\Shopping.Api.IdentityMember\Shopping.Api.IdentityMember.csproj", "{BE736258-6558-4458-A332-BCBBE94BA107}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Product", "Shopping.Api.Product\Shopping.Api.Product.csproj", "{55325AC4-6755-47C4-88F0-6147FAB7DA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.IdentityTenant", "microservices\Shopping.Api.IdentityTenant\Shopping.Api.IdentityTenant.csproj", "{68538B65-7E08-4CBB-B3E8-6D36FAC1A3AA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "oss", "oss", "{3F6E9CD6-2419-45A7-A997-F22ADC607EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Order", "microservices\Shopping.Api.Order\Shopping.Api.Order.csproj", "{199069D3-C60E-487F-92B4-A123F62A2770}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.OSS", "Shopping.Api.OSS\Shopping.Api.OSS.csproj", "{305B911D-EA64-475A-B42A-BD79F0CD130A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Pay", "microservices\Shopping.Api.Pay\Shopping.Api.Pay.csproj", "{55289A50-8893-4170-AAA4-6E36D92DE82C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.DomainBase", "Shopping.Framework.DomainBase\Shopping.Framework.DomainBase.csproj", "{685E0785-7A1E-4741-905D-E06CB52F1713}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.Product", "microservices\Shopping.Api.Product\Shopping.Api.Product.csproj", "{55325AC4-6755-47C4-88F0-6147FAB7DA1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Framework.AccountApplication", "Shopping.Framework.AccountApplication\Shopping.Framework.AccountApplication.csproj", "{4A8F8BE8-831B-417F-A2BB-5852D734C126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Api.OSS", "microservices\Shopping.Api.OSS\Shopping.Api.OSS.csproj", "{305B911D-EA64-475A-B42A-BD79F0CD130A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B9723B1-9BE6-42E4-827B-FF43D3326291}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\.gitignore = ..\..\.gitignore
 		global.json = global.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Framework.EFCore", "frameworks\Shopping.Framework.EFCore\Shopping.Framework.EFCore.csproj", "{04703F20-5A2C-45A6-872A-FFFC03B77510}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,18 @@ Global
 		{E412F93B-B47A-49C4-8DDB-DF776CE52A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E412F93B-B47A-49C4-8DDB-DF776CE52A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E412F93B-B47A-49C4-8DDB-DF776CE52A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{685E0785-7A1E-4741-905D-E06CB52F1713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{685E0785-7A1E-4741-905D-E06CB52F1713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{685E0785-7A1E-4741-905D-E06CB52F1713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{685E0785-7A1E-4741-905D-E06CB52F1713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE736258-6558-4458-A332-BCBBE94BA107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE736258-6558-4458-A332-BCBBE94BA107}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE736258-6558-4458-A332-BCBBE94BA107}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -107,20 +123,17 @@ Global
 		{305B911D-EA64-475A-B42A-BD79F0CD130A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{305B911D-EA64-475A-B42A-BD79F0CD130A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{305B911D-EA64-475A-B42A-BD79F0CD130A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{685E0785-7A1E-4741-905D-E06CB52F1713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{685E0785-7A1E-4741-905D-E06CB52F1713}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{685E0785-7A1E-4741-905D-E06CB52F1713}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{685E0785-7A1E-4741-905D-E06CB52F1713}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A8F8BE8-831B-417F-A2BB-5852D734C126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04703F20-5A2C-45A6-872A-FFFC03B77510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04703F20-5A2C-45A6-872A-FFFC03B77510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04703F20-5A2C-45A6-872A-FFFC03B77510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04703F20-5A2C-45A6-872A-FFFC03B77510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1BE4C977-8C10-44FE-8370-7DBE4003F2D1} = {CE539316-BAC5-463A-BBC7-6F38BB214C82}
+		{3F6E9CD6-2419-45A7-A997-F22ADC607EEE} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{2C4AFB86-235F-4B4D-B906-1706FFACA41F} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{80C1F598-5A61-4767-8C13-B5C81C300549} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{A82E00EB-0234-4C8A-AC34-0DA25D050F91} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
@@ -129,15 +142,16 @@ Global
 		{15A3B7A2-C764-4A22-99CC-A747BB461B00} = {2EA56D4B-E2F6-4038-A624-687F602C4392}
 		{150B6C9A-810F-4430-92D0-09B8BD67146C} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
 		{E412F93B-B47A-49C4-8DDB-DF776CE52A6D} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
+		{685E0785-7A1E-4741-905D-E06CB52F1713} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
+		{6AD6B6FE-A64B-4E02-9CB9-43A4188A82FC} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
+		{4A8F8BE8-831B-417F-A2BB-5852D734C126} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
 		{BE736258-6558-4458-A332-BCBBE94BA107} = {01F57133-5CEA-461B-ADA9-BEF4AC8F6476}
 		{68538B65-7E08-4CBB-B3E8-6D36FAC1A3AA} = {01F57133-5CEA-461B-ADA9-BEF4AC8F6476}
 		{199069D3-C60E-487F-92B4-A123F62A2770} = {2C4AFB86-235F-4B4D-B906-1706FFACA41F}
 		{55289A50-8893-4170-AAA4-6E36D92DE82C} = {A82E00EB-0234-4C8A-AC34-0DA25D050F91}
 		{55325AC4-6755-47C4-88F0-6147FAB7DA1A} = {80C1F598-5A61-4767-8C13-B5C81C300549}
-		{3F6E9CD6-2419-45A7-A997-F22ADC607EEE} = {B83FC9E4-1D7E-4BA5-9EDA-02CB6B6E2F97}
 		{305B911D-EA64-475A-B42A-BD79F0CD130A} = {3F6E9CD6-2419-45A7-A997-F22ADC607EEE}
-		{685E0785-7A1E-4741-905D-E06CB52F1713} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
-		{4A8F8BE8-831B-417F-A2BB-5852D734C126} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
+		{04703F20-5A2C-45A6-872A-FFFC03B77510} = {A293FBDC-F2FF-4E36-965F-E16787BFDE7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58B868B8-AD61-40B0-A1A6-37621BF802F7}

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+		<PackageReference Include="Grpc.AspNetCore.Server" Version="2.50.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.51.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\frameworks\Shopping.Framework.Web\Shopping.Framework.Web.csproj" />
+		<ProjectReference Include="..\..\frameworks\Shopping.Framework.Application\Shopping.Framework.Application.csproj" />
+	</ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="..\..\frameworks\Shopping.Framework.Web\Protos\*.proto" GrpcServices="Server" Link="Grpc\Protos\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>
